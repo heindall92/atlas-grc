@@ -637,7 +637,7 @@ a.tag:hover{filter:brightness(.97)}
 .flame-ico{color:#ff6b00;font-size:22px}
 .combo{display:inline-flex;align-items:center;justify-content:flex-end;gap:3px}
 .combo .ico{font-size:15px}
-.rv .ico{font-size:13px;vertical-align:-2px}
+.rv .ico{font-size:13px;vertical-align:-2px;display:inline-block}
 
 /* Brújula de Atlas: la aguja busca el norte y se asienta con un muelle */
 .ico .needle{transform-box:view-box;transform-origin:12px 12px}
@@ -827,3 +827,42 @@ a.tag:hover{filter:brightness(.97)}
   .dest{flex-basis:200px;height:280px}
 }
 @media (prefers-reduced-motion:reduce){.stepper span,.stepper i::after,.qr .c,.dest{transition:none}}
+
+
+/* ═════════ Documentos de Albatrel ═════════ */
+.docs-lvl{margin-top:22px}
+.docs-lvl h3{display:flex;align-items:center;gap:8px;margin:0 0 10px;font-size:15px;color:var(--ink-2)}
+.docs-lvl h3 i{width:10px;height:10px;border-radius:3px;background:var(--c)}
+.dcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.dcard{position:relative;display:flex;flex-direction:column;gap:8px;padding:16px;border-radius:18px;background:var(--surface);border:1px solid var(--line-2);min-height:150px}
+.dcard .dc-k{display:flex;align-items:center;gap:8px;font:700 12.5px var(--mono);color:var(--c)}
+.dcard .dc-k .ico{font-size:16px}
+.dcard b{font:650 15.5px/1.25 var(--display);letter-spacing:-.015em}
+.dcard small{color:var(--ink-3);font-size:12.5px}
+.dcard .dc-a{display:flex;gap:6px;margin-top:auto}
+.dcard .built{position:absolute;top:12px;right:12px;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--ok-fill);color:#fff}
+.dcard .built .ico{font-size:14px;stroke-width:3}
+.paper{background:var(--surface);border:1px solid var(--line-2);border-radius:22px;box-shadow:var(--shadow);padding:clamp(20px,3vw,40px);margin-top:16px}
+.paper h2{font-size:22px;margin:26px 0 10px}
+.paper h2:first-of-type{margin-top:6px}
+.paper p,.paper li{color:var(--ink-2);line-height:1.6;font-size:15.5px}
+.paper ul{padding-left:20px;margin:0 0 10px}
+.dmeta{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:1px;background:var(--line-2);border:1px solid var(--line-2);border-radius:14px;overflow:hidden;margin:6px 0 10px}
+.dmeta div{background:var(--surface-2);padding:10px 12px}
+.dmeta span{display:block;font-size:11.5px;color:var(--ink-3);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.dmeta b{font-size:14px}
+.dtw{overflow-x:auto;margin:6px 0 12px;border:1px solid var(--line-2);border-radius:14px}
+.dtable{width:100%;border-collapse:collapse;font-size:14px}
+.dtable th{text-align:left;padding:10px 12px;background:var(--surface-2);font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);white-space:nowrap}
+.dtable td{padding:10px 12px;border-top:1px solid var(--line-2);vertical-align:top;color:var(--ink-2)}
+.dtable td.mono{white-space:nowrap}
+.lv{display:inline-grid;place-items:center;min-width:34px;height:24px;padding:0 7px;border-radius:7px;font:700 12px var(--mono);color:#fff}
+.lv[data-l="MB"]{background:#34c759}.lv[data-l="B"]{background:#8fd14f;color:#1d3a00}.lv[data-l="M"]{background:#ffcc00;color:#3a2a00}.lv[data-l="A"]{background:#ff9f0a}.lv[data-l="MA"]{background:#ff3b30}
+.st-pill{display:inline-flex;height:22px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:650;align-items:center;white-space:nowrap}
+.st-pill[data-s="Implantado"],.st-pill[data-s="Hecho"]{background:var(--ok-soft);color:var(--ok)}
+.st-pill[data-s="En curso"]{background:var(--warn-soft);color:var(--warn)}
+.st-pill[data-s="Planificado"]{background:var(--fill);color:var(--ink-2)}
+.st-pill[data-s="N/A"]{background:var(--bad-soft);color:var(--bad)}
+.soa-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0}
+@media (max-width:720px){.soa-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.doc-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}

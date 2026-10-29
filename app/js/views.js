@@ -352,6 +352,7 @@
         h('div.grid', C.kpis.map(([v, l], i) => rise(h('div.kv', h('b', v), h('span', l)), i + 2)))),
       h('div.sec', h('div.sec-h', h('h2', 'La pirámide documental'), h('small', 'Cláusula 7.5 · control 5.1')),
         h('div.grid', C.pyramid.map(([t, d], i) => rise(h('div.card', {style: {marginInline: (i * 4) + '%', padding: '16px 20px'}}, h('b', t), h('p.muted', {style: {margin: '4px 0 0', fontSize: '14.5px'}}, d)), i)))),
+      Docs.section(),
       h('div.sec', h('div.sec-h', h('h2', 'Lo que construirás con Albatrel'), h('small', 'bloque a bloque')),
         h('div.lib', C.plan.map(([ic, t, d], i) => rise(h('div.lib-i', h('span.li', icon(ic)), h('div', h('b', t), h('small', d)), h('span')), i)))),
       h('div.sec', h('div.soon', icon('file-text'), 'Para ver documentos reales de un SGSI, abre las plantillas del curso en la ', h('a.link', {href: '#/biblioteca'}, 'Biblioteca'), '.')));
@@ -421,6 +422,7 @@
       ['crown', 'Liderazgo', 'Completa el bloque 1.', App.T().modules[1].units.every(id => unitState(App.T().units[id]).complete)],
       ['scale', 'Gestor de riesgos', 'Completa el bloque 2.', App.T().modules[2].units && App.T().modules[2].units.every(id => unitState(App.T().units[id]).complete)],
       ['file-text', 'Documentalista', 'Completa el bloque 3.', App.T().modules[3].units && App.T().modules[3].units.every(id => unitState(App.T().units[id]).complete)],
+      ['file-check', 'Arquitecto del SGSI', 'Construye todos los documentos de Albatrel.', App.T().caso.docs && App.T().caso.docs.every(d => Store.docBuilt(d.id))],
       ['flame', 'Constancia', 'Racha de 7 días.', Store.bestStreak() >= 7],
       ['map', 'Cartógrafo', 'Marca 30 controles como entendidos.', Object.keys(Store.tr().known).length >= 30],
       ['award', 'Listo para CertiProf', 'Aprueba un simulacro de 40 preguntas.', Store.tr().exams.some(e => e.pass && e.n >= 40)]

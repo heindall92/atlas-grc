@@ -137,12 +137,14 @@
     if (r === 'lab' && T.units[parts[1]]) return startLab(T.units[parts[1]], parts[2]);
     if (r === 'jefe' && T.units[parts[1]]) return startBoss(T.units[parts[1]]);
     if (r === 'repaso' && parts[1] === 'errores') return startMistakes();
+    if (r === 'construir') return Docs.build(parts[1]);
     let el;
     switch (r) {
       case '': el = Views.today(); break;
       case 'ruta': el = Views.path(); break;
       case 'u': el = Views.unit(parts[1]); break;
       case 'b': el = Views.block(parts[1]); break;
+      case 'doc': el = Docs.view(parts[1]); break;
       case 'norma': el = Views.norma(parts[1]); break;
       case 'repaso': el = parts[1] === 'tarjetas' ? Views.flashcards() : Views.review(); break;
       case 'glosario': el = Views.glossary(); break;
@@ -243,6 +245,7 @@
     Views.allUnits().forEach(u => idx.push({g: 'Unidades', ic: u.icon || 'book-open', t: 'Unidad ' + u.n + ' · ' + u.t, s: u.s, go: () => { location.hash = '#/u/' + u.id; }}));
     (T.norma ? T.norma.clauses : []).forEach(c => c.sub.forEach(s => idx.push({g: 'Cláusulas', ic: 'scroll-text', t: s.n + ' · ' + s.t, s: s.plain, go: () => { location.hash = '#/norma'; setTimeout(() => document.querySelectorAll('.cl').forEach(b => { if (b.textContent.startsWith(s.n)) b.click(); }), 80); }})));
     (T.norma ? T.norma.controls : []).forEach(c => idx.push({g: 'Controles', ic: 'shield', t: c[0] + ' · ' + c[1], s: c[2], go: () => { location.hash = '#/norma/controles'; setTimeout(() => document.querySelectorAll('.ctl').forEach(b => { if (b.querySelector('.n').textContent === c[0]) b.click(); }), 80); }}));
+    ((T.caso && T.caso.docs) || []).forEach(d => idx.push({g: 'Documentos de Albatrel', ic: 'file-text', t: d.code + ' · ' + d.t, s: d.why, go: () => { location.hash = '#/doc/' + d.id; }}));
     (T.glossary || []).forEach(g => idx.push({g: 'Glosario', ic: 'book-a', t: g[0], s: g[1], go: () => { location.hash = '#/glosario'; }}));
     idx.push({g: 'Acciones', ic: 'moon', t: 'Cambiar tema claro/oscuro', s: '', go: toggleTheme});
     idx.push({g: 'Acciones', ic: 'settings', t: 'Ajustes y ayuda', s: 'Meta diaria, sonido, copia de seguridad', go: () => Views.settings()});

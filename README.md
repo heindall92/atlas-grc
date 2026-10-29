@@ -20,7 +20,7 @@ El progreso se guarda solo en tu navegador (en Ajustes puedes guardar y restaura
 | **Mapa de la norma** | Cláusulas 4-10 por el ciclo PDCA y los 93 controles del Anexo A, cada uno explicado en sencillo y marcable como «entendido». |
 | **Repaso** | Glosario con repaso espaciado (1, 3, 7, 14, 30 días) y «Mis errores» (vuelven a los 1, 3 y 7 días). |
 | **Simulacro** | Formato CertiProf (40 preguntas, 60 min) con 183 preguntas propias. Con el pack privado se suma el examen de práctica del curso. |
-| **Caso Albatrel** | Empresa inventada para esta app (no es el caso del curso): Albatrel Servicios Digitales, con su contexto, partes interesadas, alcance, política y roles. Las 13 plantillas Word del curso están en la Biblioteca. |
+| **Caso Albatrel** | Empresa inventada (no es el caso del curso) con su SGSI completo en **14 documentos propios**: política, contexto y alcance, roles y RACI, metodología de riesgos, registro de 10 riesgos, Declaración de Aplicabilidad de los 93 controles con justificación, plan de tratamiento, objetivos, plan de formación y comunicación, 3 normativas y 2 procedimientos. Cada uno se puede leer, descargar en Markdown y **construir paso a paso** con ejercicios. |
 | **Biblioteca** | Recursos oficiales y gratuitos (ISO, CertiProf, INCIBE, MAGERIT, CCN, BOE). Con el pack privado, también tus PDF del curso. |
 
 ## Contenido y derechos de autor
@@ -43,9 +43,9 @@ Dos temas de color: índigo y coral (en Ajustes), cada uno con modo claro y oscu
 
 ## Estructura
 - `app/index.html`, `app/css/atlas.css`
-- `app/js/`: `store.js` (progreso), `motion.js` (interfaz y movimiento), `exercises.js`, `player.js`, `views.js`, `app.js`, `icons.js` (Lucide, ISC)
+- `app/js/`: `store.js` (progreso), `motion.js` (interfaz y movimiento), `exercises.js`, `player.js`, `views.js`, `docs.js` (documentos de Albatrel), `app.js`, `icons.js` (Lucide, ISC)
 - `app/data/tracks.js`: registro de normas. **Para añadir ENS u otra ISO**: crea `app/data/<id>/content.js` con el mismo formato que `iso27001`, ponla como `activo` y añade sus `<script>` en `index.html`.
-- `app/data/iso27001/`: `content.js` (bloques 0 y 1, glosario, caso, biblioteca), `bloque2.js` (cláusula 6), `bloque3.js` (cláusula 7) y `norma.js` (cláusulas y controles). Cada bloque nuevo va en su propio fichero `bloqueN.js`.
+- `app/data/iso27001/`: `content.js` (bloques 0 y 1, glosario, caso, biblioteca), `bloque2.js` (cláusula 6), `bloque3.js` (cláusula 7), `albatrel.js` (los 14 documentos del caso, riesgos, SoA y plan de tratamiento) y `norma.js` (cláusulas y controles). Cada bloque nuevo va en su propio fichero `bloqueN.js`.
 - `tools/extraer.py`: pasa todo el material a Markdown con [MarkItDown](https://github.com/microsoft/markitdown) en `sources/md/` (los PDF página a página).
 - `_version-grok/`: la versión anterior, guardada por si acaso.
 

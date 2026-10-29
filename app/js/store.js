@@ -105,6 +105,8 @@
       save();
     },
 
+    docBuilt(id) { return !!(tr().docs || {})[id]; },
+    markDoc(id) { const d = tr().docs || (tr().docs = {}); const first = !d[id]; d[id] = day(); save(); emit('progress'); return first; },
     toggleKnown(n) { const k = tr().known; if (k[n]) delete k[n]; else k[n] = 1; save(); emit('known'); return !!k[n]; },
     addExam(r) { tr().exams.unshift(r); tr().exams = tr().exams.slice(0, 20); save(); emit('progress'); },
 

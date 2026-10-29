@@ -39,6 +39,7 @@
       if (typeof b === 'string') body.append(h('p', {html: rich(b)}));
       else if (b.ul) body.append(h('ul', b.ul.map(([m, t]) => h('li', h('span.bul' + (m.startsWith('i:') ? '.ic' : ''), m.startsWith('i:') ? icon(m.slice(2)) : m), h('span', {html: rich(t)})))));
       else if (b.dia) { const d = diagram(b); d && body.append(d); }
+      else if (b.table) body.append(Docs.table(b.table));
     });
     const callouts = [];
     if (s.plain) callouts.push(h('div.callout.plain', icon('lightbulb'), h('div', h('b', 'En cristiano'), h('span', {html: rich(s.plain)}))));
