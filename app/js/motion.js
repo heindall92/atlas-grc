@@ -240,9 +240,20 @@
   }
 
   /* ── Transición entre vistas (View Transitions API si existe) ── */
+  /* Si la animación se cancela (cambios muy rápidos o pestaña en segundo plano), la pantalla se pinta igual */
+  let vt = null;
   function transition(update) {
-    if (!document.startViewTransition || RM()) { update(); return; }
-    document.startViewTransition(update);
+    if (!document.startViewTransition || RM() || document.hidden) { update(); return; }
+    if (vt) { try { vt.skipTransition(); } catch (e) { /* nada */ } }
+    let ran = false;
+    const run = () => { if (!ran) { ran = true; update(); } };
+    try {
+      vt = document.startViewTransition(run);
+      vt.ready.catch(() => {});
+      vt.finished.catch(() => {}).finally(() => { vt = null; run(); });
+      vt.updateCallbackDone.catch(() => run());
+      setTimeout(run, 350);   // red de seguridad si el navegador no está dibujando fotogramas
+    } catch (e) { run(); }
   }
 
   /* ── Sonidos suaves (Web Audio, sin ficheros) ── */

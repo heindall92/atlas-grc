@@ -1,7 +1,7 @@
 # Ilustraciones de Atlas GRC
 
 Deja aquí las imágenes generadas con los prompts de `diseno/prompts-ilustraciones.md`.
-La app las usa en cuanto existen; si falta alguna, muestra un fondo de color con un icono.
+Después, añade el nombre de cada imagen a la lista de `imagenes.js` (así la app no pide imágenes que no existen). Si falta alguna, se ve un fondo de color con un icono.
 
 | Fichero | Dónde sale | Tamaño |
 |---|---|---|

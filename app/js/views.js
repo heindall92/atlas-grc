@@ -21,7 +21,8 @@
   const BLOCK_ICON = ['compass', 'building-2', 'scale', 'file-text', 'refresh-cw', 'scan-search', 'sparkles', 'landmark', 'users', 'server', 'award'];
   const blockPct = (m) => { const T = App.T(); if (m.soon) return null; const us = m.units.map(id => T.units[id]); return us.reduce((a, u) => a + unitState(u).pct, 0) / us.length; };
   /* Imagen opcional de app/img: si no existe, se queda el fondo de color */
-  const optImg = (src, alt) => h('img', {src, alt: alt || '', loading: 'lazy', decoding: 'async', onerror: (e) => e.currentTarget.remove()});
+  /* Solo se piden las ilustraciones que existen (lista en app/img/imagenes.js): sin errores 404 */
+  const optImg = (src, alt) => (window.ATLAS_IMG || []).includes(src.replace(/^img\//, '')) ? h('img', {src, alt: alt || '', loading: 'lazy', decoding: 'async', onerror: (e) => e.currentTarget.remove()}) : null;
   function nextStep() {
     const T = App.T(), start = (Store.s.plan && Store.s.plan.level) || 0;
     const ordered = T.modules.filter(m => !m.soon && +m.n >= start).concat(T.modules.filter(m => !m.soon && +m.n < start)).flatMap(m => m.units.map(id => T.units[id]));
@@ -424,6 +425,7 @@
       ['file-text', 'Documentalista', 'Completa el bloque 3.', App.T().modules[3].units && App.T().modules[3].units.every(id => unitState(App.T().units[id]).complete)],
       ['file-check', 'Arquitecto del SGSI', 'Construye todos los documentos de Albatrel.', App.T().caso.docs && App.T().caso.docs.every(d => Store.docBuilt(d.id))],
       ['play', 'Operador', 'Completa el bloque 4.', App.T().modules[4].units && App.T().modules[4].units.every(id => unitState(App.T().units[id]).complete)],
+      ['scan-search', 'Auditor', 'Completa el bloque 5.', App.T().modules[5].units && App.T().modules[5].units.every(id => unitState(App.T().units[id]).complete)],
       ['flame', 'Constancia', 'Racha de 7 días.', Store.bestStreak() >= 7],
       ['map', 'Cartógrafo', 'Marca 30 controles como entendidos.', Object.keys(Store.tr().known).length >= 30],
       ['award', 'Listo para CertiProf', 'Aprueba un simulacro de 40 preguntas.', Store.tr().exams.some(e => e.pass && e.n >= 40)]
