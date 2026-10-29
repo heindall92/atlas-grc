@@ -11,7 +11,9 @@ El progreso se guarda solo en tu navegador (en Ajustes puedes guardar y restaura
 ## Qué hay
 | | |
 |---|---|
-| **Hoy** | Siguiente paso recomendado, anillos de actividad (aprender, practicar, repasar), racha y XP. |
+| **Bienvenida** | Tres preguntas (objetivo, nivel y minutos al día) que arman tu plan: desde qué bloque empiezas y tu meta diaria. Se puede rehacer en Ajustes. |
+| **Hoy** | Siguiente paso recomendado, anillos de actividad, accesos rápidos redondos y carrusel de bloques. |
+| **Bloques** | Cada bloque tiene su página con cabecera grande, progreso y unidades. |
 | **Ruta** | Bloque 0 · Fundamentos (5 unidades), Bloque 1 · Cláusulas 4 y 5 (4 unidades) Bloque 2 · Cláusula 6: riesgos con MAGERIT, SoA, plan de tratamiento y objetivos (4 unidades) y Bloque 3 · Cláusula 7: recursos, competencia, concienciación, comunicación e información documentada (4 unidades). Bloques 4-10 en camino. |
 | **Unidad** | Lección en tarjetas cortas con preguntas rápidas → prácticas (bandera azul 70 %, dorada 100 %) → jefe (3 vidas, 30 s). |
 | **Ejercicios** | Elegir, verdadero/falso, emparejar, ordenar y clasificar. Corrección en una hoja inferior con explicación y enlace «Doc, pág. N». |
@@ -37,7 +39,7 @@ Si tienes el material de un curso, puedes conectarlo en local sin subirlo nunca:
 Las tres rutas (`app/data/private/`, `sources/` y `_version-grok/`) están en `.gitignore`.
 
 ## Diseño
-Logo: una brújula de Lucide cuya aguja busca el norte y oscila. Iconos: solo Lucide, sin emojis. Lenguaje visual propio de inspiración Apple (no es el de LemonByte) y movimiento según Emil Kowalski: curvas ease-out, escala 0,97 al pulsar, avisos apilados tipo Sonner, hojas arrastrables tipo Vaul, pestañas con pastilla deslizante, View Transitions entre pantallas, «mantener para confirmar», contador que rueda y respeto a «reducir movimiento». Sin dependencias ni internet.
+Dos temas de color: índigo y coral (en Ajustes), cada uno con modo claro y oscuro. Ilustraciones opcionales en `app/img/`. Logo: una brújula de Lucide cuya aguja busca el norte y oscila. Iconos: solo Lucide, sin emojis. Lenguaje visual propio de inspiración Apple (no es el de LemonByte) y movimiento según Emil Kowalski: curvas ease-out, escala 0,97 al pulsar, avisos apilados tipo Sonner, hojas arrastrables tipo Vaul, pestañas con pastilla deslizante, View Transitions entre pantallas, «mantener para confirmar», contador que rueda y respeto a «reducir movimiento». Sin dependencias ni internet.
 
 ## Estructura
 - `app/index.html`, `app/css/atlas.css`

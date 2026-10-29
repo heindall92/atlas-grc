@@ -49,13 +49,21 @@
       return bank;
     },
     setTrack(id) { Store.set('track', id); applyTrack(); renderHeader(); },
+    setSkin(s) {
+      const root = document.documentElement;
+      if (!UI.RM()) { root.classList.add('theme-anim'); setTimeout(() => root.classList.remove('theme-anim'), 380); }
+      Store.set('skin', s); applyTrack();
+    },
     render: () => route()
   };
   window.App = App;
 
   /* ── Color de la norma activa ── */
+  const CORAL = {color: '#f2545b', color2: '#ff9a76', dark: '#ff7a7f', dark2: '#ffb199'};
   function applyTrack() {
-    const t = App.trackInfo();
+    const skin = Store.s.skin === 'coral' ? 'coral' : null;
+    if (skin) document.documentElement.dataset.skin = skin; else delete document.documentElement.dataset.skin;
+    const t = Object.assign({}, App.trackInfo(), skin ? CORAL : {});
     let st = $('#track-style'); if (!st) { st = h('style#track-style'); document.head.append(st); }
     const dark = `--track:${t.dark};--track-2:${t.dark2};--track-ink:#0b0a1a`;
     st.textContent = `:root{--track:${t.color};--track-2:${t.color2};--track-ink:#fff}
@@ -134,6 +142,7 @@
       case '': el = Views.today(); break;
       case 'ruta': el = Views.path(); break;
       case 'u': el = Views.unit(parts[1]); break;
+      case 'b': el = Views.block(parts[1]); break;
       case 'norma': el = Views.norma(parts[1]); break;
       case 'repaso': el = parts[1] === 'tarjetas' ? Views.flashcards() : Views.review(); break;
       case 'glosario': el = Views.glossary(); break;
@@ -278,22 +287,7 @@
   /* ── Arranque (primera visita) ── */
   function boot() {
     if (Store.s.booted) return;
-    const T = App.T();
-    const lines = [
-      ['layers', (T.norma ? T.norma.controls.length : 93) + ' controles del Anexo A explicados en sencillo'],
-      ['briefcase', 'Un caso propio, Albatrel, para aplicarlo todo'],
-      ...(ATLAS.private ? [['graduation-cap', 'Pack privado: material del curso conectado']] : []),
-      ['book-open', Object.keys(T.units).length + ' unidades para empezar desde cero'],
-      ['lock', 'Todo se queda en tu ordenador: sin cuentas, sin seguimiento']
-    ];
-    const box = h('div.boot-lines');
-    const go = h('button.btn.primary.lg.press', {type: 'button', style: {opacity: 0}}, 'Empezar', icon('arrow-right'));
-    const el = h('div.boot', {role: 'dialog', 'aria-label': 'Bienvenida'}, h('div.boot-in', h('span.mark', icon('atlas')), h('h1', 'Atlas GRC'),
-      h('p.lede', 'Tu estudio personal de la ISO 27001, montado con el material de tus clases.'), box, go));
-    document.body.append(el);
-    lines.forEach(([ic, t], k) => setTimeout(() => box.append(h('div.boot-line', icon(ic === 'lock' ? 'lock' : 'check'), t)), UI.RM() ? 0 : 350 + k * 260));
-    setTimeout(() => { go.style.transition = 'opacity .4s var(--ease-out)'; go.style.opacity = 1; go.focus(); }, UI.RM() ? 0 : 350 + lines.length * 260);
-    go.onclick = () => { Store.set('booted', true); el.classList.add('out'); setTimeout(() => el.remove(), 520); };
+    Views.onboarding();
   }
 
   /* ── Minutos de estudio: cuenta un minuto si hubo actividad en él ── */

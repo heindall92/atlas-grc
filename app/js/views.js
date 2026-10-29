@@ -15,8 +15,17 @@
       bossOpen: lesson && user >= 1, gold: lesson && root === u.labs.length && boss && boss.best >= 1};
   }
   function allUnits() { const T = App.T(); return T.modules.filter(m => !m.soon).flatMap(m => m.units.map(id => T.units[id])); }
+  /* Colores de cada bloque (portadas del carrusel y cabeceras) */
+  const BLOCK_COL = [['#5e5ce6', '#0a84ff'], ['#30b0c7', '#5e5ce6'], ['#ff9f0a', '#ff375f'], ['#34c759', '#30b0c7'], ['#64d2ff', '#5e5ce6'], ['#bf5af2', '#ff375f'], ['#ffcc00', '#ff9f0a'], ['#5e5ce6', '#bf5af2'], ['#ff9f0a', '#ff6482'], ['#30d158', '#0a84ff'], ['#ff375f', '#bf5af2']];
+  const BLOCK_HEAD = ['Empieza por los cimientos', 'Conoce tu organización', 'Domina el riesgo', 'Prepara el terreno', 'Pon el SGSI en marcha', 'Mide y audita', 'Mejora siempre', 'Controles de organización', 'Personas y espacios', 'Controles tecnológicos', 'Rumbo a la certificación'];
+  const BLOCK_ICON = ['compass', 'building-2', 'scale', 'file-text', 'refresh-cw', 'scan-search', 'sparkles', 'landmark', 'users', 'server', 'award'];
+  const blockPct = (m) => { const T = App.T(); if (m.soon) return null; const us = m.units.map(id => T.units[id]); return us.reduce((a, u) => a + unitState(u).pct, 0) / us.length; };
+  /* Imagen opcional de app/img: si no existe, se queda el fondo de color */
+  const optImg = (src, alt) => h('img', {src, alt: alt || '', loading: 'lazy', decoding: 'async', onerror: (e) => e.currentTarget.remove()});
   function nextStep() {
-    for (const u of allUnits()) {
+    const T = App.T(), start = (Store.s.plan && Store.s.plan.level) || 0;
+    const ordered = T.modules.filter(m => !m.soon && +m.n >= start).concat(T.modules.filter(m => !m.soon && +m.n < start)).flatMap(m => m.units.map(id => T.units[id]));
+    for (const u of ordered) {
       const s = unitState(u);
       if (!s.lesson) return {u, kind: 'lesson', href: '#/leccion/' + u.id, label: 'Empezar lección', what: 'Lección'};
       const lab = u.labs.find(l => !(Store.lab(l.id) && Store.lab(l.id).best >= .7));
@@ -52,12 +61,13 @@
         h('div', h('i', {style: {background: 'var(--ring-2)'}}), h('b', 'Practicar'), h('span', td.xp + '/' + Store.s.goal + ' ', h('small', 'XP'))),
         h('div', h('i', {style: {background: 'var(--ring-3)'}}), h('b', 'Repasar'), h('span', td.cards + '/' + reviewGoal + ' ', h('small', 'tarjetas')))));
 
-    const quick = [
-      ['#/repaso', 'refresh-cw', 'Repaso', dueCards + dueMist ? `${dueCards} tarjetas y ${dueMist} errores esperan` : 'Nada pendiente hoy', dueCards + dueMist ? 'Repasar ahora' : 'Al día', '#ff2d55'],
-      ['#/norma', 'map', 'Mapa de la norma', 'Cláusulas 4-10 y los 93 controles, explicados en sencillo.', Object.keys(Store.tr().known).length + ' de 93 entendidos', '#30b0c7'],
-      ['#/examen', 'graduation-cap', 'Simulacro', 'Formato CertiProf: 40 preguntas en 60 minutos.', Store.tr().exams.length ? 'Último: ' + Math.round(Store.tr().exams[0].pct * 100) + ' %' : 'Sin intentos aún', '#ff9f0a'],
-      ['#/caso', 'briefcase', 'Caso Albatrel', 'Tu empresa de prácticas, inventada para esta app.', T.caso.kpis[0][0] + ' personas · ' + T.caso.kpis[1][0] + ' entidades', '#5e5ce6']
-    ].map(([href, ic, t, s, n, c], i) => rise(h('a.qk.press', {href, style: {'--c': c}}, h('div.qi', icon(ic)), h('b', t), h('small', s), h('span.n', n)), i + 2));
+    const qr = h('nav.qr', {'aria-label': 'Accesos rápidos'}, [
+      ['#/repaso', 'refresh-cw', 'Repaso', dueCards + dueMist, dueCards + dueMist ? 'pendiente' : 'al día', '#ff2d55'],
+      ['#/norma', 'layers', 'Mapa', 0, Object.keys(Store.tr().known).length + '/93', '#30b0c7'],
+      ['#/examen', 'graduation-cap', 'Simulacro', 0, Store.tr().exams.length ? Math.round(Store.tr().exams[0].pct * 100) + ' %' : 'sin intentos', '#ff9f0a'],
+      ['#/caso', 'briefcase', 'Albatrel', 0, 'tu caso', 'var(--track)'],
+      ['#/glosario', 'book-a', 'Glosario', 0, T.glossary.length + ' términos', '#34c759']
+    ].map(([href, ic, t, n, sub, c], i) => rise(h('a.press', {href, style: {'--c': c}}, h('span.c', icon(ic), n ? h('i', n > 99 ? '99+' : n) : null), h('span', t, h('small', sub))), i)));
 
     return h('div.view',
       h('div.eyebrow.track', h('span.dot'), date),
@@ -67,8 +77,27 @@
           h('div.mini', h('span', 'Racha'), h('b', {style: {display: 'flex', alignItems: 'center', gap: '6px'}}, Store.streak(), icon('flame', 'flame-ico'))),
           h('div.mini', h('span', 'XP total'), h('b', Store.s.xp)),
           h('div.mini', h('span', 'Unidades'), h('b', doneUnits + '/' + units.length)))), 1)),
-      h('div.sec', h('div.sec-h', h('h2', 'Atajos')), h('div.quick', quick)),
-      h('div.sec', h('div.sec-h', h('h2', 'Tu ruta'), h('a', {href: '#/ruta'}, 'Ver todo')), modulesList(true)));
+      h('div.sec', qr),
+      h('div.sec', h('div.sec-h', h('h2', 'Tus bloques'), h('a', {href: '#/ruta'}, 'Ver la ruta')), carousel()));
+  }
+  function carousel() {
+    const T = App.T();
+    const car = h('div.car', T.modules.map((m, i) => {
+      const p = blockPct(m), [a, b] = BLOCK_COL[i % BLOCK_COL.length];
+      return h('a.dest', {href: m.soon ? '#/ruta' : '#/b/' + m.id, style: {'--a': a, '--b': b}, 'aria-label': 'Bloque ' + m.n + ': ' + m.t},
+        h('span.cov'), h('span.deco', icon(BLOCK_ICON[i] || 'compass')), optImg('img/bloque-' + m.n + '-portada.webp'),
+        p != null && p > 0 ? h('span.pct', icon(p >= 1 ? 'crown' : 'flag'), Math.round(p * 100) + ' %') : null,
+        h('span.meta', h('small', 'Bloque ' + m.n), h('b', m.t)),
+        m.soon ? h('span.lk', icon('lock'), 'Próximamente') : null);
+    }));
+    // Arrastrar con el ratón; con el dedo manda el scroll nativo (inercia incluida)
+    let x0 = null, s0 = 0, moved = false;
+    car.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') return; x0 = e.clientX; s0 = car.scrollLeft; moved = false; });
+    car.addEventListener('pointermove', (e) => { if (x0 == null) return; const dx = e.clientX - x0; if (Math.abs(dx) > 5) { moved = true; car.classList.add('drag'); } car.scrollLeft = s0 - dx; });
+    const end = () => { x0 = null; setTimeout(() => car.classList.remove('drag'), 0); };
+    car.addEventListener('pointerup', end); car.addEventListener('pointerleave', end);
+    car.addEventListener('click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+    return car;
   }
   function saludo() {
     const hr = new Date().getHours();
@@ -86,7 +115,7 @@
       const pct = us.reduce((a, u) => a + unitState(u).pct, 0) / us.length;
       return rise(h('section.mod', h('div.mod-rail', h('div.mod-n', m.n)),
         h('div.mod-body',
-          h('div.mod-h', h('div', h('h3', 'Bloque ' + m.n + ' · ' + m.t), h('p', m.s)), h('span.tag.track', Math.round(pct * 100) + ' %')),
+          h('div.mod-h', h('div', h('h3', h('a', {href: '#/b/' + m.id, style: {textDecoration: 'none'}}, 'Bloque ' + m.n + ' · ' + m.t)), h('p', m.s)), h('a.tag.track', {href: '#/b/' + m.id}, Math.round(pct * 100) + ' %', icon('chevron-right'))),
           h('div.mod-bar', h('i', {style: {'--v': pct}})),
           h('div.units', us.map(u => {
             const s = unitState(u);
@@ -423,6 +452,10 @@
       return [
         h('div.panel-h', h('div', h('h2', 'Ajustes y ayuda')), h('button.ib.press', {type: 'button', 'aria-label': 'Cerrar', onclick: close}, icon('x'))),
         h('div.panel-b',
+          h('h4', 'Color'),
+          (() => { const g = h('div.opt-row', [['', 'Índigo'], ['coral', 'Coral']].map(([k, l]) => h('button.pill.press', {type: 'button', 'aria-pressed': String((Store.s.skin || '') === k), onclick: (e) => { App.setSkin(k || null); g.querySelectorAll('.pill').forEach(p => p.setAttribute('aria-pressed', 'false')); e.currentTarget.setAttribute('aria-pressed', 'true'); }}, l))); return g; })(),
+          h('h4', 'Tu plan'),
+          h('button.btn.sm.press', {type: 'button', onclick: () => { close(); setTimeout(onboarding, 300); }}, icon('compass'), 'Rehacer mi plan'),
           h('h4', 'Meta diaria'), goal,
           h('h4', 'Sonido'), sound,
           h('h4', 'Atajos de teclado'),
@@ -441,7 +474,88 @@
     });
   }
 
+  /* ═════ Página de bloque: cabecera grande ═════ */
+  function block(id) {
+    const T = App.T(), i = T.modules.findIndex(m => m.id === id), m = T.modules[i];
+    if (!m || m.soon) return notFound();
+    const us = m.units.map(x => T.units[x]), p = blockPct(m), [a, b] = BLOCK_COL[i % BLOCK_COL.length];
+    let nx = null;
+    for (const u of us) { const s = unitState(u); if (!s.complete) { nx = u; break; } }
+    const cta = nx ? h('a.btn.lg.press', {href: '#/u/' + nx.id}, icon('play'), (p > 0 ? 'Continuar' : 'Empezar') + ' · Unidad ' + nx.n) : h('a.btn.lg.press', {href: '#/examen'}, icon('graduation-cap'), 'Ponte a prueba');
+    const mins = us.reduce((s, u) => s + (u.mins || 10) + u.labs.length * 4, 0);
+    const waves = h('div.waves', {html: '<svg viewBox="0 0 400 120" preserveAspectRatio="none" width="100%" height="100%"><path d="M0 70 Q 80 20 160 60 T 320 40 T 400 50 V120 H0Z" fill="#fff" fill-opacity=".14"/><path d="M0 95 Q 100 60 200 90 T 400 80 V120 H0Z" fill="#fff" fill-opacity=".1"/></svg>'});
+    return h('div.view',
+      h('a.back', {href: '#/ruta'}, icon('chevron-left'), 'Ruta'),
+      rise(h('section.bh', {style: {'--a': a, '--b': b, marginTop: '10px'}},
+        h('div',
+          h('div.eyebrow', 'Bloque ' + m.n + ' · ' + m.t),
+          h('h1', BLOCK_HEAD[i] || m.t),
+          h('p', m.s),
+          h('div.prog', h('div.bar', h('i', {style: {'--v': p}})), h('b', Math.round(p * 100) + ' %')),
+          h('div', {style: {display: 'flex', gap: '10px', flexWrap: 'wrap'}}, cta, h('a.btn.lg.glass.press', {href: '#/ruta'}, 'Toda la ruta')),
+          h('div.chips', h('span', icon('book-open'), us.length + ' unidades'), h('span', icon('timer'), '≈ ' + mins + ' min'), h('span', icon('swords'), us.length + ' jefes'))),
+        h('div.ill', h('div.big', icon(BLOCK_ICON[i] || 'compass')), waves, optImg('img/bloque-' + m.n + '-cabecera.webp', 'Ilustración del bloque ' + m.n))), 0),
+      h('div.sec', h('div.sec-h', h('h2', 'Unidades'), h('small', us.filter(u => unitState(u).complete).length + ' de ' + us.length + ' completadas')),
+        h('div.units', us.map((u, k) => {
+          const s = unitState(u);
+          return rise(h('a.unit.press', {href: '#/u/' + u.id},
+            s.complete ? h('span.done-ico', icon('check')) : null,
+            h('span.u-k', 'UNIDAD ' + u.n + (u.clauses ? ' · ' + u.clauses.join(', ') : '')),
+            h('b', u.t), h('small.muted', {style: {fontSize: '13.5px', lineHeight: 1.35}}, u.s),
+            h('div.steps-dots', h('span.sd' + (s.lesson ? '.on' : '')), s.labs.map(l => h('span.sd' + (l && l.best >= 1 ? '.gold' : l && l.best >= .7 ? '.on' : ''))), h('span.sd' + (s.won ? '.on' : '')))), k + 1);
+        }))));
+  }
+
+  /* ═════ Bienvenida en 3 pasos: objetivo, nivel y meta diaria → plan ═════ */
+  const OB_STEPS = [
+    {t: '¿Cuál es tu objetivo?', p: 'Adaptamos la ruta y el simulacro a lo que buscas.', k: 'goal', o: [['graduation-cap', 'Aprobar CertiProf ISO 27001 Foundation', 'Ruta completa y simulacros de 40 preguntas'], ['compass', 'Aprender GRC desde cero', 'Sin prisa, con el caso Albatrel'], ['scan-search', 'Prepararme para auditar', 'Más casos de auditoría y no conformidades']]},
+    {t: '¿Cuánto sabes ya?', p: 'Si ya conoces lo básico, empezamos más adelante.', k: 'level', o: [['sparkles', 'Nada, parto de cero', 'Empezamos por «¿qué es GRC?»'], ['book-open', 'Algo de teoría', 'Empezamos en el bloque 1'], ['shield-check', 'He trabajado con un SGSI', 'Directo a riesgos y controles']]},
+    {t: '¿Cuánto tiempo al día?', p: 'Mejor poco y constante. Lo puedes cambiar en Ajustes.', k: 'min', o: [['timer', '5 minutos', 'Una tarjeta y un repaso'], ['flame', '15 minutos', 'Una lección o una práctica'], ['zap', '30 minutos', 'Lección, práctica y repaso']]}
+  ];
+  function onboarding() {
+    const prev = Store.s.plan || {};
+    const st = {i: 0, dir: 1, goal: prev.goal ?? null, level: prev.level ?? null, min: prev.min ?? null};
+    const card = h('div.obc', {role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Configura tu plan'});
+    const wrap = h('div.ob', h('div.ob-in',
+      h('div.ob-art', optImg('img/bienvenida.webp'), h('span.mark', icon('atlas')), h('h1', 'Atlas GRC'), h('p', 'Aprende GRC desde cero con la ISO 27001. Tres preguntas y te armo un plan.')),
+      card));
+    const finish = () => {
+      Store.set('plan', {goal: st.goal, level: st.level, min: st.min});
+      Store.set('goal', [30, 60, 100][st.min]);
+      Store.set('booted', true);
+      wrap.classList.add('out'); setTimeout(() => wrap.remove(), 520);
+      App.render();
+      toast('Plan guardado. ¡A por ello!', {icon: 'compass'});
+    };
+    const draw = () => {
+      const stepper = h('div.stepper', [0, 1, 2].flatMap(k => [h('span' + (k <= st.i ? '.on' : '')), k < 2 ? h('i', {style: {'--f': k < st.i ? 1 : 0}}) : null]));
+      card.textContent = '';
+      if (st.i > 2) {
+        const weeks = Math.max(3, [12, 7, 4][st.min] - [0, 1, 2][st.level]);
+        card.append(stepper, h('div.obs', h('h3', 'Tu plan está listo'), h('p', 'Lo puedes cambiar cuando quieras en Ajustes.'),
+          h('div.plan',
+            h('div', icon('target'), OB_STEPS[0].o[st.goal][1]),
+            h('div', icon('map'), OB_STEPS[1].o[st.level][2]),
+            h('div', icon('timer'), OB_STEPS[2].o[st.min][1] + ' al día · meta de ' + [30, 60, 100][st.min] + ' XP'),
+            h('div', icon('calendar'), 'Preparado para el examen en unas ' + weeks + ' semanas')),
+          h('div.ob-foot', h('button.btn.press', {type: 'button', onclick: () => { st.dir = -1; st.i = 2; draw(); }}, 'Atrás'), h('button.btn.primary.press', {type: 'button', onclick: finish}, 'Empezar', icon('arrow-right')))));
+        card.querySelector('.btn.primary').focus();
+        return;
+      }
+      const s = OB_STEPS[st.i];
+      card.append(stepper, h('div.obs' + (st.dir < 0 ? '.back-dir' : ''), h('h3', s.t), h('p', s.p),
+        h('div.choice', s.o.map(([ic, t, sub], k) => h('button.press', {type: 'button', 'aria-pressed': String(st[s.k] === k), onclick: () => { st[s.k] = k; st.dir = 1; st.i++; draw(); }}, icon(ic), h('span', t, h('small', sub))))),
+        h('div.ob-foot',
+          h('button.btn.press', {type: 'button', disabled: st.i ? null : true, onclick: () => { st.dir = -1; st.i--; draw(); }}, 'Atrás'),
+          h('button.btn.ghost.press', {type: 'button', onclick: () => { if (st.goal == null) st.goal = 1; if (st.level == null) st.level = 0; if (st.min == null) st.min = 1; st.i = 3; draw(); }}, 'Saltar'))));
+      const sel = card.querySelector('.choice button[aria-pressed="true"]') || card.querySelector('.choice button');
+      sel && sel.focus({preventScroll: true});
+    };
+    document.body.append(wrap);
+    draw();
+  }
+
   function notFound() { return h('div.view', h('h1', 'No encuentro esa página'), h('a.btn.primary.press', {href: '#/'}, 'Volver a Hoy')); }
 
-  window.Views = {today, path, unit, norma, review, flashcards, glossary, caso, examCover, library, progress, tracks, settings, notFound, unitState, allUnits, nextStep};
+  window.Views = {today, path, unit, block, onboarding, norma, review, flashcards, glossary, caso, examCover, library, progress, tracks, settings, notFound, unitState, allUnits, nextStep};
 })();
