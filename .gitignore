@@ -1,0 +1,16 @@
+# Material de terceros: NUNCA se sube
+# - texto extraído de los PDF y Word del curso y de la norma
+sources/
+# - versión anterior con contenido del curso
+_version-grok/
+# - pack privado: rutas al material del curso y examen de práctica
+app/data/private/
+
+# Local
+.claude/
+__pycache__/
+*.pyc
+Thumbs.db
+.DS_Store
+# - herramienta que contiene textos del examen de práctica del curso
+tools/examen_ezequiel.py
