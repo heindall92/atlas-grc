@@ -14,12 +14,12 @@ El progreso se guarda solo en tu navegador (en Ajustes puedes guardar y restaura
 | **Bienvenida** | Tres preguntas (objetivo, nivel y minutos al día) que arman tu plan: desde qué bloque empiezas y tu meta diaria. Se puede rehacer en Ajustes. |
 | **Hoy** | Siguiente paso recomendado, anillos de actividad, accesos rápidos redondos y carrusel de bloques. |
 | **Bloques** | Cada bloque tiene su página con cabecera grande, progreso y unidades. |
-| **Ruta** | Bloque 0 · Fundamentos (5 unidades), Bloque 1 · Cláusulas 4 y 5 (4 unidades) Bloque 2 · Cláusula 6: riesgos con MAGERIT, SoA, plan de tratamiento y objetivos (4 unidades) y Bloque 3 · Cláusula 7: recursos, competencia, concienciación, comunicación e información documentada (4 unidades). Bloques 4-10 en camino. |
+| **Ruta** | Bloque 0 · Fundamentos (5 unidades), Bloque 1 · Cláusulas 4 y 5 (4 unidades) Bloque 2 · Cláusula 6: riesgos con MAGERIT, SoA, plan de tratamiento y objetivos (4 unidades) Bloque 3 · Cláusula 7: soporte y documentación (4 unidades) y Bloque 4 · Cláusula 8: operación, cambios, proveedores y riesgos en el día a día (4 unidades). Bloques 5-10 en camino. |
 | **Unidad** | Lección en tarjetas cortas con preguntas rápidas → prácticas (bandera azul 70 %, dorada 100 %) → jefe (3 vidas, 30 s). |
 | **Ejercicios** | Elegir, verdadero/falso, emparejar, ordenar y clasificar. Corrección en una hoja inferior con explicación y enlace «Doc, pág. N». |
 | **Mapa de la norma** | Cláusulas 4-10 por el ciclo PDCA y los 93 controles del Anexo A, cada uno explicado en sencillo y marcable como «entendido». |
 | **Repaso** | Glosario con repaso espaciado (1, 3, 7, 14, 30 días) y «Mis errores» (vuelven a los 1, 3 y 7 días). |
-| **Simulacro** | Formato CertiProf (40 preguntas, 60 min) con 183 preguntas propias. Con el pack privado se suma el examen de práctica del curso. |
+| **Simulacro** | Formato CertiProf (40 preguntas, 60 min) con 216 preguntas propias. Con el pack privado se suma el examen de práctica del curso. |
 | **Caso Albatrel** | Empresa inventada (no es el caso del curso) con su SGSI completo en **14 documentos propios**: política, contexto y alcance, roles y RACI, metodología de riesgos, registro de 10 riesgos, Declaración de Aplicabilidad de los 93 controles con justificación, plan de tratamiento, objetivos, plan de formación y comunicación, 3 normativas y 2 procedimientos. Cada uno se puede leer, descargar en Markdown y **construir paso a paso** con ejercicios. |
 | **Biblioteca** | Recursos oficiales y gratuitos (ISO, CertiProf, INCIBE, MAGERIT, CCN, BOE). Con el pack privado, también tus PDF del curso. |
 
@@ -45,7 +45,7 @@ Dos temas de color: índigo y coral (en Ajustes), cada uno con modo claro y oscu
 - `app/index.html`, `app/css/atlas.css`
 - `app/js/`: `store.js` (progreso), `motion.js` (interfaz y movimiento), `exercises.js`, `player.js`, `views.js`, `docs.js` (documentos de Albatrel), `app.js`, `icons.js` (Lucide, ISC)
 - `app/data/tracks.js`: registro de normas. **Para añadir ENS u otra ISO**: crea `app/data/<id>/content.js` con el mismo formato que `iso27001`, ponla como `activo` y añade sus `<script>` en `index.html`.
-- `app/data/iso27001/`: `content.js` (bloques 0 y 1, glosario, caso, biblioteca), `bloque2.js` (cláusula 6), `bloque3.js` (cláusula 7), `albatrel.js` (los 14 documentos del caso, riesgos, SoA y plan de tratamiento) y `norma.js` (cláusulas y controles). Cada bloque nuevo va en su propio fichero `bloqueN.js`.
+- `app/data/iso27001/`: `content.js` (bloques 0 y 1, glosario, caso, biblioteca), `bloque2.js` (cláusula 6), `bloque3.js` (cláusula 7), `bloque4.js` (cláusula 8), `albatrel.js` (los 14 documentos del caso, riesgos, SoA y plan de tratamiento) y `norma.js` (cláusulas y controles). Cada bloque nuevo va en su propio fichero `bloqueN.js`.
 - `tools/extraer.py`: pasa todo el material a Markdown con [MarkItDown](https://github.com/microsoft/markitdown) en `sources/md/` (los PDF página a página).
 - `_version-grok/`: la versión anterior, guardada por si acaso.
 

@@ -423,6 +423,7 @@
       ['scale', 'Gestor de riesgos', 'Completa el bloque 2.', App.T().modules[2].units && App.T().modules[2].units.every(id => unitState(App.T().units[id]).complete)],
       ['file-text', 'Documentalista', 'Completa el bloque 3.', App.T().modules[3].units && App.T().modules[3].units.every(id => unitState(App.T().units[id]).complete)],
       ['file-check', 'Arquitecto del SGSI', 'Construye todos los documentos de Albatrel.', App.T().caso.docs && App.T().caso.docs.every(d => Store.docBuilt(d.id))],
+      ['play', 'Operador', 'Completa el bloque 4.', App.T().modules[4].units && App.T().modules[4].units.every(id => unitState(App.T().units[id]).complete)],
       ['flame', 'Constancia', 'Racha de 7 días.', Store.bestStreak() >= 7],
       ['map', 'Cartógrafo', 'Marca 30 controles como entendidos.', Object.keys(Store.tr().known).length >= 30],
       ['award', 'Listo para CertiProf', 'Aprueba un simulacro de 40 preguntas.', Store.tr().exams.some(e => e.pass && e.n >= 40)]
