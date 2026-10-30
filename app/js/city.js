@@ -196,7 +196,40 @@
     ]);
   }
 
+  /* ── «Parte de obra»: un ticket que sale de una impresora (idea táctil de The Kitchen, de dqnamo) ── */
+  function ticket(st, old) {
+    const d = new Date(), pad = (n) => String(n).padStart(2, '0');
+    const delta = (a, b) => (b != null && a > b ? ' ▲' + (a - b) : '');
+    const rows = st.blocks.filter(s => !s.soon).map(s => [s.b.name, s.floors + '/' + s.b.max + delta(s.floors, old && old.b ? (old.b[s.m.id] || 0) : null)]);
+    const floors = st.blocks.reduce((a, s) => a + s.floors, 0), maxF = st.blocks.filter(s => !s.soon).reduce((a, s) => a + s.b.max, 0);
+    const line = (a, b, cls) => h('div.tk-r' + (cls ? '.' + cls : ''), h('span', a), h('b', b));
+    return h('article.tk-paper', {'aria-label': 'Parte de obra'},
+      h('div.tk-h', h('b', 'ALBATREL'), h('span', 'Parte de obra')),
+      h('div.tk-id', 'REG-OBRA-' + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate())),
+      h('hr'), ...rows.map(([a, b]) => line(a, b)), h('hr'),
+      line('Árboles', st.trees + delta(st.trees, old && old.t)),
+      line('Farolas', st.lamps + '/' + st.nDocs + delta(st.lamps, old && old.l)),
+      line('Muralla', st.wall + '/93' + delta(st.wall, old && old.w)),
+      h('hr'), line('TOTAL PLANTAS', floors + '/' + maxF, 'tot'),
+      h('div.tk-f', pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + '/' + d.getFullYear() + ' · ' + pad(d.getHours()) + ':' + pad(d.getMinutes())),
+      h('div.tk-bar', {'aria-hidden': 'true'}));
+  }
+  function printer() {
+    const out = h('div.pr-out');
+    const el = h('div.printer', {'aria-live': 'polite'}, h('div.pr-machine', h('span.pr-led'), h('span.pr-slot')), out);
+    el.print = (paper) => {
+      out.querySelectorAll('.tk-paper').forEach(p => p.remove());
+      el.classList.remove('done'); el.classList.add('printing');
+      paper.addEventListener('click', () => { paper.classList.add('tear'); setTimeout(() => paper.remove(), 380); }, {once: true});
+      paper.title = 'Toca para arrancar el ticket';
+      out.append(paper);
+      setTimeout(() => { el.classList.remove('printing'); el.classList.add('done'); }, UI.RM() ? 10 : 1700);
+    };
+    return el;
+  }
+
   /* ── Vista completa ── */
+  const isDark = () => Store.s.theme ? Store.s.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
   function view() {
     const st = data(), old = Store.s.city;
     const fresh = old ? {b: st.blocks.filter(s => s.floors > ((old.b || {})[s.m.id] || 0)).map(s => s.k), t: old.t || 0, l: old.l || 0, w: old.w || 0} : null;
@@ -205,33 +238,67 @@
     wrap.addEventListener('click', (e) => { const g = e.target.closest('.bld'); if (g) info(st.blocks[+g.dataset.k], st); });
     wrap.addEventListener('keydown', (e) => { const g = e.target.closest('.bld'); if (g && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); info(st.blocks[+g.dataset.k], st); } });
 
-    // Avisa de lo que ha crecido desde la última visita
+    // ¿Ha crecido desde la última visita?
     const snap = {b: Object.fromEntries(st.blocks.map(s => [s.m.id, s.floors])), t: st.trees, l: st.lamps, w: st.wall};
-    if (old) {
-      const fl = st.blocks.reduce((a, s) => a + Math.max(0, s.floors - ((old.b || {})[s.m.id] || 0)), 0);
-      const bits = [fl && (fl === 1 ? '1 planta' : fl + ' plantas'), st.trees > old.t && (st.trees - old.t === 1 ? '1 árbol' : (st.trees - old.t) + ' árboles'),
-        st.lamps > old.l && (st.lamps - old.l === 1 ? '1 farola' : (st.lamps - old.l) + ' farolas'), st.wall > old.w && ((st.wall - old.w) + ' de muralla')].filter(Boolean);
-      if (bits.length) setTimeout(() => toast('Albatrel ha crecido: ' + bits.join(', ')), 700);
-    }
+    const grew = old && (st.blocks.some(s => s.floors > ((old.b || {})[s.m.id] || 0)) || st.trees > old.t || st.lamps > old.l || st.wall > old.w);
     Store.s.city = snap; Store.save();
+
+    /* Escena 3D (si el navegador tiene WebGL); el plano SVG queda como respaldo */
+    const stage = h('div.city-3d');
+    const tip = h('div.city-tip', {role: 'tooltip'});
+    const pr = printer();
+    let night = isDark(), auto = false, api = null, manual = false;
+    const bNight = h('button.tac', {type: 'button', 'aria-pressed': String(night)}, icon(night ? 'moon' : 'sun'), h('span', night ? 'Noche' : 'Día'));
+    const bAuto = h('button.tac', {type: 'button', 'aria-pressed': 'false', hidden: true}, icon('rotate-3d'), h('span', 'Girar'));
+    const bTicket = h('button.tac', {type: 'button'}, icon('receipt'), h('span', 'Parte de obra'));
+    const paintNight = () => { bNight.setAttribute('aria-pressed', String(night)); bNight.replaceChildren(icon(night ? 'moon' : 'sun'), h('span', night ? 'Noche' : 'Día')); };
+    bNight.onclick = () => { manual = true; night = !night; paintNight(); api && api.setNight(night); };
+    bAuto.onclick = () => { auto = !auto; bAuto.setAttribute('aria-pressed', String(auto)); api && api.setAuto(auto); };
+    bTicket.onclick = () => pr.print(ticket(st, null));
+    const card = h('div.city-card', wrap, stage, tip, pr, h('div.city-ctl', bNight, bAuto, bTicket), h('div.city-hint', 'Arrastra para girar · Ctrl + rueda para acercar'));
+    const unsub = Store.on((w) => { if (w === 'theme' && !manual) { night = isDark(); paintNight(); api && api.setNight(night); } });
+    App.onLeave(() => { unsub(); api && api.dispose(); });
+
+    const go = () => import(new URL('js/city3d.js', document.baseURI).href).then((mod) => {
+      if (!card.isConnected) return;
+      const full = Object.assign({}, st, {cols: COLS3(), fresh: fresh ? fresh.b : null, TREES, LAMPS, WALL});
+      api = mod.mount(stage, full, {
+        night, reduced: UI.RM(), still: document.documentElement.classList.contains('captura'),
+        onPick: (k) => info(st.blocks[k], st),
+        onHover: (k, e) => {
+          if (k < 0 || !e) { tip.classList.remove('on'); return; }
+          const s = st.blocks[k], r = card.getBoundingClientRect();
+          tip.textContent = s.b.name + (s.soon ? ' · próximamente' : ' · ' + Math.round(s.pct * 100) + ' %');
+          tip.style.transform = `translate(${e.clientX - r.left + 14}px, ${e.clientY - r.top + 14}px)`; tip.classList.add('on');
+        }
+      });
+      card.classList.add('is-3d'); bAuto.hidden = false;
+    }).catch(() => { /* sin WebGL: se queda el plano SVG */ });
+    requestAnimationFrame(() => requestAnimationFrame(go));
+    if (grew) setTimeout(() => card.isConnected && pr.print(ticket(st, old)), UI.RM() ? 300 : 1400);
 
     const built = st.blocks.filter(s => s.floors > 0).length, open = st.blocks.filter(s => !s.soon).length;
     const floors = st.blocks.reduce((a, s) => a + s.floors, 0), maxF = st.blocks.filter(s => !s.soon).reduce((a, s) => a + s.b.max, 0);
     const legend = [
       ['building-2', 'Edificios', built + '/' + open, floors + ' de ' + maxF + ' plantas. Cada unidad que completas sube la obra de su bloque.'],
-      ['sprout', 'Árboles', st.trees, 'Uno por cada día que estudias. ' + (st.beacon ? 'El faro brilla mientras mantienes la racha.' : 'Estudia hoy para encender el faro.')],
+      ['sprout', 'Árboles', st.trees, 'Uno por cada día que estudias. ' + (st.beacon ? 'El faro gira su luz mientras mantienes la racha.' : 'Estudia hoy para encender el faro.')],
       ['lightbulb', 'Farolas', st.lamps + '/' + st.nDocs, 'Cada documento de Albatrel que construyes enciende una.'],
-      ['shield-check', 'Muralla', st.wall + '/93', 'Un tramo por cada control del Anexo A que marcas como entendido.']
+      ['shield-check', 'Muralla', st.wall + '/93', 'Un sillar por cada control del Anexo A que marcas como entendido.']
     ];
     const rise = (el, i) => { el.classList.add('rise'); el.style.setProperty('--i', i); return el; };
     return h('div.view',
       h('div.eyebrow.track', h('span.dot'), 'Caso Albatrel'),
       h('h1', 'La ciudad de Albatrel'),
-      h('p.lede', 'Albatrel crece contigo. Cada bloque es un edificio y lo levantas estudiando. Toca un edificio para ver cómo va su obra.'),
-      h('div.sec', h('div.city-card', wrap)),
+      h('p.lede', 'Albatrel crece contigo. Cada bloque es un edificio y lo levantas estudiando. Gírala, acércate y toca un edificio para ver cómo va su obra.'),
+      h('div.sec', card),
       h('div.sec.city-legend', legend.map(([ic, t, v, s], i) => rise(h('div.mini.cl', h('div.cl-h', h('span.cl-i', icon(ic)), h('span', t), h('b', v)), h('small', s)), i))),
-      h('div.sec', h('div.soon', icon('sparkles'), 'Idea inspirada en ', h('a.link', {href: 'https://github.com/Hyperaide/Growdoro', target: '_blank', rel: 'noopener'}, 'Growdoro'), ' (Fuente web): aquí todo está dibujado desde cero para Atlas.')));
+      h('div.sec', h('div.soon', icon('sparkles'), h('span', 'Inspirada en ', h('a.link', {href: 'https://github.com/Hyperaide/Growdoro', target: '_blank', rel: 'noopener'}, 'Growdoro'), ', ',
+        h('a.link', {href: 'https://github.com/img2threejs/img2threejs', target: '_blank', rel: 'noopener'}, 'img2threejs'), ' y ',
+        h('a.link', {href: 'https://www.dqnamo.com/kitchen', target: '_blank', rel: 'noopener'}, 'The Kitchen'), ' (Fuente web). Modelada desde cero con ',
+        h('a.link', {href: 'https://threejs.org', target: '_blank', rel: 'noopener'}, 'Three.js'), ' (MIT).'))));
   }
+  /* Colores reales para WebGL (no entiende variables CSS) */
+  const COLS3 = () => { const c = COLS().slice(); c[0] = getComputedStyle(document.documentElement).getPropertyValue('--track').trim() || '#5e5ce6'; return c; };
 
   /* ── Miniatura para la pantalla Hoy ── */
   function mini() {

@@ -22,7 +22,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/img/readme/hoy-dark.png" alt="Pantalla Hoy: siguiente paso, anillos de actividad, accesos rápidos y carrusel de bloques" width="880"/>
+  <img src="docs/img/readme/hoy-light.png" alt="Pantalla Hoy: siguiente paso, anillos de actividad, accesos rápidos y carrusel de bloques" width="880"/>
 </p>
 
 Empezar en GRC leyendo directamente una norma suele acabar igual: memorizar cláusulas sin entender cómo se convierten en documentos, controles y decisiones reales. **Atlas** ordena el aprendizaje en un recorrido corto y práctico:
@@ -65,8 +65,9 @@ Funciona en el navegador, sin servidor, sin cuentas y sin conexión. Tu progreso
         <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
         <img alt="HTML" src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
         <img alt="CSS" src="https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
-        <img alt="Lucide" src="https://img.shields.io/badge/Lucide-F56565?style=for-the-badge&logo=lucide&logoColor=white"/><br>
-        <sub><code>JavaScript sin dependencias · HTML · CSS · iconos Lucide · View Transitions</code></sub>
+        <img alt="Lucide" src="https://img.shields.io/badge/Lucide-F56565?style=for-the-badge&logo=lucide&logoColor=white"/>
+        <img alt="Three.js" src="https://img.shields.io/badge/Three.js-000000?style=for-the-badge&logo=threedotjs&logoColor=white"/><br>
+        <sub><code>JavaScript sin build · Three.js para la ciudad 3D · iconos Lucide · View Transitions</code></sub>
       </td>
       <td valign="top"><code>├─ ⚙ build_ci_cd:</code><br><br>
         <img alt="Git" src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white"/>
@@ -182,7 +183,7 @@ mindmap
 | <img src="docs/assets/icons/graduation-cap.svg" width="18"/> | **Unidad** | Lección, prácticas y jefe. Ejercicios de elegir, verdadero o falso, emparejar, ordenar y clasificar, con corrección en una hoja inferior y la fuente de cada idea. |
 | <img src="docs/assets/icons/shield-check.svg" width="18"/> | **Mapa de la norma** | Cláusulas 4 a 10 ordenadas por el ciclo PDCA y los 93 controles con buscador, filtros por tema, los 11 nuevos de 2022 y la opción de marcarlos como entendidos. |
 | <img src="docs/assets/icons/briefcase.svg" width="18"/> | **Caso Albatrel** | La empresa, su pirámide documental y sus 14 documentos para leer, descargar en Markdown o construir paso a paso. |
-| <img src="docs/assets/icons/building-2.svg" width="18"/> | **Ciudad de Albatrel** | Plano isométrico de la empresa que crece con tu progreso. Toca un edificio para ver la obra de su bloque. |
+| <img src="docs/assets/icons/building-2.svg" width="18"/> | **Ciudad de Albatrel** | Maqueta 3D de la empresa que crece con tu progreso: gírala, acércate y toca un edificio para ver la obra de su bloque. |
 | <img src="docs/assets/icons/file-check.svg" width="18"/> | **Simulacro** | 10, 20 o 40 preguntas con temporizador, marcadores, entrega manteniendo pulsado y revisión completa. |
 | <img src="docs/assets/icons/sparkles.svg" width="18"/> | **Repaso y glosario** | 59 términos con tarjetas que se giran y la sesión de «Mis errores». |
 
@@ -192,7 +193,7 @@ También incluye buscador global (`Ctrl + K`), progreso con calendario de consta
 
 <table>
 <tr>
-<td width="50%"><img src="docs/img/readme/hoy-light.png" alt="Hoy en modo claro"/><br/><sub><b>Hoy</b> · siguiente paso, anillos y accesos rápidos</sub></td>
+<td width="50%"><img src="docs/img/readme/hoy-dark.png" alt="Hoy en modo oscuro"/><br/><sub><b>Hoy</b> · en modo oscuro</sub></td>
 <td width="50%"><img src="docs/img/readme/bloque-light.png" alt="Página del bloque 2"/><br/><sub><b>Bloque 2</b> · «Domina el riesgo», con progreso y unidades</sub></td>
 </tr>
 <tr>
@@ -208,8 +209,8 @@ También incluye buscador global (`Ctrl + K`), progreso con calendario de consta
 <td><img src="docs/img/readme/examen-dark.png" alt="Simulacro"/><br/><sub><b>Simulacro</b> · formato CertiProf e historial de intentos</sub></td>
 </tr>
 <tr>
-<td><img src="docs/img/readme/ciudad-light.png" alt="Ciudad de Albatrel de día"/><br/><sub><b>Ciudad de Albatrel</b> · de día, con grúas en las obras abiertas</sub></td>
-<td><img src="docs/img/readme/ciudad-dark.png" alt="Ciudad de Albatrel de noche"/><br/><sub><b>Ciudad de Albatrel</b> · de noche, con ventanas y farolas encendidas</sub></td>
+<td><img src="docs/img/readme/ciudad-light.png" alt="Ciudad de Albatrel de día"/><br/><sub><b>Ciudad de Albatrel</b> · maqueta 3D de día, con grúas en las obras abiertas</sub></td>
+<td><img src="docs/img/readme/ciudad-dark.png" alt="Ciudad de Albatrel de noche"/><br/><sub><b>Ciudad de Albatrel</b> · de noche, con ventanas, farolas y el faro encendidos</sub></td>
 </tr>
 </table>
 
@@ -237,7 +238,7 @@ En el modo **Construir**, cada sección del documento se decide con un ejercicio
 
 ## <img src="docs/assets/icons/building-2.svg" width="20" height="20" valign="middle"/> La ciudad de Albatrel
 
-Un plano isométrico de la empresa que se construye mientras estudias. Está dibujado con SVG propio, sin librerías.
+Una maqueta 3D de la empresa que se construye mientras estudias, hecha con [Three.js](https://threejs.org) (MIT, incluido en `app/vendor/three`). Tiene luz solar con sombras, materiales por fachada (muro cortina, ladrillo, piedra, hormigón, paneles), coches que circulan, grúas que giran y modo noche con ventanas y farolas encendidas. Se gira arrastrando y se acerca con `Ctrl + rueda` (en el móvil, con dos dedos).
 
 | Lo que haces | Lo que crece |
 |---|---|
@@ -247,7 +248,14 @@ Un plano isométrico de la empresa que se construye mientras estudias. Está dib
 | Marcar un control del Anexo A como entendido | Un tramo de muralla (93 en total) |
 | Aprobar un simulacro | Una bandera dorada en el faro |
 
-Las obras abiertas muestran una grúa y el contorno de las plantas que faltan; los bloques que aún no existen son solares. Al volver, un aviso te cuenta lo que ha crecido desde tu última visita. La idea viene de [Growdoro](https://github.com/Hyperaide/Growdoro) (Fuente web), que no tiene licencia publicada: no se ha copiado ni su código ni sus dibujos.
+Las obras abiertas muestran una grúa y el andamio de las plantas que faltan; los bloques que aún no existen son solares vallados. Cuando la ciudad crece, una impresora saca un **parte de obra** (REG-OBRA) con lo nuevo; también se puede imprimir con su botón.
+
+Inspiración (Fuente web), sin copiar código ni dibujos:
+- [Growdoro](https://github.com/Hyperaide/Growdoro): la idea de un mundo que crece con tu constancia.
+- [img2threejs](https://github.com/img2threejs/img2threejs) (Apache-2.0): montar cada objeto 3D por piezas con pivotes animables. Cada edificio tiene su propia «fábrica».
+- [The Kitchen de dqnamo](https://www.dqnamo.com/kitchen): componentes táctiles, como los botones con profundidad y la impresora de tickets.
+
+Si el navegador no tiene WebGL, se muestra el plano isométrico en SVG.
 
 ## <img src="docs/assets/icons/rocket.svg" width="20" height="20" valign="middle"/> Arranque rápido
 
@@ -273,6 +281,7 @@ flowchart LR
   end
   subgraph App
     S[store.js<br/>progreso y repaso] --> V[views.js · docs.js · city.js<br/>pantallas]
+    W[city3d.js + Three.js<br/>maqueta 3D] -.-> V
     M[motion.js<br/>movimiento] --> V
     E[exercises.js · player.js<br/>ejercicios y jefes] --> V
     V --> A[app.js<br/>rutas y buscador]
@@ -281,7 +290,7 @@ flowchart LR
   A --> L[(localStorage)]
 ```
 
-- **Sin dependencias ni build**: HTML, CSS y JavaScript que el navegador carga tal cual.
+- **Sin build**: HTML, CSS y JavaScript que el navegador carga tal cual. La única librería es Three.js (MIT), incluida en el repo y cargada solo al abrir la ciudad.
 - **Datos separados de la interfaz**: cada norma es una «pista» en `app/data/tracks.js`, con su color y su progreso. Añadir el ENS u otra ISO es crear su carpeta de datos.
 - **Pack privado opcional**: en local se puede conectar material propio (por ejemplo, los PDF de un curso) en `app/data/private/`, que está en `.gitignore` y nunca forma parte de la demo.
 
@@ -299,7 +308,7 @@ flowchart LR
 - [x] Bloques 0 a 5: fundamentos y cláusulas 4 a 9
 - [x] Caso Albatrel con 14 documentos y modo Construir
 - [x] Bienvenida con plan personal, temas índigo y coral, modo demostración
-- [x] Ciudad de Albatrel: el progreso convertido en una ciudad que crece
+- [x] Ciudad de Albatrel: el progreso convertido en una maqueta 3D que crece
 - [ ] Bloque 6: cláusula 10 (no conformidades y mejora)
 - [ ] Bloques 7 a 9: controles del Anexo A en profundidad
 - [ ] Bloque 10: auditoría de certificación
@@ -328,12 +337,14 @@ atlas-grc/
 │   │   ├── player.js             Lecciones, prácticas, jefes y simulacro
 │   │   ├── views.js              Hoy, ruta, bloques, norma, repaso, progreso, ajustes
 │   │   ├── docs.js               Documentos de Albatrel: visor, descarga y modo Construir
-│   │   ├── city.js               Ciudad de Albatrel: plano isométrico que crece con el progreso
+│   │   ├── city.js               Ciudad de Albatrel: datos, parte de obra y plano SVG de respaldo
+│   │   ├── city3d.js             Maqueta 3D (Three.js): edificios por piezas, día y noche, coches
 │   │   ├── app.js                Cabecera, rutas, buscador y bienvenida
 │   │   └── icons.js              Iconos Lucide en línea (ISC)
 │   ├── data/
 │   │   ├── tracks.js             Registro de normas
 │   │   └── iso27001/             content · bloque2 a bloque5 · albatrel · norma
+│   ├── vendor/three/             Three.js r169 y complementos (MIT)
 │   └── img/                      Ilustraciones opcionales
 │
 ├── 📄 docs/                      Capturas e iconos del README
