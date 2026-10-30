@@ -79,6 +79,7 @@
           h('div.mini', h('span', 'XP total'), h('b', Store.s.xp)),
           h('div.mini', h('span', 'Unidades'), h('b', doneUnits + '/' + units.length)))), 1)),
       h('div.sec', qr),
+      h('div.sec', h('div.sec-h', h('h2', 'Tu ciudad'), h('a', {href: '#/ciudad'}, 'Verla entera')), City.mini()),
       h('div.sec', h('div.sec-h', h('h2', 'Tus bloques'), h('a', {href: '#/ruta'}, 'Ver la ruta')), carousel()));
   }
   function carousel() {
@@ -353,6 +354,7 @@
         h('div.grid', C.kpis.map(([v, l], i) => rise(h('div.kv', h('b', v), h('span', l)), i + 2)))),
       h('div.sec', h('div.sec-h', h('h2', 'La pirámide documental'), h('small', 'Cláusula 7.5 · control 5.1')),
         h('div.grid', C.pyramid.map(([t, d], i) => rise(h('div.card', {style: {marginInline: (i * 4) + '%', padding: '16px 20px'}}, h('b', t), h('p.muted', {style: {margin: '4px 0 0', fontSize: '14.5px'}}, d)), i)))),
+      h('div.sec', City.mini()),
       Docs.section(),
       h('div.sec', h('div.sec-h', h('h2', 'Lo que construirás con Albatrel'), h('small', 'bloque a bloque')),
         h('div.lib', C.plan.map(([ic, t, d], i) => rise(h('div.lib-i', h('span.li', icon(ic)), h('div', h('b', t), h('small', d)), h('span')), i)))),

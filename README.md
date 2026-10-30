@@ -107,6 +107,7 @@ Funciona en el navegador, sin servidor, sin cuentas y sin conexión. Tu progreso
 - [Vistas](#-vistas)
 - [Capturas](#-capturas)
 - [El caso Albatrel](#-el-caso-albatrel)
+- [La ciudad de Albatrel](#-la-ciudad-de-albatrel)
 - [Arranque rápido](#-arranque-rápido)
 - [Arquitectura](#-arquitectura)
 - [Contenido y derechos de autor](#-contenido-y-derechos-de-autor)
@@ -125,6 +126,7 @@ Funciona en el navegador, sin servidor, sin cuentas y sin conexión. Tu progreso
 3. **Aterrizar en Albatrel.** Cada concepto se aplica a la misma empresa ficticia y puedes construir sus documentos paso a paso.
 4. **Repasar.** Las tarjetas del glosario vuelven a los 1, 3, 7, 14 y 30 días; los errores, a los 1, 3 y 7 días hasta acertarlos tres veces.
 5. **Ponerte a prueba.** Simulacros de 10, 20 o 40 preguntas con revisión de cada respuesta; los fallos pasan al repaso.
+6. **Ver crecer Albatrel.** Todo lo anterior levanta la ciudad de la empresa: plantas, árboles, farolas y muralla.
 
 ## <img src="docs/assets/icons/brain-circuit.svg" width="20" height="20" valign="middle"/> Mapa mental
 
@@ -180,6 +182,7 @@ mindmap
 | <img src="docs/assets/icons/graduation-cap.svg" width="18"/> | **Unidad** | Lección, prácticas y jefe. Ejercicios de elegir, verdadero o falso, emparejar, ordenar y clasificar, con corrección en una hoja inferior y la fuente de cada idea. |
 | <img src="docs/assets/icons/shield-check.svg" width="18"/> | **Mapa de la norma** | Cláusulas 4 a 10 ordenadas por el ciclo PDCA y los 93 controles con buscador, filtros por tema, los 11 nuevos de 2022 y la opción de marcarlos como entendidos. |
 | <img src="docs/assets/icons/briefcase.svg" width="18"/> | **Caso Albatrel** | La empresa, su pirámide documental y sus 14 documentos para leer, descargar en Markdown o construir paso a paso. |
+| <img src="docs/assets/icons/building-2.svg" width="18"/> | **Ciudad de Albatrel** | Plano isométrico de la empresa que crece con tu progreso. Toca un edificio para ver la obra de su bloque. |
 | <img src="docs/assets/icons/file-check.svg" width="18"/> | **Simulacro** | 10, 20 o 40 preguntas con temporizador, marcadores, entrega manteniendo pulsado y revisión completa. |
 | <img src="docs/assets/icons/sparkles.svg" width="18"/> | **Repaso y glosario** | 59 términos con tarjetas que se giran y la sesión de «Mis errores». |
 
@@ -204,7 +207,13 @@ También incluye buscador global (`Ctrl + K`), progreso con calendario de consta
 <td><img src="docs/img/readme/doc-light.png" alt="Documento DOC-01"/><br/><sub><b>DOC-01</b> · contexto, partes interesadas y alcance</sub></td>
 <td><img src="docs/img/readme/examen-dark.png" alt="Simulacro"/><br/><sub><b>Simulacro</b> · formato CertiProf e historial de intentos</sub></td>
 </tr>
+<tr>
+<td><img src="docs/img/readme/ciudad-light.png" alt="Ciudad de Albatrel de día"/><br/><sub><b>Ciudad de Albatrel</b> · de día, con grúas en las obras abiertas</sub></td>
+<td><img src="docs/img/readme/ciudad-dark.png" alt="Ciudad de Albatrel de noche"/><br/><sub><b>Ciudad de Albatrel</b> · de noche, con ventanas y farolas encendidas</sub></td>
+</tr>
 </table>
+
+<sub>Capturas en el tema coral del modo demostración. La app también tiene el tema índigo.</sub>
 
 <p align="center">
   <img src="docs/img/readme/movil-dark.png" alt="Atlas en el móvil, modo oscuro" width="260"/>
@@ -225,6 +234,20 @@ También incluye buscador global (`Ctrl + K`), progreso con calendario de consta
 | Registros | REG-01 Análisis de riesgos (10 riesgos) · SOA-01 Declaración de Aplicabilidad (93 controles justificados) · PTR-01 Plan de tratamiento (14 acciones) |
 
 En el modo **Construir**, cada sección del documento se decide con un ejercicio y después se muestra ya redactada.
+
+## <img src="docs/assets/icons/building-2.svg" width="20" height="20" valign="middle"/> La ciudad de Albatrel
+
+Un plano isométrico de la empresa que se construye mientras estudias. Está dibujado con SVG propio, sin librerías.
+
+| Lo que haces | Lo que crece |
+|---|---|
+| Completar lecciones, prácticas y jefes de un bloque | Las plantas de su edificio: el Faro del norte (fundamentos), la Sede central (cláusulas 4 y 5), el Observatorio de riesgos (6), la Escuela y archivo (7), la Sala técnica (8), la Torre de auditoría (9)… |
+| Estudiar un día | Un árbol nuevo. El faro brilla mientras mantienes la racha |
+| Construir un documento de Albatrel | Una farola encendida (14 en total) |
+| Marcar un control del Anexo A como entendido | Un tramo de muralla (93 en total) |
+| Aprobar un simulacro | Una bandera dorada en el faro |
+
+Las obras abiertas muestran una grúa y el contorno de las plantas que faltan; los bloques que aún no existen son solares. Al volver, un aviso te cuenta lo que ha crecido desde tu última visita. La idea viene de [Growdoro](https://github.com/Hyperaide/Growdoro) (Fuente web), que no tiene licencia publicada: no se ha copiado ni su código ni sus dibujos.
 
 ## <img src="docs/assets/icons/rocket.svg" width="20" height="20" valign="middle"/> Arranque rápido
 
@@ -249,7 +272,7 @@ flowchart LR
     P[(pack privado<br/>opcional, fuera de Git)] -.-> C
   end
   subgraph App
-    S[store.js<br/>progreso y repaso] --> V[views.js · docs.js<br/>pantallas]
+    S[store.js<br/>progreso y repaso] --> V[views.js · docs.js · city.js<br/>pantallas]
     M[motion.js<br/>movimiento] --> V
     E[exercises.js · player.js<br/>ejercicios y jefes] --> V
     V --> A[app.js<br/>rutas y buscador]
@@ -269,13 +292,14 @@ flowchart LR
 - De la ISO/IEC 27001 solo se usan los **números y títulos** de cláusulas y controles como referencia. Es una obra protegida de ISO/IEC: consulta tu ejemplar oficial (ISO o UNE).
 - Lo que procede de internet está marcado como **«Fuente web»** con su enlace.
 - MAGERIT, el ENS y las guías CCN-STIC son publicaciones públicas de la Administración española.
-- Inspirado en las clases de GRC del profesor **Ezequiel Wolf**.
+- Inspirado en las clases de GRC del profesor [**Ezequiel Wolf**](https://www.linkedin.com/in/ezequiel-wolf/).
 
 ## <img src="docs/assets/icons/telescope.svg" width="20" height="20" valign="middle"/> Hoja de ruta
 
 - [x] Bloques 0 a 5: fundamentos y cláusulas 4 a 9
 - [x] Caso Albatrel con 14 documentos y modo Construir
 - [x] Bienvenida con plan personal, temas índigo y coral, modo demostración
+- [x] Ciudad de Albatrel: el progreso convertido en una ciudad que crece
 - [ ] Bloque 6: cláusula 10 (no conformidades y mejora)
 - [ ] Bloques 7 a 9: controles del Anexo A en profundidad
 - [ ] Bloque 10: auditoría de certificación
@@ -304,6 +328,7 @@ atlas-grc/
 │   │   ├── player.js             Lecciones, prácticas, jefes y simulacro
 │   │   ├── views.js              Hoy, ruta, bloques, norma, repaso, progreso, ajustes
 │   │   ├── docs.js               Documentos de Albatrel: visor, descarga y modo Construir
+│   │   ├── city.js               Ciudad de Albatrel: plano isométrico que crece con el progreso
 │   │   ├── app.js                Cabecera, rutas, buscador y bienvenida
 │   │   └── icons.js              Iconos Lucide en línea (ISC)
 │   ├── data/

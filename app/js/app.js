@@ -3,7 +3,7 @@
   const {h, icon, toast, menu, pill, ticker, transition} = UI;
   const $ = (s) => document.querySelector(s);
   const TABS = [['#/', 'house', 'Hoy'], ['#/ruta', 'map', 'Ruta'], ['#/norma', 'layers', 'Norma'], ['#/repaso', 'refresh-cw', 'Repaso'], ['#/examen', 'graduation-cap', 'Examen']];
-  const MORE = [['#/glosario', 'book-a', 'Glosario', 'Los términos clave'], ['#/caso', 'briefcase', 'Caso Albatrel', 'Tu empresa de prácticas'], ['#/biblioteca', 'library', 'Biblioteca', 'PDF del curso y enlaces'], ['#/progreso', 'chart-column', 'Progreso', 'Racha, constancia e insignias'], ['#/normas', 'compass', 'Normas', 'ISO 27001, ENS y más']];
+  const MORE = [['#/glosario', 'book-a', 'Glosario', 'Los términos clave'], ['#/caso', 'briefcase', 'Caso Albatrel', 'Tu empresa de prácticas'], ['#/ciudad', 'building-2', 'Ciudad de Albatrel', 'La ciudad que levantas estudiando'], ['#/biblioteca', 'library', 'Biblioteca', 'PDF del curso y enlaces'], ['#/progreso', 'chart-column', 'Progreso', 'Racha, constancia e insignias'], ['#/normas', 'compass', 'Normas', 'ISO 27001, ENS y más']];
   let leaveFns = [];
 
   const App = {
@@ -149,6 +149,7 @@
       case 'repaso': el = parts[1] === 'tarjetas' ? Views.flashcards() : Views.review(); break;
       case 'glosario': el = Views.glossary(); break;
       case 'caso': el = Views.caso(); break;
+      case 'ciudad': el = City.view(); break;
       case 'examen': el = Views.examCover(); break;
       case 'biblioteca': el = Views.library(); break;
       case 'progreso': el = Views.progress(); break;

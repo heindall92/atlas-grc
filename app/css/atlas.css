@@ -887,3 +887,108 @@ a.tag:hover{filter:brightness(.97)}
 @keyframes g-tilt{30%{transform:rotate(-12deg)}60%{transform:rotate(6deg)}100%{transform:rotate(0)}}
 @keyframes g-swing{25%{transform:rotate(10deg)}50%{transform:rotate(-8deg)}75%{transform:rotate(4deg)}100%{transform:rotate(0)}}
 @keyframes g-beat{30%{transform:scale(1.18)}60%{transform:scale(.94)}100%{transform:scale(1)}}
+
+/* ═════ Ciudad de Albatrel (isométrica, crece con el progreso) ═════ */
+.city-card,.city-mini{
+  --sky-a:#eef3ff; --sky-b:#fbf7ff;
+  --g-t:#d9ead0; --g-l:#bba98f; --g-r:#a8957c; --road:#e9e8ef; --plaza:#f4f2f8; --plaza-in:#ebe8f3; --lane:#ffffff;
+  --w-l:#ffffff; --w-r:#e6e5ee; --w-t:#f4f4f8; --edge:rgba(29,29,31,.10);
+  --win:#bcd2f7; --win-r:#a6bfe9; --win-on:#bcd2f7;
+  --tree:#7cc77a; --tree-hi:#a8e0a0; --trunk:#9b7b5b; --sh:rgba(0,0,0,.10);
+  --lamp-on:#ffcc4d; --lamp-off:#c7c7cc; --wall:#d6d3e0; --stars:0;
+}
+:root[data-theme="dark"] .city-card,:root[data-theme="dark"] .city-mini{
+  --sky-a:#0b0b1e; --sky-b:#1a1440;
+  --g-t:#1f3326; --g-l:#2a2219; --g-r:#211a13; --road:#2c2c33; --plaza:#34343c; --plaza-in:#3c3c46; --lane:#55555f;
+  --w-l:#3b3b45; --w-r:#2b2b33; --w-t:#46464f; --edge:rgba(255,255,255,.06);
+  --win:#20242f; --win-r:#1a1d26; --win-on:#ffd36b;
+  --tree:#2f7a45; --tree-hi:#46a35f; --trunk:#5c4632; --sh:rgba(0,0,0,.35);
+  --lamp-on:#ffd36b; --lamp-off:#4a4a52; --wall:#55536a; --stars:1;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .city-card,:root:not([data-theme="light"]) .city-mini{
+  --sky-a:#0b0b1e; --sky-b:#1a1440;
+  --g-t:#1f3326; --g-l:#2a2219; --g-r:#211a13; --road:#2c2c33; --plaza:#34343c; --plaza-in:#3c3c46; --lane:#55555f;
+  --w-l:#3b3b45; --w-r:#2b2b33; --w-t:#46464f; --edge:rgba(255,255,255,.06);
+  --win:#20242f; --win-r:#1a1d26; --win-on:#ffd36b;
+  --tree:#2f7a45; --tree-hi:#46a35f; --trunk:#5c4632; --sh:rgba(0,0,0,.35);
+  --lamp-on:#ffd36b; --lamp-off:#4a4a52; --wall:#55536a; --stars:1;
+}}
+.city-card{border-radius:28px;overflow:hidden;border:1px solid var(--line-2);
+  background:radial-gradient(120% 80% at 15% 0%,color-mix(in oklab,var(--track) 14%,transparent),transparent 60%),linear-gradient(180deg,var(--sky-a),var(--sky-b))}
+.city-svg{display:block;width:100%;height:auto;overflow:visible}
+.city-svg polygon{stroke:var(--edge);stroke-width:.6;stroke-linejoin:round}
+.city-svg .g-t{fill:var(--g-t)} .city-svg .g-l{fill:var(--g-l)} .city-svg .g-r{fill:var(--g-r)}
+.city-svg .road{fill:var(--road);stroke:none} .city-svg .plaza{fill:var(--plaza)} .city-svg .plaza-in{fill:var(--plaza-in)}
+.city-svg .lane{stroke:var(--lane);stroke-width:1.6;stroke-dasharray:6 7;fill:none}
+.city-svg .fl{fill:color-mix(in oklab,var(--a) 8%,var(--w-l))}
+.city-svg .fr{fill:color-mix(in oklab,var(--a) 16%,var(--w-r))}
+.city-svg .ft{fill:color-mix(in oklab,var(--a) 62%,var(--w-t))}
+.city-svg .stripe.fl,.city-svg .stripe.fr{fill:color-mix(in oklab,var(--a) 70%,var(--w-r))}
+.city-svg .glass{fill:color-mix(in oklab,var(--win-on) 70%,transparent)}
+.city-svg .unit{fill:var(--w-r)}
+.city-svg .rf.l{fill:color-mix(in oklab,var(--a) 70%,var(--w-l))}
+.city-svg .rf.r{fill:color-mix(in oklab,var(--a) 85%,var(--w-r))}
+.city-svg .rf.b{fill:color-mix(in oklab,var(--a) 55%,var(--w-t))}
+.city-svg .dome{fill:var(--w-l);stroke:var(--edge)} .city-svg .dome-b{fill:var(--w-r)}
+.city-svg .shine{fill:rgba(255,255,255,.55)}
+.city-svg .slit{stroke:color-mix(in oklab,var(--a) 75%,#000);stroke-width:3;stroke-linecap:round}
+.city-svg .win{fill:var(--win);stroke:none} .city-svg .win.r{fill:var(--win-r)}
+.city-svg .win.on{fill:var(--win-on)}
+.city-svg .lot{fill:color-mix(in oklab,var(--a) 10%,transparent);stroke:color-mix(in oklab,var(--a) 55%,transparent);stroke-width:1.2;stroke-dasharray:4 4}
+.city-svg .lot.soon{fill:none;stroke:var(--ink-4)}
+.city-svg .gh{fill:none;stroke:color-mix(in oklab,var(--a) 55%,transparent);stroke-width:1;stroke-dasharray:3 4}
+.city-svg .gh.faint{stroke:var(--ink-4);opacity:.45}
+.city-svg .star{fill:#ffcc00;stroke:#e0a800}
+.city-svg .pole{stroke:var(--ink-3);stroke-width:1.4}
+.city-svg .flag{fill:var(--track);transform-box:fill-box;transform-origin:left center;animation:c-flag 2.4s ease-in-out infinite}
+.city-svg .cert .flag{fill:#ffcc00}
+.city-svg .crane path{stroke:#ff9f0a;stroke-width:2;fill:none;stroke-linecap:round}
+.city-svg .crane rect{fill:#ff9f0a}
+.city-svg .hook{animation:c-hook 3s ease-in-out infinite}
+.city-svg .beacon{fill:var(--win-on);opacity:0}
+.city-svg.beam .beacon{opacity:.5;animation:c-beam 2.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.city-svg .tree .crown circle{fill:var(--tree)} .city-svg .tree .crown .hi{fill:var(--tree-hi)}
+.city-svg .tree .trunk{stroke:var(--trunk);stroke-width:2.4;stroke-linecap:round}
+.city-svg .sh{fill:var(--sh)}
+.city-svg .tree .crown{transform-box:fill-box;transform-origin:50% 100%;animation:c-sway 5s ease-in-out infinite;animation-delay:calc(var(--i)*-.37s)}
+.city-svg .lamp .post{stroke:var(--ink-4);stroke-width:1.6}
+.city-svg .lamp .bulb{fill:var(--lamp-off)} .city-svg .lamp .halo{fill:var(--lamp-on);opacity:0}
+.city-svg .lamp.on .bulb{fill:var(--lamp-on)} .city-svg .lamp.on .halo{opacity:calc(.18 + var(--stars)*.22)}
+.city-svg .wall polygon{fill:var(--wall)}
+.city-svg .wall .ft{fill:color-mix(in oklab,var(--track) 35%,var(--wall))}
+.city-svg .stars circle{fill:#fff;opacity:calc(var(--stars)*.8);animation:c-twinkle 3.2s ease-in-out infinite;animation-delay:calc(var(--i)*-.5s)}
+.city .bld{cursor:pointer;outline:none;transition:transform .25s var(--ease-out),filter .25s var(--ease-out)}
+@media (hover:hover){.city .bld:hover{transform:translateY(-4px);filter:drop-shadow(0 8px 10px rgba(0,0,0,.14))}}
+.city .bld:focus-visible{filter:drop-shadow(0 0 6px var(--track))}
+.city .bld:active{transform:translateY(-1px)}
+/* Entrada: los edificios se levantan desde el suelo, los árboles brotan */
+.city.anim .gr{transform-box:fill-box;transform-origin:50% 100%;animation:c-grow .8s var(--spring) both;animation-delay:calc(var(--i)*70ms + 120ms)}
+.city.anim .tree{transform-box:fill-box;transform-origin:50% 100%;animation:c-pop .6s var(--spring) both;animation-delay:calc(var(--i)*30ms + 500ms)}
+.city.anim .wall{transform-box:fill-box;transform-origin:50% 100%;animation:c-grow .5s var(--ease-out) both;animation-delay:calc(var(--i)*15ms + 700ms)}
+.city .fresh{filter:drop-shadow(0 0 6px color-mix(in oklab,var(--track) 70%,transparent))}
+.city .bld.fresh .gr{animation-duration:1.3s}
+@keyframes c-grow{from{transform:scaleY(0)}}
+@keyframes c-pop{from{transform:scale(0)}}
+@keyframes c-sway{50%{transform:rotate(2.5deg)}}
+@keyframes c-flag{50%{transform:skewY(8deg) scaleX(.85)}}
+@keyframes c-hook{50%{transform:translateY(6px)}}
+@keyframes c-beam{50%{opacity:.15;transform:scale(1.35)}}
+@keyframes c-twinkle{50%{opacity:calc(var(--stars)*.2)}}
+.city-legend{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.city-legend .cl small{display:block;color:var(--ink-3);font-size:13.5px;line-height:1.4;margin-top:8px}
+.cl-h{display:flex;align-items:center;gap:8px;font-weight:600}
+.cl-h b{margin-left:auto;font-size:20px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.cl-i{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--track-soft);color:var(--track)}
+.prog-row{display:flex;align-items:center;gap:12px}
+/* Miniatura en Hoy y en el caso */
+.city-mini{position:relative;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);align-items:center;gap:8px;border-radius:24px;overflow:hidden;text-decoration:none;color:inherit;border:1px solid var(--line-2);
+  background:radial-gradient(120% 80% at 15% 0%,color-mix(in oklab,var(--track) 14%,transparent),transparent 60%),linear-gradient(180deg,var(--sky-a),var(--sky-b))}
+.city-mini .cm-art{padding:10px 0 4px 10px;pointer-events:none}
+.city-mini .city-svg{max-height:270px}
+.city-mini .cm-t{display:flex;flex-direction:column;gap:4px;padding:20px}
+.city-mini .cm-t b{font-size:20px;letter-spacing:-.02em}
+.city-mini .cm-t small{color:var(--ink-3);font-size:14px}
+.city-mini .cm-go{display:inline-flex;align-items:center;gap:4px;margin-top:8px;color:var(--track);font-weight:600;font-size:14.5px}
+@media (hover:hover){.city-mini:hover{border-color:color-mix(in oklab,var(--track) 35%,transparent)}}
+@media (max-width:760px){.city-legend{grid-template-columns:1fr 1fr}.city-mini{grid-template-columns:1fr}.city-mini .cm-art{padding:10px 10px 0}.city-mini .cm-t{padding:4px 18px 18px}}
+@media (prefers-reduced-motion:reduce){.city-svg *,.city .gr,.city .tree,.city .wall{animation:none!important}}
