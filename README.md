@@ -70,7 +70,7 @@ Funciona en el navegador, sin servidor, sin cuentas y sin conexión. Tu progreso
         <img alt="Git" src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white"/>
         <img alt="GitHub Actions" src="https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white"/>
         <img alt="GitHub Pages" src="https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=githubpages&logoColor=white"/><br>
-        <sub><code>sin build · publicación automática en GitHub Pages en cada push</code></sub>
+        <sub><code>sin build · GitHub Pages publica la rama main en cada push</code></sub>
       </td>
     </tr>
     <tr>
@@ -313,7 +313,7 @@ atlas-grc/
 ├── 🎨 diseno/                    Prompts de las ilustraciones
 ├── 🛠️ tools/                      extraer.py (MarkItDown, para el pack privado)
 ├── 🐍 serve.py · Iniciar.bat     Servidor local
-└── ⚙️ .github/workflows/          pages.yml
+└── 🌐 index.html · .nojekyll     Entrada de GitHub Pages (redirige a app/)
 ```
 
 ## <img src="docs/assets/icons/scale.svg" width="20" height="20" valign="middle"/> Licencia
