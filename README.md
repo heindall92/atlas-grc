@@ -1,4 +1,6 @@
-![header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,20,24,30&height=200&section=header&text=ATLAS%20GRC&fontSize=64&fontColor=fff&animation=twinkling&fontAlignY=35&desc=Aprende%20la%20ISO%2FIEC%2027001%20desde%20cero%20%C2%B7%20GRC%20en%20espa%C3%B1ol&descSize=18&descAlignY=56&descAlign=50)
+<p align="center">
+  <img src="docs/assets/atlas-header.svg" alt="Atlas GRC · Aprende la ISO/IEC 27001 desde cero" width="100%"/>
+</p>
 
 <p align="center">
   <b>Laboratorio interactivo para aprender GRC desde cero, empezando por la ISO/IEC 27001:2022: lecciones cortas, prácticas, jefes, repaso espaciado, simulacro tipo CertiProf y una empresa inventada, Albatrel, con su SGSI completo para construir paso a paso.</b>
@@ -343,4 +345,6 @@ Otras herramientas GRC del autor: [Rosetta](https://github.com/heindall92/rosett
 
 Errores o propuestas: abre una *issue* o escribe a <a href="mailto:yoandyramirezdelgado@gmail.com">yoandyramirezdelgado@gmail.com</a>.
 
-![footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,20,24,30&height=120&section=footer&animation=twinkling)
+<p align="center">
+  <img src="docs/assets/atlas-footer.svg" alt="Atlas GRC · busca siempre el norte" width="100%"/>
+</p>

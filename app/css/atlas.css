@@ -869,3 +869,21 @@ a.tag:hover{filter:brightness(.97)}
 
 /* Capturas del README (?demo&captura): todo visible al instante */
 .captura *,.captura *::before,.captura *::after{animation:none!important;transition:none!important}
+
+/* Gestos propios de cada icono (inspirado en animateicons, hecho con CSS sobre Lucide) */
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .qr a:hover .c{transform:translateY(-2px)}
+  .qr a[href="#/repaso"]:hover .c .ico{animation:g-spin .7s var(--ease-out)}
+  .qr a[href="#/norma"]:hover .c .ico path:first-child{animation:g-lift .6s var(--spring)}
+  .qr a[href="#/examen"]:hover .c .ico{animation:g-tilt .7s var(--ease-out);transform-origin:50% 80%}
+  .qr a[href="#/caso"]:hover .c .ico{animation:g-swing .7s var(--ease-out);transform-origin:50% 0}
+  .qr a[href="#/glosario"]:hover .c .ico{animation:g-beat .6s var(--ease-out)}
+  .tabs a[href="#/"]:hover .ico{animation:g-beat .6s var(--ease-out)}
+  .tabs a[href="#/ruta"]:hover .ico{animation:g-tilt .7s var(--ease-out)}
+}
+.qr .c .ico path{transform-box:fill-box;transform-origin:center}
+@keyframes g-spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes g-lift{40%{transform:translateY(-3px)}100%{transform:translateY(0)}}
+@keyframes g-tilt{30%{transform:rotate(-12deg)}60%{transform:rotate(6deg)}100%{transform:rotate(0)}}
+@keyframes g-swing{25%{transform:rotate(10deg)}50%{transform:rotate(-8deg)}75%{transform:rotate(4deg)}100%{transform:rotate(0)}}
+@keyframes g-beat{30%{transform:scale(1.18)}60%{transform:scale(.94)}100%{transform:scale(1)}}
