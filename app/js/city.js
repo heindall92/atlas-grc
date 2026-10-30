@@ -27,7 +27,7 @@
     {name: 'Centro de datos', what: 'Controles tecnológicos del Anexo A (tema 8).', at: [12.7, 9.5, .9, 3], max: 3, roof: 'units'},
     {name: 'Sello de certificación', what: 'Auditoría externa y certificación (ISO 19011). El monumento que corona la ciudad.', at: [8.2, 8.2, .6, .6], max: 2, roof: 'star'}
   ];
-  const LAMPS = [[5.8, 1], [8.2, 2.5], [5.8, 4], [8.2, 11], [5.8, 12.5], [8.2, 13.4], [1, 5.8], [2.6, 8.2], [4, 5.8], [10, 8.2], [11.5, 5.8], [13.3, 8.2], [8.2, 5], [5.8, 9.2]];
+  const LAMPS = [[5.8, 1], [8.2, 2.5], [5.8, 4], [8.2, 11], [5.8, 12.5], [8.2, 13.4], [1, 5.8], [2.6, 8.2], [4, 5.8], [10, 8.2], [11.5, 5.8], [13.3, 8.2], [8.2, 5], [5.8, 9.2], [11.6, 8.2]];
 
   /* Huecos libres para árboles, repartidos siempre igual */
   const TREES = (() => {

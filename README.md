@@ -12,7 +12,7 @@
 
 <p align="center">
   <img alt="ISO/IEC 27001:2022" src="https://img.shields.io/badge/ISO%2FIEC-27001%3A2022-3B6FD4?style=flat"/>
-  <img alt="Cláusulas 4 a 9" src="https://img.shields.io/badge/cl%C3%A1usulas-4%20a%209-5E5CE6?style=flat"/>
+  <img alt="Cláusulas 4 a 10" src="https://img.shields.io/badge/cl%C3%A1usulas-4%20a%2010-5E5CE6?style=flat"/>
   <img alt="93 controles" src="https://img.shields.io/badge/Anexo%20A-93%20controles-7B4FD1?style=flat"/>
   <img alt="MAGERIT v3" src="https://img.shields.io/badge/MAGERIT-v3-E07B39?style=flat"/>
   <img alt="Simulacro CertiProf" src="https://img.shields.io/badge/simulacro-CertiProf%20I27001F-2E9E7A?style=flat"/>
@@ -27,10 +27,10 @@
 
 Empezar en GRC leyendo directamente una norma suele acabar igual: memorizar cláusulas sin entender cómo se convierten en documentos, controles y decisiones reales. **Atlas** ordena el aprendizaje en un recorrido corto y práctico:
 
-- **25 unidades** en 6 bloques (fundamentos y cláusulas 4 a 9), cada una con lección, prácticas y un jefe final;
+- **29 unidades** en 7 bloques (fundamentos y cláusulas 4 a 10), cada una con lección, prácticas y un jefe final;
 - **mapa de la norma** con las cláusulas por el ciclo PDCA y los **93 controles** del Anexo A explicados en lenguaje sencillo;
-- **caso Albatrel**: una empresa inventada con su SGSI completo en **14 documentos propios**, que se leen, se descargan y se **construyen paso a paso**;
-- **simulacro** con el formato del examen ISO/IEC 27001 Foundation de CertiProf (40 preguntas, 60 minutos) y un banco de **247 preguntas propias**;
+- **caso Albatrel**: una empresa inventada con su SGSI completo en **15 documentos propios**, que se leen, se descargan y se **construyen paso a paso**;
+- **simulacro** con el formato del examen ISO/IEC 27001 Foundation de CertiProf (40 preguntas, 60 minutos) y un banco de **280 preguntas propias**;
 - **repaso espaciado** del glosario y de los errores, para que lo aprendido se quede.
 
 Funciona en el navegador, sin servidor, sin cuentas y sin conexión. Tu progreso no sale de tu equipo.
@@ -51,13 +51,13 @@ Funciona en el navegador, sin servidor, sin cuentas y sin conexión. Tu progreso
         <img alt="ISO/IEC 27001" src="https://img.shields.io/badge/ISO%2FIEC%2027001-2022-3B6FD4?style=for-the-badge"/>
         <img alt="MAGERIT" src="https://img.shields.io/badge/MAGERIT-v3-E07B39?style=for-the-badge"/>
         <img alt="ENS" src="https://img.shields.io/badge/ENS-pr%C3%B3ximamente-8E8E93?style=for-the-badge"/><br>
-        <sub><code>cláusulas 4–9 · 93 controles · CertiProf I27001F · ENS, ISO 27005, 22301, 19011 y 27701 en la hoja de ruta</code></sub>
+        <sub><code>cláusulas 4–10 · 93 controles · CertiProf I27001F · ENS, ISO 27005, 22301, 19011 y 27701 en la hoja de ruta</code></sub>
       </td>
       <td width="50%" valign="top"><code>├─ ▣ contenido:</code><br><br>
-        <img alt="Unidades" src="https://img.shields.io/badge/unidades-25-5E5CE6?style=for-the-badge"/>
-        <img alt="Preguntas" src="https://img.shields.io/badge/preguntas-247-7B4FD1?style=for-the-badge"/>
-        <img alt="Documentos" src="https://img.shields.io/badge/documentos-14-2E9E7A?style=for-the-badge"/><br>
-        <sub><code>6 bloques · 59 términos · 10 riesgos · SoA de 93 controles · 14 acciones de tratamiento</code></sub>
+        <img alt="Unidades" src="https://img.shields.io/badge/unidades-29-5E5CE6?style=for-the-badge"/>
+        <img alt="Preguntas" src="https://img.shields.io/badge/preguntas-280-7B4FD1?style=for-the-badge"/>
+        <img alt="Documentos" src="https://img.shields.io/badge/documentos-15-2E9E7A?style=for-the-badge"/><br>
+        <sub><code>7 bloques · 64 términos · 10 riesgos · SoA de 93 controles · 14 acciones de tratamiento</code></sub>
       </td>
     </tr>
     <tr>
@@ -92,7 +92,7 @@ Funciona en el navegador, sin servidor, sin cuentas y sin conexión. Tu progreso
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="2"><code>version: 0.5 beta&nbsp;&nbsp;·&nbsp;&nbsp;ISO/IEC 27001:2022&nbsp;&nbsp;·&nbsp;&nbsp;bloques: 0–5 de 10&nbsp;&nbsp;·&nbsp;&nbsp;caso: Albatrel (ficticio)</code></td>
+      <td colspan="2"><code>version: 0.6 beta&nbsp;&nbsp;·&nbsp;&nbsp;ISO/IEC 27001:2022&nbsp;&nbsp;·&nbsp;&nbsp;bloques: 0–6 de 10&nbsp;&nbsp;·&nbsp;&nbsp;caso: Albatrel (ficticio)</code></td>
     </tr>
   </tfoot>
 </table>
@@ -158,12 +158,16 @@ mindmap
         Medición y KPI
         Auditoría interna
         Revisión por la dirección
+      Bloque 6 Cláusula 10
+        Mejora continua
+        No conformidades y causa raíz
+        Acciones correctivas
     Norma
       Cláusulas por PDCA
       93 controles en 4 temas
       11 nuevos en 2022
     Caso Albatrel
-      14 documentos
+      15 documentos
       10 riesgos
       SoA de 93 controles
       Modo Construir
@@ -182,10 +186,10 @@ mindmap
 | <img src="docs/assets/icons/map.svg" width="18"/> | **Ruta y bloques** | Los 11 bloques previstos; cada bloque activo con su cabecera, progreso y unidades. |
 | <img src="docs/assets/icons/graduation-cap.svg" width="18"/> | **Unidad** | Lección, prácticas y jefe. Ejercicios de elegir, verdadero o falso, emparejar, ordenar y clasificar, con corrección en una hoja inferior y la fuente de cada idea. |
 | <img src="docs/assets/icons/shield-check.svg" width="18"/> | **Mapa de la norma** | Cláusulas 4 a 10 ordenadas por el ciclo PDCA y los 93 controles con buscador, filtros por tema, los 11 nuevos de 2022 y la opción de marcarlos como entendidos. |
-| <img src="docs/assets/icons/briefcase.svg" width="18"/> | **Caso Albatrel** | La empresa, su pirámide documental y sus 14 documentos para leer, descargar en Markdown o construir paso a paso. |
+| <img src="docs/assets/icons/briefcase.svg" width="18"/> | **Caso Albatrel** | La empresa, su pirámide documental y sus 15 documentos para leer, descargar en Markdown o construir paso a paso. |
 | <img src="docs/assets/icons/building-2.svg" width="18"/> | **Ciudad de Albatrel** | Maqueta 3D de la empresa que crece con tu progreso: gírala, acércate y toca un edificio para ver la obra de su bloque. |
 | <img src="docs/assets/icons/file-check.svg" width="18"/> | **Simulacro** | 10, 20 o 40 preguntas con temporizador, marcadores, entrega manteniendo pulsado y revisión completa. |
-| <img src="docs/assets/icons/sparkles.svg" width="18"/> | **Repaso y glosario** | 59 términos con tarjetas que se giran y la sesión de «Mis errores». |
+| <img src="docs/assets/icons/sparkles.svg" width="18"/> | **Repaso y glosario** | 64 términos con tarjetas que se giran y la sesión de «Mis errores». |
 
 También incluye buscador global (`Ctrl + K`), progreso con calendario de constancia e insignias, temas claro y oscuro en índigo o coral, copia de seguridad del progreso, versión móvil y un **modo demostración** con progreso de ejemplo: [`?demo`](https://heindall92.github.io/atlas-grc/?demo).
 
@@ -231,7 +235,7 @@ También incluye buscador global (`Ctrl + K`), progreso con calendario de consta
 | Política | POL-01 Política de seguridad de la información |
 | Documentos del sistema | DOC-01 Contexto, partes interesadas y alcance · ORG-01 Roles y RACI · MET-01 Metodología de riesgos (MAGERIT) · OBJ-01 Objetivos · PLN-01 Competencia, concienciación y comunicación |
 | Normativas | NOR-01 Control de accesos · NOR-02 Copias de seguridad · NOR-03 Uso aceptable y teletrabajo |
-| Procedimientos | PRO-01 Gestión de incidentes · PRO-02 Gestión documental |
+| Procedimientos | PRO-01 Gestión de incidentes · PRO-02 Gestión documental · PRO-03 No conformidades y acciones correctivas |
 | Registros | REG-01 Análisis de riesgos (10 riesgos) · SOA-01 Declaración de Aplicabilidad (93 controles justificados) · PTR-01 Plan de tratamiento (14 acciones) |
 
 En el modo **Construir**, cada sección del documento se decide con un ejercicio y después se muestra ya redactada.
@@ -305,11 +309,10 @@ flowchart LR
 
 ## <img src="docs/assets/icons/telescope.svg" width="20" height="20" valign="middle"/> Hoja de ruta
 
-- [x] Bloques 0 a 5: fundamentos y cláusulas 4 a 9
-- [x] Caso Albatrel con 14 documentos y modo Construir
+- [x] Bloques 0 a 6: fundamentos y cláusulas 4 a 10
+- [x] Caso Albatrel con 15 documentos y modo Construir
 - [x] Bienvenida con plan personal, temas índigo y coral, modo demostración
 - [x] Ciudad de Albatrel: el progreso convertido en una maqueta 3D que crece
-- [ ] Bloque 6: cláusula 10 (no conformidades y mejora)
 - [ ] Bloques 7 a 9: controles del Anexo A en profundidad
 - [ ] Bloque 10: auditoría de certificación
 - [ ] Ilustraciones por bloque
@@ -317,7 +320,7 @@ flowchart LR
 
 ## <img src="docs/assets/icons/triangle-alert.svg" width="20" height="20" valign="middle"/> Limitaciones conocidas
 
-- **Beta**: el contenido cubre las cláusulas 4 a 9; el Anexo A en profundidad y la cláusula 10 están en camino.
+- **Beta**: el contenido cubre las cláusulas 4 a 10; el Anexo A en profundidad y la auditoría de certificación están en camino.
 - El simulacro reproduce el **formato** del examen de CertiProf, no sus preguntas. Confirma la nota de aprobado y las condiciones en la [web oficial](https://certiprof.com/es/pages/certified-iso-iec-27001-2022-foundation-i27001f-spanish).
 - El progreso vive en el navegador: si borras sus datos, se pierde. Usa **Ajustes → Guardar copia**.
 - No sustituye a la norma ni a un curso oficial: es una herramienta de estudio.

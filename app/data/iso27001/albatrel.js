@@ -83,7 +83,7 @@ C.ptr = [
   ['R-10', '5.31', 'Registro de requisitos legales y contractuales revisado cada año', 'Responsable de Seguridad', 'Ene 2027', 'En curso', 'B']
 ];
 
-/* ─────────── Los 14 documentos ─────────── */
+/* ─────────── Los 15 documentos ─────────── */
 C.docs = [
 D({id: 'pol', code: 'POL-01', t: 'Política de seguridad de la información', lvl: 'POL', icon: 'shield', cl: ['5.2'], ctl: ['5.1'], owner: 'Responsable de Seguridad', appr: 'Gerencia',
  why: 'Es el documento de primer nivel: el compromiso firmado de la dirección. Lo exige la cláusula 5.2 y es el control 5.1.',
@@ -255,6 +255,23 @@ D({id: 'pdoc', code: 'PRO-02', t: 'Procedimiento de gestión documental', lvl: '
   {sec: 4, ex: {k: 'tf', q: 'Los contratos con proveedores que necesita el SGSI son documentos externos que también se controlan.', a: true, ref: ['une', 14]}}
  ]}),
 
+D({id: 'pnc', code: 'PRO-03', t: 'Procedimiento de no conformidades y acciones correctivas', lvl: 'PRO', icon: 'refresh-cw', cl: ['10.1', '10.2'], ctl: [], owner: 'Responsable de Seguridad', appr: 'Comité de Seguridad',
+ why: 'Cómo detecta, analiza, corrige y cierra Albatrel sus no conformidades, y cómo registra las mejoras (cláusula 10).',
+ body: [
+  {h: '1. Origen y registro', ul: ['Cualquier persona puede comunicar una posible NC al Responsable de Seguridad.', 'Orígenes: auditorías, indicadores, incidentes, quejas de clientes y revisión por la dirección.', 'Cada NC recibe un código (NC-AAAA-nn) y una ficha en el registro de NC.']},
+  {h: '2. Reacción inmediata', p: ['El responsable del proceso controla y corrige la NC y atiende sus consecuencias en un plazo máximo de 5 días laborables. La corrección queda anotada en la ficha.']},
+  {h: '3. Análisis de la causa', ul: ['Se usa la técnica de los 5 porqués; si la NC es compleja, un diagrama de espina de pescado.', 'Se revisa si existen o podrían ocurrir NC similares en otros procesos.']},
+  {h: '4. Acción correctiva', table: {head: ['Gravedad', 'Plazo para implantar', 'Aprueba'], rows: [['NC mayor', '30 días', 'Comité de Seguridad'], ['NC menor', '90 días', 'Responsable de Seguridad']]}},
+  {h: '5. Eficacia y cierre', ul: ['Se revisa la eficacia pasado un periodo razonable (al menos un ciclo del control afectado).', 'Si no ha sido eficaz, se reabre el análisis.', 'Si hace falta, se actualizan los riesgos (REG-01) y los documentos del SGSI.']},
+  {h: '6. Mejoras y seguimiento', p: ['Las oportunidades de mejora se anotan en el registro de mejoras (MJ-nn). El Comité revisa NC y mejoras cada trimestre, y su estado es una entrada de la revisión por la dirección.']}
+ ],
+ build: [
+  {sec: 1, ex: {k: 'choice', q: 'Restaurar hoy la copia que no se probó es…', opts: ['La corrección', 'La acción correctiva', 'Una mejora'], a: 0, ref: ['uceval', 11]}},
+  {sec: 2, ex: {k: 'tf', q: '10.2 pide comprobar si existen o podrían ocurrir NC similares.', a: true, ref: ['une', 17]}},
+  {sec: 4, ex: {k: 'choice', q: '¿Qué se hace después de implantar la acción correctiva?', opts: ['Revisar su eficacia', 'Cerrar la NC sin más', 'Borrar la ficha'], a: 0, ref: ['une', 17]}},
+  {sec: 5, ex: {k: 'choice', q: 'El estado de las NC y acciones correctivas es una entrada de…', opts: ['La revisión por la dirección (9.3.2)', 'El alcance (4.3)', 'La política (5.2)'], a: 0, ref: ['une', 16]}}
+ ]}),
+
 D({id: 'nuso', code: 'NOR-03', t: 'Normativa de uso aceptable y teletrabajo', lvl: 'NOR', icon: 'users', cl: [], ctl: ['5.10', '6.7', '7.7', '8.1', '6.8'], owner: 'Responsable de Seguridad', appr: 'Comité de Seguridad',
  why: 'Reglas del día a día para toda la plantilla, también en casa (tratan R-04 y R-08).',
  body: [
@@ -272,5 +289,5 @@ D({id: 'nuso', code: 'NOR-03', t: 'Normativa de uso aceptable y teletrabajo', lv
 ];
 
 C.plan = C.plan || [];
-C.plan.unshift(['file-check', 'Los 14 documentos de su SGSI', 'Política, alcance, roles, riesgos, SoA, plan de tratamiento, objetivos, normativas y procedimientos. Constrúyelos paso a paso.']);
+C.plan.unshift(['file-check', 'Los 15 documentos de su SGSI', 'Política, alcance, roles, riesgos, SoA, plan de tratamiento, objetivos, normativas y procedimientos. Constrúyelos paso a paso.']);
 })();

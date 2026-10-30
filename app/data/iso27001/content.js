@@ -34,7 +34,7 @@ T.caso = {
     ['compass', 'Bloques 0 y 1 · Contexto, partes interesadas, alcance, política y roles', 'Ya los tienes en las unidades 5 a 8.'],
     ['scale', 'Bloque 2 · Análisis de riesgos, SoA y plan de tratamiento', 'Riesgos del padrón, la sede electrónica y las historias clínicas.'],
     ['file-text', 'Bloque 3 · Competencia, concienciación, comunicación y documentación', 'Su plan de formación y su cuerpo normativo.'],
-    ['refresh-cw', 'Bloques 4 a 6 · Operación, métricas, auditoría interna y mejora', 'Próximamente.'],
+    ['refresh-cw', 'Bloques 4 a 6 · Operación, métricas, auditoría interna y mejora', 'Sus indicadores, su programa de auditoría, el acta de revisión y la NC de las copias (PRO-03).'],
     ['shield', 'Bloques 7 a 9 · Controles del Anexo A aplicados a Albatrel', 'Próximamente.']
   ],
   pyramid: [
