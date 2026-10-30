@@ -273,8 +273,8 @@
         }
       });
       card.classList.add('is-3d'); bAuto.hidden = false;
-    }).catch(() => { /* sin WebGL: se queda el plano SVG */ });
-    requestAnimationFrame(() => requestAnimationFrame(go));
+    }).catch((e) => { console.warn('Ciudad 3D no disponible; se usa el plano SVG.', e); });
+    setTimeout(go, 40);
     if (grew) setTimeout(() => card.isConnected && pr.print(ticket(st, old)), UI.RM() ? 300 : 1400);
 
     const built = st.blocks.filter(s => s.floors > 0).length, open = st.blocks.filter(s => !s.soon).length;
@@ -310,5 +310,5 @@
     return a;
   }
 
-  window.City = {view, mini, data};
+  window.City = {view, mini, data, B, TREES, LAMPS, WALL};
 })();

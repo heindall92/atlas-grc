@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/atlas-header.svg" alt="Atlas GRC · Aprende la ISO/IEC 27001 desde cero" width="100%"/>
+  <img src="docs/assets/atlas-header-ciudad.webp" alt="Atlas GRC · Aprende la ISO/IEC 27001 desde cero. La ciudad de Albatrel en 3D, de noche, con el faro girando y los coches circulando" width="100%"/>
 </p>
 
 <p align="center">
@@ -190,6 +190,7 @@ mindmap
 | <img src="docs/assets/icons/building-2.svg" width="18"/> | **Ciudad de Albatrel** | Maqueta 3D de la empresa que crece con tu progreso: gírala, acércate y toca un edificio para ver la obra de su bloque. |
 | <img src="docs/assets/icons/file-check.svg" width="18"/> | **Simulacro** | 10, 20 o 40 preguntas con temporizador, marcadores, entrega manteniendo pulsado y revisión completa. |
 | <img src="docs/assets/icons/sparkles.svg" width="18"/> | **Repaso y glosario** | 64 términos con tarjetas que se giran y la sesión de «Mis errores». |
+| <img src="docs/assets/icons/user-round.svg" width="18"/> | **Acerca de** | Autor, enlace al código fuente, aviso de independencia y las demás herramientas GRC del ecosistema (también en Ajustes). |
 
 También incluye buscador global (`Ctrl + K`), progreso con calendario de constancia e insignias, temas claro y oscuro en índigo o coral, copia de seguridad del progreso, versión móvil y un **modo demostración** con progreso de ejemplo: [`?demo`](https://heindall92.github.io/atlas-grc/?demo).
 
@@ -242,7 +243,7 @@ En el modo **Construir**, cada sección del documento se decide con un ejercicio
 
 ## <img src="docs/assets/icons/building-2.svg" width="20" height="20" valign="middle"/> La ciudad de Albatrel
 
-Una maqueta 3D de la empresa que se construye mientras estudias, hecha con [Three.js](https://threejs.org) (MIT, incluido en `app/vendor/three`). Tiene luz solar con sombras, materiales por fachada (muro cortina, ladrillo, piedra, hormigón, paneles), coches que circulan, grúas que giran y modo noche con ventanas y farolas encendidas. Se gira arrastrando y se acerca con `Ctrl + rueda` (en el móvil, con dos dedos).
+Una maqueta 3D de la empresa que se construye mientras estudias, hecha con [Three.js](https://threejs.org) (MIT, incluido en `app/vendor/three`). Tiene luz solar con sombras, materiales por fachada (muro cortina, ladrillo, piedra, hormigón, paneles), coches que circulan, peatones por las aceras, bancos en la plaza, sombras de nubes que pasan, grúas que giran y modo noche con ventanas, farolas y charcos de luz. Se gira arrastrando y se acerca con `Ctrl + rueda` (en el móvil, con dos dedos).
 
 | Lo que haces | Lo que crece |
 |---|---|
@@ -260,6 +261,8 @@ Inspiración (Fuente web), sin copiar código ni dibujos:
 - [The Kitchen de dqnamo](https://www.dqnamo.com/kitchen): componentes táctiles, como los botones con profundidad y la impresora de tickets.
 
 Si el navegador no tiene WebGL, se muestra el plano isométrico en SVG.
+
+La cabecera de este README es la misma maqueta grabada en bucle con `tools/cabecera.py`: GitHub no ejecuta 3D en un README, pero sí muestra imágenes animadas (WebP).
 
 ## <img src="docs/assets/icons/rocket.svg" width="20" height="20" valign="middle"/> Arranque rápido
 
@@ -352,7 +355,7 @@ atlas-grc/
 │
 ├── 📄 docs/                      Capturas e iconos del README
 ├── 🎨 diseno/                    Prompts de las ilustraciones
-├── 🛠️ tools/                      extraer.py (MarkItDown, para el pack privado)
+├── 🛠️ tools/                      extraer.py (MarkItDown) · cabecera.py (graba la ciudad para la cabecera)
 ├── 🐍 serve.py · Iniciar.bat     Servidor local
 └── 🌐 index.html · .nojekyll     Entrada de GitHub Pages (redirige a app/)
 ```

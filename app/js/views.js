@@ -448,6 +448,67 @@
   }
 
   /* ═════ Ajustes y ayuda ═════ */
+  /* ═════ Acerca de: autor, código fuente y el ecosistema GRC (como en Rosetta) ═════ */
+  const VERSION = '0.6 beta';
+  const AUTOR = {nombre: 'Yoandy Ramírez Delgado', email: 'yoandyramirezdelgado@gmail.com', repo: 'https://github.com/heindall92/atlas-grc',
+    links: [['linkedin', 'LinkedIn', 'https://www.linkedin.com/in/yoandyrd92/'], ['github', 'GitHub', 'https://github.com/heindall92'],
+      ['globe', 'Portafolio', 'https://yoandyramirez.com'], ['hackthebox', 'HackTheBox', 'https://profile.hackthebox.com/profile/019c5812-b4ca-7315-b12f-14db6d2b42fa']]};
+  // Logotipos de marca (no existen en Lucide): GitHub y Hack The Box de Simple Icons (CC0); LinkedIn, dibujado
+  const BRAND = {
+    github: 'M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12',
+    hackthebox: 'm22.5106 6.4566.0008-.0123a.888.888 0 0 0-.2717-.6384c-.0084-.0084-.018-.0155-.0267-.0235-.0186-.0166-.0371-.0333-.0572-.0484-.0193-.0147-.04-.0276-.0607-.0406-.0096-.006-.0182-.0131-.0281-.0188L12.4576.1266a.891.891 0 0 0-.9223.0043L1.933 5.6744c-.0107.0062-.0203.014-.0307.0205-.0073.0047-.015.008-.0223.0128-.007.0047-.013.0106-.02.0155a.8769.8769 0 0 0-.147.1333l-.0026.003a.8872.8872 0 0 0-.2218.5847l.0009.014c-.0002.0088-.0015.0176-.0015.0264v11.0708c0 .3277.1802.6288.469.7836l9.5986 5.5417c.0076.0044.0158.0075.0236.0117a.8754.8754 0 0 0 .166.0687c.0134.004.0266.0083.0401.0117a.8793.8793 0 0 0 .072.0142c.0117.0019.0232.0045.0349.006a.835.835 0 0 0 .2157 0c.0117-.0015.0232-.0041.0348-.006a.9.9 0 0 0 .072-.0142c.0135-.0034.0267-.0077.04-.0117a.895.895 0 0 0 .0646-.0217.9134.9134 0 0 0 .1015-.047c.0078-.0042.016-.0072.0236-.0117l9.5986-5.5417a.8888.8888 0 0 0 .469-.7836V6.4779c0-.0071-.0012-.0142-.0014-.0213zM5.2543 6.0822l6.5367-3.774a.4182.4182 0 0 1 .4182 0l6.5366 3.774a.4182.4182 0 0 1 0 .7243l-6.5367 3.774a.4182.4182 0 0 1-.4182 0l-6.5366-3.774a.4182.4182 0 0 1 0-.7243zm5.6134 14.3449a.4172.4172 0 0 1-.626.3613L3.718 17.0218a.4173.4173 0 0 1-.2086-.3613V9.1279a.4172.4172 0 0 1 .6258-.3613l6.524 3.7666a.4172.4172 0 0 1 .2086.3614v7.5325zm9.623-3.7666a.4173.4173 0 0 1-.2086.3613l-6.5239 3.7666a.4172.4172 0 0 1-.6259-.3613v-7.5325c0-.149.0796-.2868.2087-.3614l6.5239-3.7666a.4172.4172 0 0 1 .6258.3613v7.5326z'
+  };
+  function brand(k) {
+    const s = h('span.brand-ic', {'aria-hidden': 'true'});
+    if (k === 'linkedin') s.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16"><rect x="1" y="1" width="22" height="22" rx="4" fill="currentColor"/><text x="12" y="17.2" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="13" fill="#fff">in</text></svg>';
+    else if (BRAND[k]) s.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="' + BRAND[k] + '"/></svg>';
+    else return icon(k);
+    return s;
+  }
+  const ext = (href, cls, ...kids) => h('a' + cls, {href, target: '_blank', rel: 'noopener noreferrer'}, ...kids);
+  // El ecosistema: cada herramienta enlaza a las demás. Webs comprobadas el 30/10/2026.
+  const SUITE = [
+    ['atlas', 'Atlas GRC', 'Aprender la ISO/IEC 27001 desde cero: lecciones, prácticas, simulacros CertiProf y la ciudad de Albatrel que crece contigo.', null, 'https://github.com/heindall92/atlas-grc'],
+    ['argos', 'ARGOS', 'Laboratorio de práctica GRC: rutas, máquinas con flags y simulacros cronometrados de ENS, ISO/IEC 27001 y continuidad.', 'https://heindall92.github.io/argos-grc/', 'https://github.com/heindall92/argos-grc'],
+    ['rosetta', 'Rosetta', 'Mapa multinorma: ENS, ISO/IEC 27001, NIS2, DORA, RGPD y más en 152 controles unificados, con equivalencias ENS ↔ ISO.', 'https://heindall92.github.io/rosetta_multinorma/', 'https://github.com/heindall92/rosetta_multinorma'],
+    ['ens', 'ENS Compliance Studio', 'Categorización del sistema, análisis de riesgos MAGERIT, Declaración de Aplicabilidad y preauditoría del ENS.', 'https://heindall92.github.io/grc_ens_compliance_studio/app/dist/ens-compliance-studio.html', 'https://github.com/heindall92/grc_ens_compliance_studio'],
+    ['kairos', 'KAIROS', 'Continuidad de negocio: BIA, BCP y DRP con la ruta crítica de recuperación de cada función.', 'https://heindall92.github.io/kairos/', 'https://github.com/heindall92/kairos'],
+    ['ctem', 'CTEM-Nexus', 'Gestión de la exposición: prioriza hallazgos de escáneres y pentest y dibuja las rutas de ataque hacia los activos críticos.', 'https://heindall92.github.io/ctem-nexus/', 'https://github.com/heindall92/ctem-nexus'],
+    ['adaudit', 'ENS AD Auditor', 'Audita el Directorio Activo frente a las medidas de control de acceso del ENS (op.acc).', 'https://heindall92.github.io/ens_ad-auditor/', 'https://github.com/heindall92/ens_ad-auditor'],
+    ['mcpshield', 'MCP-Shield', 'Audita las configuraciones MCP de los asistentes de IA: cadena de suministro, secretos, ficheros y tool poisoning.', 'https://heindall92.github.io/mcp-shield/', 'https://github.com/heindall92/mcp-shield'],
+    ['norvik', 'Norvik', 'Gobernanza: roles, responsables y políticas que unen al resto de herramientas.', null, 'https://github.com/heindall92/Norvik_Gobernanza']
+  ];
+  function about() {
+    return [
+      h('div.about-card',
+        h('div.about-av', {'aria-hidden': 'true'}, 'YR'),
+        h('div.about-who',
+          h('b.about-name', AUTOR.nombre), h('span.about-role', 'Diseño y desarrollo de Atlas'),
+          h('small', 'Junior Pentester · eJPTv2 · AI Governance (ISO 42001) · SysAdmin'),
+          h('div.about-links', AUTOR.links.map(([k, l, href]) => ext(href, '.about-link', brand(k), l)), ext('mailto:' + AUTOR.email, '.about-link', icon('mail'), 'Correo')))),
+      h('h4', 'Sobre la herramienta'),
+      h('p', h('b', 'Atlas GRC ' + VERSION), ' · ISO/IEC 27001:2022. Herramienta de estudio: no sustituye a la norma, a un curso oficial ni a una auditoría de certificación. El caso Albatrel es ficticio.'),
+      h('p.muted', {style: {fontSize: '13px'}}, 'No está afiliada ni respaldada por ISO, IEC, UNE, CertiProf, el CCN ni ninguna entidad de certificación. Iconos Lucide (ISC). Ciudad 3D con Three.js (MIT).'),
+      ext(AUTOR.repo, '.about-repo', brand('github'), 'github.com/heindall92/atlas-grc'),
+      h('h4', 'Herramientas GRC del autor'),
+      h('p.muted', {style: {fontSize: '13.5px'}}, 'Se complementan: Atlas te enseña la norma, ARGOS te entrena, Rosetta traduce entre marcos, ENS Compliance Studio prepara el ENS, KAIROS cubre la continuidad, CTEM-Nexus mide la exposición técnica, ENS AD Auditor revisa el directorio, MCP-Shield audita los asistentes de IA y Norvik gobierna el conjunto.'),
+      h('div.suite', SUITE.map(([id, n, d, app, repo]) => h('article.suite-card' + (id === 'atlas' ? '.here' : ''),
+        h('div.suite-hd', h('b', n), id === 'atlas' ? h('span.tag.suite-here', 'Estás aquí') : null),
+        h('p', d),
+        h('div.suite-row', id !== 'atlas' && app ? ext(app, '.btn.sm.primary.press', 'Abrir la app', icon('arrow-right')) : null, ext(repo, '.btn.sm.press', brand('github'), 'Código'))))),
+      h('div.help-cta', h('b', icon('life-buoy'), '¿Algo no funciona o tienes una idea?'),
+        h('p', 'Atlas no tiene soporte en directo. Abre una incidencia en el repositorio o escribe al autor.'),
+        h('div.suite-row',
+          ext(AUTOR.repo + '/issues/new', '.btn.sm.primary.press', icon('bug'), 'Abrir una incidencia'),
+          ext('mailto:' + AUTOR.email + '?subject=Atlas%20GRC', '.btn.sm.press', icon('mail'), 'Escribir al autor'),
+          ext(AUTOR.repo, '.btn.sm.press', brand('github'), 'Ver el código')))
+    ];
+  }
+  function aboutView() {
+    return h('div.view', h('div.eyebrow.track', h('span.dot'), 'Atlas GRC ' + VERSION), h('h1', 'Acerca de'),
+      h('p.lede', 'Quién hace Atlas, dónde está su código y qué otras herramientas GRC lo acompañan.'), h('div.sec.about-page', about()));
+  }
+
   function settings() {
     panel(close => {
       const sound = h('button.btn.sm.press', {type: 'button', onclick: (e) => { Store.set('sound', Store.s.sound === false); e.currentTarget.textContent = Store.s.sound === false ? 'Sonido: no' : 'Sonido: sí'; }}, Store.s.sound === false ? 'Sonido: no' : 'Sonido: sí');
@@ -475,8 +536,9 @@
           h('h4', 'Empezar de cero'),
           holdButton('Mantén para borrar todo el progreso', 1600, () => { Store.reset(); toast('Progreso borrado', {icon: 'trash-2'}); close(); App.render(); }, 'sm'),
           h('h4', 'De dónde sale el contenido'),
-          h('p', 'Las lecciones, ejercicios, explicaciones y el caso Albatrel son contenido propio. Las citas indican de dónde sale cada idea (curso, norma o fuente web). Gracias al profesor Ezequiel Wolf, cuya frase sobre cómo se encalla uno con la norma inspiró este proyecto.'),
-          h('p', 'Uso personal. El material del curso tiene derechos de autor: no se publica ni se sube a ningún sitio.'))
+          h('p', 'Las lecciones, ejercicios, explicaciones y el caso Albatrel son contenido propio. Las citas indican de dónde sale cada idea (curso, norma o fuente web). Gracias al profesor ', h('a.link', {href: 'https://www.linkedin.com/in/ezequiel-wolf/', target: '_blank', rel: 'noopener noreferrer'}, 'Ezequiel Wolf'), ', cuya frase sobre cómo se encalla uno con la norma inspiró este proyecto.'),
+          h('p', 'Uso personal. El material del curso tiene derechos de autor: no se publica ni se sube a ningún sitio.'),
+          h('h4', 'Acerca de'), ...about())
       ];
     });
   }
@@ -564,5 +626,5 @@
 
   function notFound() { return h('div.view', h('h1', 'No encuentro esa página'), h('a.btn.primary.press', {href: '#/'}, 'Volver a Hoy')); }
 
-  window.Views = {today, path, unit, block, onboarding, norma, review, flashcards, glossary, caso, examCover, library, progress, tracks, settings, notFound, unitState, allUnits, nextStep};
+  window.Views = {aboutView, today, path, unit, block, onboarding, norma, review, flashcards, glossary, caso, examCover, library, progress, tracks, settings, notFound, unitState, allUnits, nextStep};
 })();
