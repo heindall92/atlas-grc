@@ -1,7 +1,11 @@
 /* Atlas GRC · estado y progreso.
    Todo se guarda en este navegador (localStorage). Cada norma tiene su propio progreso. */
 (function () {
-  const KEY = 'atlas-grc.v1';
+  /* Modo demostración (?demo): progreso de ejemplo guardado aparte; nunca toca el progreso real */
+  const DEMO = /[?&]demo(&|$)/.test(location.search);
+  const KEY = DEMO ? 'atlas-grc.demo' : 'atlas-grc.v1';
+  /* &captura: sin animaciones de entrada (para hacer capturas del README) */
+  if (/[?&]captura(&|$)/.test(location.search)) document.documentElement.classList.add('captura');
   const BOXES = [0, 1, 3, 7, 14, 30];      // días de espera por caja (Leitner)
   const day = (d = new Date()) => {
     const z = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
@@ -13,6 +17,19 @@
   let S;
   try { S = Object.assign(blank(), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { S = blank(); }
 
+  if (DEMO && !S.booted) {
+    const t0 = new Date(); const d = (n) => { const x = new Date(t0); x.setDate(x.getDate() - n); return new Date(x.getTime() - x.getTimezoneOffset() * 60000).toISOString().slice(0, 10); };
+    const days = {}; [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 16, 19, 22].forEach((n, i) => { days[d(n)] = {xp: n === 0 ? 42 : 30 + (i * 17) % 70, mins: 12 + (i * 7) % 25, lessons: n === 0 ? 1 : 1, cards: n === 0 ? 6 : 8}; });
+    const lab = (b) => ({best: b, first: b, last: d(3)});
+    const L = {}, labs = {}, boss = {};
+    ['u0', 'u1', 'u2', 'u3', 'u4', 'u5', 'u6', 'u7', 'u9', 'u10'].forEach(u => { L[u] = d(5); });
+    ['u0l1', 'u1l1', 'u1l2', 'u1l3', 'u2l1', 'u2l2', 'u3l1', 'u3l2', 'u4l1', 'u4l2', 'u4l3', 'u5l1', 'u5l2', 'u6l1', 'u6l2', 'u7l1', 'u9l1'].forEach((id, i) => { labs[id] = lab(i % 3 ? 1 : .8); });
+    ['u0', 'u1', 'u2', 'u3', 'u4', 'u5', 'u6'].forEach(u => { boss[u] = {won: true, best: .9, last: d(4)}; });
+    S = Object.assign(blank(), {booted: true, xp: 1840, days, goal: 60, plan: {goal: 0, level: 0, min: 1},
+      tracks: {iso27001: {lessons: L, labs, boss, cards: {}, mistakes: {}, known: {'5.1': 1, '5.2': 1, '5.3': 1, '5.9': 1, '5.15': 1, '8.5': 1, '8.13': 1, '8.8': 1}, docs: {pol: d(2), ctx: d(2), org: d(1), met: d(1)},
+        exams: [{date: d(1), good: 33, n: 40, pct: .825, pass: true, mins: 41}, {date: d(8), good: 27, n: 40, pct: .675, pass: false, mins: 52}]}}});
+  }
+  { const m = location.search.match(/[?&]tema=(light|dark)/); if (DEMO && m) S.theme = m[1]; }
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* modo privado: se sigue sin guardar */ } };
   const tr = (id = S.track) => S.tracks[id] || (S.tracks[id] = {lessons: {}, labs: {}, boss: {}, cards: {}, mistakes: {}, known: {}, exams: []});
   const today = () => S.days[day()] || (S.days[day()] = {xp: 0, mins: 0, lessons: 0, cards: 0});

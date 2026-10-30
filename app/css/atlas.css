@@ -474,7 +474,7 @@ a.tag:hover{filter:brightness(.97)}
 .ctl b{font-size:13.5px;line-height:1.25;font-weight:600}
 .ctl .new{position:absolute;top:10px;right:10px;font-size:10px;font-weight:700;letter-spacing:.04em;padding:2px 6px;border-radius:6px;background:var(--warn-soft);color:var(--warn)}
 .ctl.known{background:color-mix(in oklab,var(--c) 7%,var(--surface))}
-.ctl .known-ico{font-size:13px;color:var(--ok);vertical-align:-2px;margin-left:4px}
+.ctl .known-ico{font-size:13px;color:var(--ok);vertical-align:-2px;margin-left:4px;display:inline-block}
 .th-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13.5px;color:var(--ink-2)}
 .th-legend span{display:inline-flex;align-items:center;gap:7px}
 .th-legend i{width:10px;height:10px;border-radius:3px;background:var(--c)}
@@ -633,7 +633,7 @@ a.tag:hover{filter:brightness(.97)}
 
 /* Iconos Lucide en lugar de emojis */
 .idea .body li .bul.ic .ico{font-size:16px}
-.doc-ico{font-size:12px;vertical-align:-2px;margin-left:4px;color:var(--warn)}
+.doc-ico{font-size:12px;vertical-align:-2px;margin-left:4px;color:var(--warn);display:inline-block}
 .flame-ico{color:#ff6b00;font-size:22px}
 .combo{display:inline-flex;align-items:center;justify-content:flex-end;gap:3px}
 .combo .ico{font-size:15px}
@@ -866,3 +866,6 @@ a.tag:hover{filter:brightness(.97)}
 .soa-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0}
 @media (max-width:720px){.soa-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .doc-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+
+/* Capturas del README (?demo&captura): todo visible al instante */
+.captura *,.captura *::before,.captura *::after{animation:none!important;transition:none!important}
