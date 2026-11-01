@@ -10,6 +10,9 @@
 <meta name="description" content="Atlas GRC: estudio personal de la ISO/IEC 27001:2022 desde cero, con el material del curso GRC.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235e5ce6'/%3E%3Cstop offset='1' stop-color='%23bf5af2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='9' fill='url%28%23g%29'/%3E%3Cg transform='translate%284 4%29' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/atlas.css">
+<script src="js/i18n.js"></script>
+<script>/* En inglés se cargan los diccionarios (solo entonces) */
+if (I18N.lang === 'en') ['ui', 'extra', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10', 'c11', 'c12', 'c13'].forEach(f => document.write('<script src="i18n/en-' + f + '.js" onerror="void 0"><\/script>'));</script>
 </head>
 <body>
 <a class="skip" href="#main">Saltar al contenido</a>
@@ -42,6 +45,7 @@
 <script src="data/private/pack.js" onerror="void 0"></script>
 <script src="data/private/examen-ezequiel.js" onerror="void 0"></script>
 <script src="data/iso27001/norma.js"></script>
+<script>I18N.apply();</script>
 <script src="js/store.js"></script>
 <script src="js/motion.js"></script>
 <script src="js/exercises.js"></script>
@@ -50,5 +54,6 @@
 <script src="js/docs.js"></script>
   <script src="js/city.js"></script>
 <script src="js/app.js"></script>
+<script>I18N.observe();</script>
 </body>
 </html>

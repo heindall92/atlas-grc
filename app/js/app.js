@@ -152,6 +152,8 @@
         h('span.chip.streak', {title: 'Días seguidos estudiando'}, icon('flame'), h('span#streak-n', String(Store.streak()))),
         h('span.chip.xp', {title: 'Experiencia total'}, icon('zap'), xp),
         h('button.search.press', {type: 'button', onclick: () => cmdk(true), 'aria-label': 'Buscar (Ctrl K)'}, icon('search'), h('span.lbl', 'Buscar'), h('kbd', 'Ctrl K')),
+        h('div.lang-seg', {role: 'group', 'aria-label': 'Idioma'}, [['es', 'ES', 'Español'], ['en', 'EN', 'English']].map(([k, l, full]) =>
+          h('button.press', {type: 'button', 'aria-pressed': String(I18N.lang === k), title: full, lang: k, onclick: () => { if (I18N.lang !== k) I18N.set(k); }}, l))),
         h('button#theme-btn.ib.press', {type: 'button', onclick: toggleTheme}),
         h('button.ib.press', {type: 'button', 'aria-label': 'Más', 'aria-haspopup': 'menu', onclick: (e) => moreMenu(e.currentTarget)}, icon('ellipsis'))));
     paintThemeBtn();
@@ -221,7 +223,8 @@
   function moreView() {
     return h('div.view', h('h1', 'Más'), h('div.lib', [...MORE.map(([href, ic, t, s]) => h('a.lib-i', {href}, h('span.li', icon(ic)), h('div', h('b', t), h('small', s)), icon('chevron-right'))),
       h('button.lib-i', {type: 'button', style: {textAlign: 'left', width: '100%', font: 'inherit'}, onclick: () => Views.settings()}, h('span.li', icon('settings')), h('div', h('b', 'Ajustes y ayuda'), h('small', 'Meta, sonido, copia de seguridad')), icon('chevron-right')),
-      h('button.lib-i', {type: 'button', style: {textAlign: 'left', width: '100%', font: 'inherit'}, onclick: toggleTheme}, h('span.li', icon('moon')), h('div', h('b', 'Cambiar tema'), h('small', 'Claro u oscuro')), icon('chevron-right'))]));
+      h('button.lib-i', {type: 'button', style: {textAlign: 'left', width: '100%', font: 'inherit'}, onclick: toggleTheme}, h('span.li', icon('moon')), h('div', h('b', 'Cambiar tema'), h('small', 'Claro u oscuro')), icon('chevron-right')),
+      h('button.lib-i', {type: 'button', style: {textAlign: 'left', width: '100%', font: 'inherit'}, onclick: () => I18N.set(I18N.lang === 'en' ? 'es' : 'en')}, h('span.li', icon('globe')), h('div', h('b', I18N.lang === 'en' ? 'Español' : 'English'), h('small', 'Cambiar de idioma')), icon('chevron-right'))]));
   }
 
   /* ── Arrancar reproductores ── */

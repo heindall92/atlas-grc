@@ -29,7 +29,8 @@
       tracks: {iso27001: {lessons: L, labs, boss, cards: {}, mistakes: {}, known: {'5.1': 1, '5.2': 1, '5.3': 1, '5.9': 1, '5.15': 1, '8.5': 1, '8.13': 1, '8.8': 1}, docs: {pol: d(2), ctx: d(2), org: d(1), met: d(1)},
         exams: [{date: d(1), good: 33, n: 40, pct: .825, pass: true, mins: 41}, {date: d(8), good: 27, n: 40, pct: .675, pass: false, mins: 52}]}}});
   }
-  { const m = location.search.match(/[?&]tema=(light|dark)/); if (DEMO && m) S.theme = m[1]; }
+  /* La app siempre abre en modo claro; el oscuro se elige con el botón (y &tema=dark en la demo, para capturas) */
+  { const m = location.search.match(/[?&]tema=(light|dark)/); S.theme = DEMO && m ? m[1] : 'light'; }
   /* &piel=coral|indigo: color de la app en la demostración (las capturas del README van en coral) */
   { const m = location.search.match(/[?&]piel=(coral|azul|verde|indigo)/); if (DEMO && m) S.skin = m[1] === 'indigo' ? null : m[1]; }
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* modo privado: se sigue sin guardar */ } };

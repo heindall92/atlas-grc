@@ -14,6 +14,8 @@
     return {lesson, labs, user, root, boss, won: !!(boss && boss.won), pct: done / steps, complete: lesson && user === u.labs.length && boss && boss.won,
       bossOpen: lesson && user >= 1, gold: lesson && root === u.labs.length && boss && boss.best >= 1};
   }
+  /* Clave estable de un término del glosario (en inglés se traduce el texto, pero el repaso sigue siendo el mismo) */
+  const gk = (g) => g.key || g[0];
   function allUnits() { const T = App.T(); return T.modules.filter(m => !m.soon).flatMap(m => m.units.map(id => T.units[id])); }
   /* Colores de cada bloque (portadas del carrusel y cabeceras) */
   const BLOCK_COL = [['#5e5ce6', '#0a84ff'], ['#30b0c7', '#5e5ce6'], ['#ff9f0a', '#ff375f'], ['#34c759', '#30b0c7'], ['#64d2ff', '#5e5ce6'], ['#bf5af2', '#ff375f'], ['#ffcc00', '#ff9f0a'], ['#5e5ce6', '#bf5af2'], ['#ff9f0a', '#ff6482'], ['#30d158', '#0a84ff'], ['#ff375f', '#bf5af2']];
@@ -39,10 +41,10 @@
   /* ═════ Hoy ═════ */
   function today() {
     const T = App.T(), td = Store.today(), nx = nextStep();
-    const dueCards = Store.dueCards(T.glossary.map(g => g[0])).length, dueMist = Store.dueMistakes().length;
+    const dueCards = Store.dueCards(T.glossary.map(gk)).length, dueMist = Store.dueMistakes().length;
     const reviewGoal = 10;
     const vals = [Math.min(1, td.lessons / 1), Math.min(1, td.xp / Store.s.goal), (dueCards + dueMist) === 0 && td.cards === 0 ? 0 : Math.min(1, td.cards / reviewGoal)];
-    const date = new Date().toLocaleDateString('es-ES', {weekday: 'long', day: 'numeric', month: 'long'});
+    const date = new Date().toLocaleDateString(I18N.locale, {weekday: 'long', day: 'numeric', month: 'long'});
     const units = allUnits(), doneUnits = units.filter(u => unitState(u).complete).length;
 
     const hero = nx ? h('section.hero',
@@ -266,7 +268,7 @@
   /* ═════ Repaso ═════ */
   function review() {
     const T = App.T();
-    const terms = T.glossary.map(g => g[0]);
+    const terms = T.glossary.map(gk);
     const due = Store.dueCards(terms), mist = Store.dueMistakes();
     const boxes = [0, 0, 0, 0, 0];
     terms.forEach(t => { const c = Store.card(t); boxes[(c ? Math.max(1, Math.min(c.box, 5)) : 1) - 1]++; });
@@ -287,8 +289,8 @@
   }
   function flashcards() {
     const T = App.T();
-    let queue = Store.dueCards(T.glossary.map(g => g[0]));
-    if (!queue.length) queue = UI_shuffle(T.glossary.map(g => g[0])).slice(0, 10);
+    let queue = Store.dueCards(T.glossary.map(gk));
+    if (!queue.length) queue = UI_shuffle(T.glossary.map(gk)).slice(0, 10);
     queue = UI_shuffle(queue).slice(0, 15);
     let i = 0, flipped = false, good = 0;
     const deck = h('div.deck');
@@ -300,7 +302,7 @@
         deck.append(h('div.result.blur-in', h('div.medal.track', icon('layers')), h('h2', 'Repaso terminado'), h('p.lede', `${good} de ${queue.length} las sabías.`), h('a.btn.primary.press', {href: '#/'}, 'Volver a Hoy')));
         return;
       }
-      const g = T.glossary.find(x => x[0] === queue[i]);
+      const g = T.glossary.find(x => gk(x) === queue[i]);
       flipped = false;
       const card = h('button.flash', {type: 'button', 'aria-label': 'Girar tarjeta'},
         h('div.flash-in', h('div.face', h('small', 'Tarjeta ' + (i + 1) + ' de ' + queue.length), h('div.term', g[0]), h('small', 'Toca o pulsa Espacio para girar')),
@@ -522,6 +524,8 @@
         h('div.panel-b',
           h('h4', 'Color'),
           (() => { const g = h('div.opt-row', [['', 'Malva'], ['coral', 'Coral'], ['azul', 'Azul eléctrico'], ['verde', 'Verde']].map(([k, l]) => h('button.pill.press', {type: 'button', 'aria-pressed': String((Store.s.skin || '') === k), onclick: (e) => { App.setSkin(k || null); g.querySelectorAll('.pill').forEach(p => p.setAttribute('aria-pressed', 'false')); e.currentTarget.setAttribute('aria-pressed', 'true'); }}, l))); return g; })(),
+          h('h4', 'Idioma'),
+          h('div.opt-row', [['es', 'Español'], ['en', 'English']].map(([k, l]) => h('button.pill.press', {type: 'button', 'aria-pressed': String(I18N.lang === k), onclick: () => { if (I18N.lang !== k) I18N.set(k); }}, l))),
           h('h4', 'Tu plan'),
           h('button.btn.sm.press', {type: 'button', onclick: () => { close(); setTimeout(onboarding, 300); }}, icon('compass'), 'Rehacer mi plan'),
           h('h4', 'Meta diaria'), goal,
