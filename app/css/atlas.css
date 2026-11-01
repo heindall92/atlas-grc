@@ -89,7 +89,7 @@ kbd{font:600 11px var(--mono);padding:2px 6px;border-radius:6px;background:var(-
 .track-btn:hover{border-color:color-mix(in oklab,var(--track) 40%,var(--line))}
 
 /* Pestañas: la pastilla activa se desliza (FLIP con transform, interrumpible) */
-.tabs{position:relative;display:flex;gap:2px;padding:4px;border-radius:999px;background:var(--fill);isolation:isolate}
+.tabs{position:relative;display:flex;justify-self:center;width:max-content;gap:2px;padding:4px;border-radius:999px;background:var(--fill);isolation:isolate}
 .tabs a{position:relative;z-index:1;display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 15px;border-radius:999px;text-decoration:none;font-size:14px;font-weight:600;color:var(--ink-2);white-space:nowrap;transition:color .2s var(--ease-out)}
 .tabs a .ico{font-size:16px}
 .tabs a[aria-current="page"]{color:var(--ink)}
@@ -172,8 +172,11 @@ a.tag:hover{filter:brightness(.97)}
 .ref .ico{font-size:13px;color:var(--ink-3)}
 @media (hover:hover){.ref:hover{border-color:color-mix(in oklab,var(--track) 45%,var(--line));color:var(--ink)}}
 .ref.web .ico{color:var(--web)}
-.ref.cite{cursor:default;border-style:dashed}
-@media (hover:hover){.ref.cite:hover{border-color:var(--line);color:var(--ink-2)}}
+.ref.cite{cursor:pointer;font-family:inherit}
+.ref.cite .ico:last-child{font-size:12px;opacity:.6;transition:transform .25s var(--ease-out)}
+.ref.cite[aria-expanded="true"]{border-color:color-mix(in oklab,var(--track) 45%,transparent);color:var(--track)}
+.ref.cite[aria-expanded="true"] .ico:last-child{transform:rotate(180deg)}
+@media (hover:hover){.ref.cite:hover{border-color:color-mix(in oklab,var(--track) 35%,transparent);color:var(--ink)}}
 
 /* Aparición escalonada (stagger) al entrar en una vista */
 .rise{animation:rise .5s var(--ease-out) both;animation-delay:calc(var(--i,0) * 40ms)}
@@ -1142,13 +1145,37 @@ main{padding-bottom:56px}
 .ft-legal a:hover{color:#fff}
 .ft-legal i{font-style:normal;opacity:.5}
 @media (max-width:980px){.ft-top{grid-template-columns:1fr;gap:32px}}
+.ft-soc-col{display:none}
+.ft-soc-grid{display:grid;grid-template-columns:repeat(2,44px);gap:10px}
 @media (max-width:760px){
   .ftr{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
-  .ft-card{padding:28px 22px 22px;border-radius:26px}
-  .ft-cols{grid-template-columns:1fr 1fr;gap:26px 16px}
-  .ft-col:last-child{grid-column:1 / -1}
-  .ft-cta{border-radius:20px}
+  .ft-card{padding:26px 20px 20px;border-radius:26px}
+  .ft-top{gap:26px}
+  .ft-tag{margin:10px 0 16px;font-size:15px}
+  .ft-cta-h{display:none}
+  .ft-cta{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .ft-btn{justify-content:center;padding:0 10px;white-space:nowrap}
+  .ft-long{display:none}
+  .ft-cols{grid-template-columns:1fr 1fr;gap:24px 16px}
+  .ft-col ul{gap:10px}
+  .ft-a{font-size:15px}
+  .ft-more{display:none}
+  .ft-soc-col{display:block}
+  .ft-social{display:none}
+  .ft-bottom{margin-top:24px;font-size:12.5px}
 }
 @media (prefers-reduced-motion:reduce){.ftr{transition:none;opacity:1;transform:none}}
 .captura .ftr{opacity:1;transform:none}
 .focus main{padding-bottom:120px}
+
+/* Resumen propio de la página citada (dentro de la tarjeta, sin abrir documentos) */
+.src-note{margin-top:10px;padding:12px 14px;border-radius:14px;background:color-mix(in oklab,var(--track) 6%,var(--surface-2));border:1px solid color-mix(in oklab,var(--track) 18%,transparent);font-size:14px;line-height:1.45;color:var(--ink-2);animation:src-in .3s var(--ease-out)}
+.src-h{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-3);margin-bottom:4px}
+.src-h b{color:var(--ink-2);font-weight:600}
+.src-t{display:block;color:var(--ink);font-size:14.5px;margin-bottom:4px}
+.src-note ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px}
+.src-note p{margin:0}
+.src-open{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:13px}
+@keyframes src-in{from{opacity:0;transform:translateY(-4px)}}
+.fb .src-note{margin:10px 0 0;max-height:34vh;overflow:auto}
+@media (prefers-reduced-motion:reduce){.src-note{animation:none}}

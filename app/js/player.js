@@ -62,7 +62,8 @@
         h('div', h('b', ok ? pick(['¡Correcto!', '¡Bien!', '¡Eso es!', '¡Perfecto!']) : (opts.timeout ? 'Se acabó el tiempo' : 'No exactamente')),
           h('small', ok ? (opts.xp ? '+' + opts.xp + ' XP' : '') : 'Respuesta correcta: ' + App.withTitle(api.answerText)))),
       why ? h('p.fb-why', {html: rich(why)}) : null,
-      h('div.fb-row', h('div.refs', item.ref ? App.refChip(item.ref) : null, item.src ? h('span.tag', item.src) : null),
+      item.ref ? App.sourceNote(item.ref) : null,
+      h('div.fb-row', h('div.refs', item.src ? h('span.tag', item.src) : null),
         h('button.btn.primary.press', {type: 'button', id: 'fb-next', onclick: onNext}, opts.last ? 'Terminar' : 'Continuar', icon('arrow-right'))));
     return wrap;
   }

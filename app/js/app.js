@@ -13,20 +13,38 @@
     docUrl(f, page) { return '/material/' + f.split('/').map(encodeURIComponent).join('/') + (page && /\.pdf$/i.test(f) ? '#page=' + page : ''); },
     /* Ruta local de un documento del curso: solo existe con el pack privado */
     docFile(key) { return (App.T().docFiles || {})[key] || null; },
+    /* Lo que explica la página citada, con palabras propias (data/iso27001/fuentes.js).
+       La app no depende de abrir ningún documento: el resumen va en la propia tarjeta. */
+    sourceNote(ref) {
+      if (!ref) return null;
+      const d = App.T().docs[ref[0]]; if (!d) return null;
+      const S = (App.T().sources || {})[ref[0] + '|' + (ref[1] || '')];
+      const pg = !d.nopage && ref[1] ? ', pág. ' + ref[1] : '';
+      const f = App.docFile(ref[0]);
+      return h('div.src-note',
+        h('div.src-h', icon('book-open'), h('span', 'Lo explica · ', h('b', (d.s || d.t.split(' · ')[0]) + pg))),
+        S ? [h('b.src-t', S.t), h('ul', S.p.map(t => h('li', t)))] : h('p', d.t),
+        f ? h('a.link.src-open', {href: App.docUrl(f, ref[1]), target: '_blank', rel: 'noopener'}, icon('file-text'), 'Abrir el documento original') : null);
+    },
+    /* Chip de cita: al tocarlo despliega debajo el resumen de esa página */
     refChip(ref, label) {
       if (!ref) return null;
       const d = App.T().docs[ref[0]];
       if (!d) return null;
       const short = label || d.s || d.t.split(' · ')[0];
-      const f = App.docFile(ref[0]);
-      if (!f) {
-        // Capa pública: la cita se muestra como texto, sin enlazar material ajeno
-        const pg = !d.nopage && ref[1] ? ', pág. ' + ref[1] : '';
-        return h('span.ref.cite', {title: 'Fuente: ' + d.t + pg}, icon('book-open'), short + pg);
-      }
-      const pdf = /\.pdf$/i.test(f);
-      return h('a.ref', {href: App.docUrl(f, ref[1]), target: '_blank', rel: 'noopener', title: d.t + (pdf ? ', página ' + ref[1] : '')},
-        icon(pdf ? 'file-text' : 'file-down'), short + (pdf && ref[1] ? ', pág. ' + ref[1] : ''));
+      const pg = !d.nopage && ref[1] ? ', pág. ' + ref[1] : '';
+      const key = ref[0] + '|' + (ref[1] || '');
+      const chip = h('button.ref.cite', {type: 'button', 'aria-expanded': 'false', title: 'Ver qué explica ' + d.t + pg}, icon('book-open'), short + pg, icon('chevron-down'));
+      chip.onclick = (e) => {
+        e.stopPropagation();
+        const box = chip.closest('.refs') || chip.parentNode;
+        const open = box.nextElementSibling && box.nextElementSibling.classList.contains('src-note') && box.nextElementSibling.dataset.k === key;
+        if (box.nextElementSibling && box.nextElementSibling.classList.contains('src-note')) box.nextElementSibling.remove();
+        box.querySelectorAll('.ref.cite').forEach(c => c.setAttribute('aria-expanded', 'false'));
+        if (open) return;
+        const n = App.sourceNote(ref); n.dataset.k = key; box.after(n); chip.setAttribute('aria-expanded', 'true');
+      };
+      return chip;
     },
     /* «8.13» → «8.13 · Copias de seguridad de la información» (solo tras responder: en el examen real no sale el nombre) */
     withTitle(txt) {
@@ -91,9 +109,10 @@
     const cols = [
       ['Aprender', [['#/', 'Hoy'], ['#/ruta', 'Ruta'], ['#/norma', 'Mapa de la norma'], ['#/examen', 'Simulacro'], ['#/repaso', 'Repaso']]],
       ['Albatrel', [['#/caso', 'El caso'], ['#/ciudad', 'La ciudad'], ['#/caso', 'Sus 15 documentos'], ['#/glosario', 'Glosario']]],
-      ['Ecosistema', [['https://heindall92.github.io/rosetta_multinorma/', 'Rosetta'], ['https://heindall92.github.io/argos-grc/', 'ARGOS'], ['https://heindall92.github.io/grc_ens_compliance_studio/app/dist/ens-compliance-studio.html', 'ENS Compliance Studio'], ['https://heindall92.github.io/kairos/', 'KAIROS'], ['#/acerca', 'Ver las 9 herramientas']]]
+      ['Ecosistema', [['https://heindall92.github.io/rosetta_multinorma/', 'Rosetta'], ['https://heindall92.github.io/argos-grc/', 'ARGOS'], ['https://heindall92.github.io/grc_ens_compliance_studio/app/dist/ens-compliance-studio.html', 'ENS Compliance Studio'], ['https://heindall92.github.io/kairos/', 'KAIROS', 1], ['#/acerca', 'Ver las 9 herramientas', 1]]]
     ];
     const link = ([href, t]) => href.startsWith('#') ? h('a.ft-a', {href}, t) : ext(href, '.ft-a', t, icon('arrow-up-right'));
+    const socials = (cls) => h('div' + cls, social.map(([k, l, href]) => ext(href, '.ft-soc', Views.brand(k), h('span.sr', l))));
     const social = [['linkedin', 'LinkedIn', 'https://www.linkedin.com/in/yoandyrd92/'], ['github', 'GitHub', 'https://github.com/heindall92'], ['globe', 'Portafolio', 'https://yoandyramirez.com'], ['hackthebox', 'HackTheBox', 'https://profile.hackthebox.com/profile/019c5812-b4ca-7315-b12f-14db6d2b42fa']];
     f.append(h('div.ft-card',
       h('div.ft-top',
@@ -102,10 +121,12 @@
           h('p.ft-tag', 'Aprende la ISO/IEC 27001 desde cero. Busca siempre el norte.'),
           h('b.ft-cta-h', 'Hecho en abierto para aprender GRC en español'),
           h('div.ft-cta',
-            ext(REPO, '.ft-btn.primary', Views.brand('github'), 'Código en GitHub'),
-            ext(REPO + '/issues/new', '.ft-btn', icon('lightbulb'), 'Proponer una mejora'))),
-        h('nav.ft-cols', {'aria-label': 'Mapa del sitio'}, cols.map(([t, ls]) => h('div.ft-col', h('h3', t), h('ul', ls.map(l => h('li', link(l)))))))),
-      h('div.ft-social', social.map(([k, l, href]) => ext(href, '.ft-soc', Views.brand(k), h('span.sr', l)))),
+            ext(REPO, '.ft-btn.primary', Views.brand('github'), 'Código', h('span.ft-long', ' en GitHub')),
+            ext(REPO + '/issues/new', '.ft-btn', icon('lightbulb'), 'Proponer', h('span.ft-long', ' una'), ' mejora'))),
+        h('nav.ft-cols', {'aria-label': 'Mapa del sitio'}, cols.map(([t, ls]) => h('div.ft-col', h('h3', t), h('ul', ls.map(l => h('li' + (l[2] ? '.ft-more' : ''), link(l)))))),
+          // En el móvil las redes ocupan el hueco junto a «Ecosistema»
+          h('div.ft-col.ft-soc-col', h('h3', 'El autor'), socials('.ft-soc-grid')))),
+      socials('.ft-social'),
       h('div.ft-bottom',
         h('span', '© 2026 Yoandy Ramírez Delgado · Atlas GRC ' + Views.VERSION),
         h('span.ft-legal', h('a', {href: '#/acerca'}, 'Acerca de'), h('i', '•'), ext(REPO, '', 'Código'), h('i', '•'), h('span', {title: 'El progreso se guarda solo en tu navegador'}, 'Sin cuentas ni seguimiento')))));
