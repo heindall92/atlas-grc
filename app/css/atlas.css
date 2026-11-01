@@ -1103,10 +1103,10 @@ main{padding-bottom:56px}
 .ftr{padding:0 max(20px,env(safe-area-inset-right)) 28px max(20px,env(safe-area-inset-left));opacity:0;transform:translateY(16px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}
 .ftr.in{opacity:1;transform:none}
 .focus .ftr{display:none}
-.ft-card{--li-in:#0b0d2b;--fi:#eef0ff;--fm:color-mix(in oklab,var(--track) 35%,#c9cdf2);max-width:1080px;margin:0 auto;position:relative;overflow:hidden;border-radius:32px;padding:40px 40px 26px;color:var(--fi);
+.ft-card{--ft-base:#0b0d2b;--ft-deep:#090a1f;--li-in:var(--ft-base);--fi:#eef0ff;--fm:color-mix(in oklab,var(--track) 30%,#cfd3e6);max-width:1080px;margin:0 auto;position:relative;overflow:hidden;border-radius:32px;padding:40px 40px 26px;color:var(--fi);
   background:radial-gradient(70% 90% at 85% 0%,color-mix(in oklab,var(--track) 55%,transparent),transparent 65%),
     radial-gradient(60% 70% at 0% 100%,color-mix(in oklab,var(--track-2) 30%,transparent),transparent 70%),
-    linear-gradient(160deg,color-mix(in oklab,var(--track) 30%,#0b0d2b),#090a1f 70%);
+    linear-gradient(160deg,color-mix(in oklab,var(--track) 24%,var(--ft-base)),var(--ft-deep) 70%);
   box-shadow:0 30px 60px -30px color-mix(in oklab,var(--track) 55%,transparent),inset 0 1px 0 rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.06)}
 .ft-card::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:.35;background:radial-gradient(1px 1px at 12% 22%,#fff,transparent),radial-gradient(1px 1px at 38% 12%,#fff,transparent),radial-gradient(1.5px 1.5px at 62% 30%,#fff,transparent),radial-gradient(1px 1px at 90% 70%,#fff,transparent),radial-gradient(1px 1px at 72% 88%,#fff,transparent)}
 .ft-top{display:grid;grid-template-columns:minmax(360px,1.2fr) minmax(0,1.6fr);gap:40px;position:relative;z-index:1}
@@ -1196,3 +1196,11 @@ main{padding-bottom:56px}
 
 .why-btn{height:32px;padding:0 12px;font-size:13px}
 .fb .src-note{margin-top:12px}
+
+/* Base oscura del pie según el color: evita mezclas turbias (verde sobre azul marino) */
+:root[data-skin="coral"] .ft-card{--ft-base:#1c0d10;--ft-deep:#120809;--fi:#fff1ef;--fm:color-mix(in oklab,var(--track) 28%,#e8d6d4)}
+:root[data-skin="azul"] .ft-card{--ft-base:#071233;--ft-deep:#040a1d;--fi:#eef4ff;--fm:color-mix(in oklab,var(--track) 30%,#cfdaf0)}
+:root[data-skin="verde"] .ft-card{--ft-base:#082015;--ft-deep:#04110b;--fi:#effaf3;--fm:color-mix(in oklab,var(--track) 30%,#cfe3d7);
+  background:radial-gradient(70% 90% at 85% 0%,color-mix(in oklab,var(--track) 42%,transparent),transparent 65%),
+    radial-gradient(60% 70% at 0% 100%,color-mix(in oklab,var(--track-2) 18%,transparent),transparent 70%),
+    linear-gradient(160deg,var(--ft-base),var(--ft-deep) 70%)}

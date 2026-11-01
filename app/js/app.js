@@ -122,8 +122,8 @@
           h('p.ft-tag', 'Aprende la ISO/IEC 27001 desde cero. Busca siempre el norte.'),
           h('b.ft-cta-h', 'Hecho en abierto para aprender GRC en español'),
           h('div.ft-cta',
-            ext(REPO, '.ft-btn.primary', Views.brand('github'), 'Código', h('span.ft-long', ' en GitHub')),
-            ext(REPO + '/issues/new', '.ft-btn', icon('lightbulb'), 'Proponer', h('span.ft-long', ' una'), ' mejora'))),
+            ext(REPO, '.ft-btn.primary', Views.brand('github'), h('span', 'Código', h('span.ft-long', ' en GitHub'))),
+            ext(REPO + '/issues/new', '.ft-btn', icon('lightbulb'), h('span', 'Proponer', h('span.ft-long', ' una'), ' mejora')))),
         h('nav.ft-cols', {'aria-label': 'Mapa del sitio'}, cols.map(([t, ls]) => h('div.ft-col', h('h3', t), h('ul', ls.map(l => h('li' + (l[2] ? '.ft-more' : ''), link(l)))))),
           // En el móvil las redes ocupan el hueco junto a «Ecosistema»
           h('div.ft-col.ft-soc-col', h('h3', 'El autor'), socials('.ft-soc-grid')))),
