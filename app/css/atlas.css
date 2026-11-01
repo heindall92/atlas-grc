@@ -729,9 +729,6 @@ a.tag:hover{filter:brightness(.97)}
 
 /* ═════════ Integración de los borradores (v0.3) ═════════ */
 /* Tema coral: fondo cálido (el acento lo pone applyTrack) */
-:root[data-skin="coral"]{--bg:#fbf8f6;--bg-2:#f6efeb;--surface:#ffffff;--surface-2:#fdf3ef}
-@media (prefers-color-scheme:dark){:root[data-skin="coral"]:not([data-theme="light"]){--bg:#0f0b0b;--bg-2:#160f0f;--surface:#1b1414;--surface-2:#231a19}}
-:root[data-skin="coral"][data-theme="dark"]{--bg:#0f0b0b;--bg-2:#160f0f;--surface:#1b1414;--surface-2:#231a19}
 :root[data-skin="coral"] .hero{background:radial-gradient(120% 140% at 100% 0%,var(--track-2) 0%,transparent 55%),radial-gradient(120% 120% at 0% 100%,#ff6482 0%,transparent 50%),var(--track)}
 
 /* Accesos rápidos redondos */
@@ -1183,14 +1180,8 @@ main{padding-bottom:56px}
 @media (prefers-reduced-motion:reduce){.src-note{animation:none}}
 
 /* ═════ Pieles azul eléctrico y verde ═════ */
-:root[data-skin="azul"]{--bg:#f5f8ff;--bg-2:#ebf1ff;--surface:#ffffff;--surface-2:#f2f6ff}
-@media (prefers-color-scheme:dark){:root[data-skin="azul"]:not([data-theme="light"]){--bg:#05080f;--bg-2:#0a1020;--surface:#111827;--surface-2:#172033}}
-:root[data-skin="azul"][data-theme="dark"]{--bg:#05080f;--bg-2:#0a1020;--surface:#111827;--surface-2:#172033}
 :root[data-skin="azul"] .hero{background:radial-gradient(120% 140% at 100% 0%,var(--track-2) 0%,transparent 55%),radial-gradient(120% 120% at 0% 100%,#5b3dff 0%,transparent 50%),var(--track)}
 :root[data-skin="azul"] .ob{background:radial-gradient(80% 60% at 15% 10%,#00b8ff,transparent 60%),radial-gradient(80% 70% at 95% 100%,#1f5cff,transparent 60%),linear-gradient(180deg,#07112b,#0f2a6b)}
-:root[data-skin="verde"]{--bg:#f5faf6;--bg-2:#eaf4ed;--surface:#ffffff;--surface-2:#f1f8f3}
-@media (prefers-color-scheme:dark){:root[data-skin="verde"]:not([data-theme="light"]){--bg:#050c08;--bg-2:#0a150f;--surface:#111a15;--surface-2:#17241c}}
-:root[data-skin="verde"][data-theme="dark"]{--bg:#050c08;--bg-2:#0a150f;--surface:#111a15;--surface-2:#17241c}
 :root[data-skin="verde"] .hero{background:radial-gradient(120% 140% at 100% 0%,var(--track-2) 0%,transparent 55%),radial-gradient(120% 120% at 0% 100%,#0a7d6e 0%,transparent 50%),var(--track)}
 :root[data-skin="verde"] .ob{background:radial-gradient(80% 60% at 15% 10%,#7cc83a,transparent 60%),radial-gradient(80% 70% at 95% 100%,#0f9b57,transparent 60%),linear-gradient(180deg,#071a10,#0f4a2b)}
 
