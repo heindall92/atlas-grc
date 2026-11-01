@@ -56,14 +56,20 @@
 
   /* Contenido de la hoja de respuesta */
   function feedback(ok, item, api, onNext, opts = {}) {
-    const why = item.why || '';
+    const why = item.why || (App.T().why || {})[item.q] || '';
+    // La explicación va dentro de la tarjeta, plegada: se despliega con el botón
+    const exp = (why || item.ref) ? h('button.ref.cite.why-btn', {type: 'button', 'aria-expanded': 'false'}, icon('lightbulb'), 'Ver la explicación', icon('chevron-down')) : null;
+    if (exp) exp.onclick = (e) => {
+      e.stopPropagation();
+      const row = exp.closest('.fb-row'), nx = row.nextElementSibling;
+      if (nx && nx.classList.contains('src-note')) { nx.remove(); exp.setAttribute('aria-expanded', 'false'); return; }
+      const n = App.sourceNote(item.ref, why); if (n) { row.after(n); exp.setAttribute('aria-expanded', 'true'); }
+    };
     const wrap = h('div.fb' + (ok ? '.ok' : '.ko'),
       h('div.fb-h', h('div.fb-ico', icon(ok ? 'check' : 'x')),
         h('div', h('b', ok ? pick(['¡Correcto!', '¡Bien!', '¡Eso es!', '¡Perfecto!']) : (opts.timeout ? 'Se acabó el tiempo' : 'No exactamente')),
           h('small', ok ? (opts.xp ? '+' + opts.xp + ' XP' : '') : 'Respuesta correcta: ' + App.withTitle(api.answerText)))),
-      why ? h('p.fb-why', {html: rich(why)}) : null,
-      item.ref ? App.sourceNote(item.ref) : null,
-      h('div.fb-row', h('div.refs', item.src ? h('span.tag', item.src) : null),
+      h('div.fb-row', h('div.refs', exp, item.src ? h('span.tag', item.src) : null),
         h('button.btn.primary.press', {type: 'button', id: 'fb-next', onclick: onNext}, opts.last ? 'Terminar' : 'Continuar', icon('arrow-right'))));
     return wrap;
   }

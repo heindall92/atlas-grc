@@ -31,7 +31,7 @@
   }
   { const m = location.search.match(/[?&]tema=(light|dark)/); if (DEMO && m) S.theme = m[1]; }
   /* &piel=coral|indigo: color de la app en la demostración (las capturas del README van en coral) */
-  { const m = location.search.match(/[?&]piel=(coral|indigo)/); if (DEMO && m) S.skin = m[1] === 'coral' ? 'coral' : null; }
+  { const m = location.search.match(/[?&]piel=(coral|azul|verde|indigo)/); if (DEMO && m) S.skin = m[1] === 'indigo' ? null : m[1]; }
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* modo privado: se sigue sin guardar */ } };
   const tr = (id = S.track) => S.tracks[id] || (S.tracks[id] = {lessons: {}, labs: {}, boss: {}, cards: {}, mistakes: {}, known: {}, exams: []});
   const today = () => S.days[day()] || (S.days[day()] = {xp: 0, mins: 0, lessons: 0, cards: 0});

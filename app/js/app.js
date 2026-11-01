@@ -3,7 +3,7 @@
   const {h, icon, toast, menu, pill, ticker, transition} = UI;
   const $ = (s) => document.querySelector(s);
   const TABS = [['#/', 'house', 'Hoy'], ['#/ruta', 'map', 'Ruta'], ['#/norma', 'layers', 'Norma'], ['#/repaso', 'refresh-cw', 'Repaso'], ['#/examen', 'graduation-cap', 'Examen']];
-  const MORE = [['#/glosario', 'book-a', 'Glosario', 'Los términos clave'], ['#/caso', 'briefcase', 'Caso Albatrel', 'Tu empresa de prácticas'], ['#/ciudad', 'building-2', 'Ciudad de Albatrel', 'La ciudad que levantas estudiando'], ['#/biblioteca', 'library', 'Biblioteca', 'PDF del curso y enlaces'], ['#/progreso', 'chart-column', 'Progreso', 'Racha, constancia e insignias'], ['#/normas', 'compass', 'Normas', 'ISO 27001, ENS y más'], ['#/acerca', 'info', 'Acerca de', 'Autor, código y herramientas GRC']];
+  const MORE = [['#/glosario', 'book-a', 'Glosario', 'Los términos clave'], ['#/caso', 'briefcase', 'Caso Albatrel', 'Tu empresa de prácticas'], ['#/ciudad', 'building-2', 'Ciudad de Albatrel', 'La ciudad que levantas estudiando'], ['#/biblioteca', 'library', 'Biblioteca', 'Enlaces oficiales y gratuitos'], ['#/progreso', 'chart-column', 'Progreso', 'Racha, constancia e insignias'], ['#/normas', 'compass', 'Normas', 'ISO 27001, ENS y más'], ['#/acerca', 'info', 'Acerca de', 'Autor, código y herramientas GRC']];
   let leaveFns = [];
 
   const App = {
@@ -13,33 +13,28 @@
     docUrl(f, page) { return '/material/' + f.split('/').map(encodeURIComponent).join('/') + (page && /\.pdf$/i.test(f) ? '#page=' + page : ''); },
     /* Ruta local de un documento del curso: solo existe con el pack privado */
     docFile(key) { return (App.T().docFiles || {})[key] || null; },
-    /* Lo que explica la página citada, con palabras propias (data/iso27001/fuentes.js).
-       La app no depende de abrir ningún documento: el resumen va en la propia tarjeta. */
-    sourceNote(ref) {
-      if (!ref) return null;
-      const d = App.T().docs[ref[0]]; if (!d) return null;
-      const S = (App.T().sources || {})[ref[0] + '|' + (ref[1] || '')];
-      const pg = !d.nopage && ref[1] ? ', pág. ' + ref[1] : '';
-      const f = App.docFile(ref[0]);
+    /* Explicación con palabras propias del tema en que se apoya cada idea o ejercicio
+       (data/iso27001/fuentes.js). No enlaza ni reproduce material ajeno: solo lo explica. */
+    sourceNote(ref, why) {
+      const S = ref ? (App.T().sources || {})[ref[0] + '|' + (ref[1] || '')] : null;
+      if (!S && !why) return null;
       return h('div.src-note',
-        h('div.src-h', icon('book-open'), h('span', 'Lo explica · ', h('b', (d.s || d.t.split(' · ')[0]) + pg))),
-        S ? [h('b.src-t', S.t), h('ul', S.p.map(t => h('li', t)))] : h('p', d.t),
-        f ? h('a.link.src-open', {href: App.docUrl(f, ref[1]), target: '_blank', rel: 'noopener'}, icon('file-text'), 'Abrir el documento original') : null);
+        h('div.src-h', icon('lightbulb'), h('span', 'La explicación')),
+        why ? h('p.src-why', {html: UI.rich(why)}) : null,
+        S ? [h('b.src-t', S.t), h('ul', S.p.map(t => h('li', t)))] : null);
     },
-    /* Chip de cita: al tocarlo despliega debajo el resumen de esa página */
-    refChip(ref, label) {
+    /* Botón que despliega la explicación debajo (sin documentos ni páginas) */
+    refChip(ref) {
       if (!ref) return null;
-      const d = App.T().docs[ref[0]];
-      if (!d) return null;
-      const short = label || d.s || d.t.split(' · ')[0];
-      const pg = !d.nopage && ref[1] ? ', pág. ' + ref[1] : '';
       const key = ref[0] + '|' + (ref[1] || '');
-      const chip = h('button.ref.cite', {type: 'button', 'aria-expanded': 'false', title: 'Ver qué explica ' + d.t + pg}, icon('book-open'), short + pg, icon('chevron-down'));
+      const S = (App.T().sources || {})[key];
+      if (!S) return null;
+      const chip = h('button.ref.cite', {type: 'button', 'aria-expanded': 'false', title: 'Ver la explicación'}, icon('lightbulb'), S.t, icon('chevron-down'));
       chip.onclick = (e) => {
         e.stopPropagation();
-        const box = chip.closest('.refs') || chip.parentNode;
-        const open = box.nextElementSibling && box.nextElementSibling.classList.contains('src-note') && box.nextElementSibling.dataset.k === key;
-        if (box.nextElementSibling && box.nextElementSibling.classList.contains('src-note')) box.nextElementSibling.remove();
+        const box = chip.closest('.fb-row') || chip.closest('.refs') || chip.parentNode;   // en la corrección, debajo de toda la fila
+        const nx = box.nextElementSibling, open = nx && nx.classList.contains('src-note') && nx.dataset.k === key;
+        if (nx && nx.classList.contains('src-note')) nx.remove();
         box.querySelectorAll('.ref.cite').forEach(c => c.setAttribute('aria-expanded', 'false'));
         if (open) return;
         const n = App.sourceNote(ref); n.dataset.k = key; box.after(n); chip.setAttribute('aria-expanded', 'true');
@@ -77,11 +72,17 @@
   window.App = App;
 
   /* ── Color de la norma activa ── */
-  const CORAL = {color: '#f2545b', color2: '#ff9a76', dark: '#ff7a7f', dark2: '#ffb199'};
+  // Pieles de color: índigo (malva, la de la norma), coral, azul eléctrico y verde
+  const SKINS = {
+    coral: {color: '#f2545b', color2: '#ff9a76', dark: '#ff7a7f', dark2: '#ffb199'},
+    azul: {color: '#1f5cff', color2: '#00b8ff', dark: '#4f86ff', dark2: '#4fd8ff'},
+    verde: {color: '#0f9b57', color2: '#7cc83a', dark: '#34d27d', dark2: '#a6e65a'}
+  };
+  App.SKINS = SKINS;
   function applyTrack() {
-    const skin = Store.s.skin === 'coral' ? 'coral' : null;
+    const skin = SKINS[Store.s.skin] ? Store.s.skin : null;
     if (skin) document.documentElement.dataset.skin = skin; else delete document.documentElement.dataset.skin;
-    const t = Object.assign({}, App.trackInfo(), skin ? CORAL : {});
+    const t = Object.assign({}, App.trackInfo(), skin ? SKINS[skin] : {});
     let st = $('#track-style'); if (!st) { st = h('style#track-style'); document.head.append(st); }
     const dark = `--track:${t.dark};--track-2:${t.dark2};--track-ink:#0b0a1a`;
     st.textContent = `:root{--track:${t.color};--track-2:${t.color2};--track-ink:#fff}

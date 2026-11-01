@@ -521,7 +521,7 @@
         h('div.panel-h', h('div', h('h2', 'Ajustes y ayuda')), h('button.ib.press', {type: 'button', 'aria-label': 'Cerrar', onclick: close}, icon('x'))),
         h('div.panel-b',
           h('h4', 'Color'),
-          (() => { const g = h('div.opt-row', [['', 'Índigo'], ['coral', 'Coral']].map(([k, l]) => h('button.pill.press', {type: 'button', 'aria-pressed': String((Store.s.skin || '') === k), onclick: (e) => { App.setSkin(k || null); g.querySelectorAll('.pill').forEach(p => p.setAttribute('aria-pressed', 'false')); e.currentTarget.setAttribute('aria-pressed', 'true'); }}, l))); return g; })(),
+          (() => { const g = h('div.opt-row', [['', 'Malva'], ['coral', 'Coral'], ['azul', 'Azul eléctrico'], ['verde', 'Verde']].map(([k, l]) => h('button.pill.press', {type: 'button', 'aria-pressed': String((Store.s.skin || '') === k), onclick: (e) => { App.setSkin(k || null); g.querySelectorAll('.pill').forEach(p => p.setAttribute('aria-pressed', 'false')); e.currentTarget.setAttribute('aria-pressed', 'true'); }}, l))); return g; })(),
           h('h4', 'Tu plan'),
           h('button.btn.sm.press', {type: 'button', onclick: () => { close(); setTimeout(onboarding, 300); }}, icon('compass'), 'Rehacer mi plan'),
           h('h4', 'Meta diaria'), goal,

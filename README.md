@@ -80,7 +80,7 @@ Funciona en el navegador, sin servidor, sin cuentas y sin conexión. Tu progreso
       <td valign="top"><code>├─ ◉ diseño:</code><br><br>
         <img alt="Apple" src="https://img.shields.io/badge/estilo-Apple-111111?style=for-the-badge&logo=apple&logoColor=white"/>
         <img alt="Emil Kowalski" src="https://img.shields.io/badge/movimiento-Emil%20Kowalski-5E5CE6?style=for-the-badge"/><br>
-        <sub><code>claro y oscuro · índigo y coral · Sonner · Vaul · respeta «reducir movimiento»</code></sub>
+        <sub><code>claro y oscuro · malva, coral, azul y verde · Sonner · Vaul · respeta «reducir movimiento»</code></sub>
       </td>
       <td valign="top"><code>╰─ ⌁ privacidad:</code><br><br>
         <img alt="Sin servidor" src="https://img.shields.io/badge/sin-servidor-2E8B57?style=for-the-badge"/>
@@ -184,7 +184,7 @@ mindmap
 |---|---|---|
 | <img src="docs/assets/icons/compass.svg" width="18"/> | **Hoy** | Siguiente paso recomendado, anillos de actividad (aprender, practicar y repasar), racha, XP, accesos rápidos y carrusel de bloques. |
 | <img src="docs/assets/icons/map.svg" width="18"/> | **Ruta y bloques** | Los 11 bloques previstos; cada bloque activo con su cabecera, progreso y unidades. |
-| <img src="docs/assets/icons/graduation-cap.svg" width="18"/> | **Unidad** | Lección, prácticas y jefe. Ejercicios de elegir, verdadero o falso, emparejar, ordenar y clasificar, con corrección en una hoja inferior y la fuente de cada idea. |
+| <img src="docs/assets/icons/graduation-cap.svg" width="18"/> | **Unidad** | Lección, prácticas y jefe. Ejercicios de elegir, verdadero o falso, emparejar, ordenar y clasificar, con corrección en una hoja inferior y la explicación de cada ejercicio, plegada hasta que la pidas. |
 | <img src="docs/assets/icons/shield-check.svg" width="18"/> | **Mapa de la norma** | Cláusulas 4 a 10 ordenadas por el ciclo PDCA y los 93 controles con buscador, filtros por tema, los 11 nuevos de 2022 y la opción de marcarlos como entendidos. |
 | <img src="docs/assets/icons/briefcase.svg" width="18"/> | **Caso Albatrel** | La empresa, su pirámide documental y sus 15 documentos para leer, descargar en Markdown o construir paso a paso. |
 | <img src="docs/assets/icons/building-2.svg" width="18"/> | **Ciudad de Albatrel** | Maqueta 3D de la empresa que crece con tu progreso: gírala, acércate y toca un edificio para ver la obra de su bloque. |
@@ -192,7 +192,7 @@ mindmap
 | <img src="docs/assets/icons/sparkles.svg" width="18"/> | **Repaso y glosario** | 64 términos con tarjetas que se giran y la sesión de «Mis errores». |
 | <img src="docs/assets/icons/user-round.svg" width="18"/> | **Acerca de** | Autor, enlace al código fuente, aviso de independencia y las demás herramientas GRC del ecosistema (también en Ajustes). |
 
-También incluye buscador global (`Ctrl + K`), progreso con calendario de constancia e insignias, temas claro y oscuro en índigo o coral, copia de seguridad del progreso, versión móvil y un **modo demostración** con progreso de ejemplo: [`?demo`](https://heindall92.github.io/atlas-grc/?demo).
+También incluye buscador global (`Ctrl + K`), progreso con calendario de constancia e insignias, temas claro y oscuro en cuatro colores (malva, coral, azul eléctrico y verde), copia de seguridad del progreso, versión móvil y un **modo demostración** con progreso de ejemplo: [`?demo`](https://heindall92.github.io/atlas-grc/?demo).
 
 ## <img src="docs/assets/icons/image.svg" width="20" height="20" valign="middle"/> Capturas
 
@@ -304,7 +304,7 @@ flowchart LR
 ## <img src="docs/assets/icons/scale.svg" width="20" height="20" valign="middle"/> Contenido y derechos de autor
 
 - **Todo el contenido es propio**: lecciones, ejercicios, explicaciones de los 93 controles, preguntas del simulacro y el caso Albatrel.
-- Las **citas** indican de dónde sale cada idea (clases del curso, la norma o una fuente web) para poder ampliarla, sin reproducir su texto.
+- **Cada ejercicio trae su explicación**, escrita con palabras propias, que se despliega en la corrección. La app no enlaza ni reproduce material del curso ni de la norma: lo explica.
 - De la ISO/IEC 27001 solo se usan los **números y títulos** de cláusulas y controles como referencia. Es una obra protegida de ISO/IEC: consulta tu ejemplar oficial (ISO o UNE).
 - Lo que procede de internet está marcado como **«Fuente web»** con su enlace.
 - MAGERIT, el ENS y las guías CCN-STIC son publicaciones públicas de la Administración española.
@@ -314,7 +314,7 @@ flowchart LR
 
 - [x] Bloques 0 a 6: fundamentos y cláusulas 4 a 10
 - [x] Caso Albatrel con 15 documentos y modo Construir
-- [x] Bienvenida con plan personal, temas índigo y coral, modo demostración
+- [x] Bienvenida con plan personal, cuatro colores, modo demostración
 - [x] Ciudad de Albatrel: el progreso convertido en una maqueta 3D que crece
 - [ ] Bloques 7 a 9: controles del Anexo A en profundidad
 - [ ] Bloque 10: auditoría de certificación
@@ -335,7 +335,7 @@ atlas-grc/
 │
 ├── 🧩 app/
 │   ├── index.html                Punto de entrada
-│   ├── css/atlas.css             Tokens, claro y oscuro, índigo y coral, móvil
+│   ├── css/atlas.css             Tokens, claro y oscuro, cuatro colores, móvil
 │   ├── js/
 │   │   ├── store.js              Progreso, XP, racha, repaso espaciado, modo demo
 │   │   ├── motion.js             Avisos, hojas, transiciones, anillos, confeti
