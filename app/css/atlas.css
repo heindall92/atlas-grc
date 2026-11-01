@@ -1082,3 +1082,14 @@ a.tag:hover{filter:brightness(.97)}
 .help-cta b{display:inline-flex;align-items:center;gap:8px}
 .help-cta p{margin:0;font-size:14px;color:var(--ink-2)}
 @media (max-width:520px){.about-card{flex-direction:column;align-items:flex-start}}
+
+/* ═════ Intro de marca: cada carga del navegador ═════ */
+html.film-on,html.film-on body{overflow:hidden}
+.film{position:fixed;inset:0;z-index:220;display:grid;place-items:center;background:#000;transition:opacity .45s var(--ease-out)}
+.film.out{opacity:0;pointer-events:none}
+.film video{width:100%;height:100%;object-fit:contain;background:#000}
+.film-bar{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:flex-end;gap:12px;padding:28px max(20px,env(safe-area-inset-right)) max(20px,env(safe-area-inset-bottom)) max(20px,env(safe-area-inset-left));background:linear-gradient(transparent,rgba(0,0,0,.62))}
+.film-btn{height:36px;padding:0 14px;border-radius:999px;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.45);color:#fff;font:600 13px var(--font);letter-spacing:-.01em;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.film-btn:hover{background:rgba(255,255,255,.16)}
+.film-btn:active{transform:scale(.97)}
+@media (prefers-reduced-motion:reduce){.film{display:none!important}}
