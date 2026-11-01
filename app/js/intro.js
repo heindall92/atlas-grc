@@ -47,7 +47,8 @@
     }).catch(resumeMuted);
   }
 
-  if (reduced) {
+  // Sin intro con movimiento reducido ni en el modo de capturas del README (?captura)
+  if (reduced || /[?&]captura/.test(location.search)) {
     root.remove();
     return;
   }

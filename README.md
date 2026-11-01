@@ -18,11 +18,12 @@
   <img alt="Simulacro CertiProf" src="https://img.shields.io/badge/simulacro-CertiProf%20I27001F-2E9E7A?style=flat"/>
   <img alt="Estado beta" src="https://img.shields.io/badge/estado-beta-F2545B?style=flat"/>
   <img alt="Sin dependencias" src="https://img.shields.io/badge/dependencias-0-2E8B57?style=flat"/>
+  <img alt="Español e inglés" src="https://img.shields.io/badge/idiomas-ES%20%C2%B7%20EN-0A84FF?style=flat"/>
   <img alt="Iconos Lucide" src="https://img.shields.io/badge/iconos-Lucide-F56565?style=flat&logo=lucide&logoColor=white"/>
 </p>
 
 <p align="center">
-  <img src="docs/img/readme/hoy-light.png" alt="Pantalla Hoy: siguiente paso, anillos de actividad, accesos rápidos y carrusel de bloques" width="880"/>
+  <img src="docs/img/readme/hoy-light.png" alt="Pantalla Hoy en modo claro y color malva: siguiente paso, anillos de actividad, accesos rápidos y la ciudad" width="880"/>
 </p>
 
 Empezar en GRC leyendo directamente una norma suele acabar igual: memorizar cláusulas sin entender cómo se convierten en documentos, controles y decisiones reales. **Atlas** ordena el aprendizaje en un recorrido corto y práctico:
@@ -33,7 +34,7 @@ Empezar en GRC leyendo directamente una norma suele acabar igual: memorizar clá
 - **simulacro** con el formato del examen ISO/IEC 27001 Foundation de CertiProf (40 preguntas, 60 minutos) y un banco de **280 preguntas propias**;
 - **repaso espaciado** del glosario y de los errores, para que lo aprendido se quede.
 
-Funciona en el navegador, sin servidor, sin cuentas y sin conexión. Tu progreso no sale de tu equipo.
+Funciona en el navegador, sin servidor, sin cuentas y sin conexión. Tu progreso no sale de tu equipo. Toda la plataforma está en **español e inglés**: el selector ES/EN está junto al botón de tema.
 
 <div align="center">
 
@@ -80,7 +81,7 @@ Funciona en el navegador, sin servidor, sin cuentas y sin conexión. Tu progreso
       <td valign="top"><code>├─ ◉ diseño:</code><br><br>
         <img alt="Apple" src="https://img.shields.io/badge/estilo-Apple-111111?style=for-the-badge&logo=apple&logoColor=white"/>
         <img alt="Emil Kowalski" src="https://img.shields.io/badge/movimiento-Emil%20Kowalski-5E5CE6?style=for-the-badge"/><br>
-        <sub><code>claro y oscuro · malva, coral, azul y verde · Sonner · Vaul · respeta «reducir movimiento»</code></sub>
+        <sub><code>abre en claro · oscuro opcional · malva, coral, azul y verde · Sonner · Vaul · respeta «reducir movimiento»</code></sub>
       </td>
       <td valign="top"><code>╰─ ⌁ privacidad:</code><br><br>
         <img alt="Sin servidor" src="https://img.shields.io/badge/sin-servidor-2E8B57?style=for-the-badge"/>
@@ -192,7 +193,7 @@ mindmap
 | <img src="docs/assets/icons/sparkles.svg" width="18"/> | **Repaso y glosario** | 64 términos con tarjetas que se giran y la sesión de «Mis errores». |
 | <img src="docs/assets/icons/user-round.svg" width="18"/> | **Acerca de** | Autor, enlace al código fuente, aviso de independencia y las demás herramientas GRC del ecosistema (también en Ajustes). |
 
-También incluye buscador global (`Ctrl + K`), progreso con calendario de constancia e insignias, temas claro y oscuro en cuatro colores (malva, coral, azul eléctrico y verde), copia de seguridad del progreso, versión móvil y un **modo demostración** con progreso de ejemplo: [`?demo`](https://heindall92.github.io/atlas-grc/?demo).
+También incluye buscador global (`Ctrl + K`), progreso con calendario de constancia e insignias, **español e inglés** (interfaz y contenido), modo claro por defecto con tarjetas y bordes bien marcados, modo oscuro opcional, cuatro colores (malva, coral, azul eléctrico y verde), explicación desplegable en cada ejercicio, copia de seguridad del progreso, versión móvil y un **modo demostración** con progreso de ejemplo: [`?demo`](https://heindall92.github.io/atlas-grc/?demo).
 
 ## <img src="docs/assets/icons/image.svg" width="20" height="20" valign="middle"/> Capturas
 
@@ -219,12 +220,30 @@ También incluye buscador global (`Ctrl + K`), progreso con calendario de consta
 </tr>
 </table>
 
-<sub>Capturas en el tema coral del modo demostración. La app también tiene el tema índigo.</sub>
+<sub>Capturas del modo demostración en el color malva.</sub>
+
+**En inglés.** El selector ES/EN de la cabecera (o Ajustes → Idioma) cambia la interfaz y todo el contenido: lecciones, ejercicios, explicaciones, glosario y el caso Albatrel. El progreso es el mismo en los dos idiomas.
 
 <p align="center">
-  <img src="docs/img/readme/movil-dark.png" alt="Atlas en el móvil, modo oscuro" width="260"/>
-  &nbsp;&nbsp;
-  <img src="docs/img/readme/movil-light.png" alt="Atlas en el móvil, modo claro" width="260"/>
+  <img src="docs/img/readme/hoy-en-light.png" alt="Pantalla Hoy en inglés" width="880"/>
+</p>
+
+**Cuatro colores.** Malva (por defecto), coral, azul eléctrico y verde, en Ajustes → Color. El fondo es neutro en todos; el color va en las tarjetas y los acentos.
+
+<table>
+<tr>
+<td width="33%"><img src="docs/img/readme/piel-coral.png" alt="Color coral"/><br/><sub><b>Coral</b></sub></td>
+<td width="33%"><img src="docs/img/readme/piel-azul.png" alt="Color azul eléctrico"/><br/><sub><b>Azul eléctrico</b></sub></td>
+<td width="33%"><img src="docs/img/readme/piel-verde.png" alt="Color verde"/><br/><sub><b>Verde</b></sub></td>
+</tr>
+</table>
+
+<p align="center">
+  <img src="docs/img/readme/movil-light.png" alt="Atlas en el móvil, modo claro" width="240"/>
+  &nbsp;
+  <img src="docs/img/readme/movil-dark.png" alt="Atlas en el móvil, modo oscuro" width="240"/>
+  &nbsp;
+  <img src="docs/img/readme/movil-en-light.png" alt="Atlas en el móvil, en inglés" width="240"/>
 </p>
 
 ## <img src="docs/assets/icons/briefcase.svg" width="20" height="20" valign="middle"/> El caso Albatrel
@@ -316,6 +335,7 @@ flowchart LR
 - [x] Caso Albatrel con 15 documentos y modo Construir
 - [x] Bienvenida con plan personal, cuatro colores, modo demostración
 - [x] Ciudad de Albatrel: el progreso convertido en una maqueta 3D que crece
+- [x] Español e inglés en toda la plataforma
 - [ ] Bloques 7 a 9: controles del Anexo A en profundidad
 - [ ] Bloque 10: auditoría de certificación
 - [ ] Ilustraciones por bloque
@@ -326,6 +346,7 @@ flowchart LR
 - **Beta**: el contenido cubre las cláusulas 4 a 10; el Anexo A en profundidad y la auditoría de certificación están en camino.
 - El simulacro reproduce el **formato** del examen de CertiProf, no sus preguntas. Confirma la nota de aprobado y las condiciones en la [web oficial](https://certiprof.com/es/pages/certified-iso-iec-27001-2022-foundation-i27001f-spanish).
 - El progreso vive en el navegador: si borras sus datos, se pierde. Usa **Ajustes → Guardar copia**.
+- La traducción al inglés es propia y se hizo para estudiar: los números y títulos de la norma son los oficiales, el resto puede tener matices.
 - No sustituye a la norma ni a un curso oficial: es una herramienta de estudio.
 
 ## <img src="docs/assets/icons/folder-tree.svg" width="20" height="20" valign="middle"/> Estructura
@@ -346,10 +367,12 @@ atlas-grc/
 │   │   ├── city.js               Ciudad de Albatrel: datos, parte de obra y plano SVG de respaldo
 │   │   ├── city3d.js             Maqueta 3D (Three.js): edificios por piezas, día y noche, coches
 │   │   ├── app.js                Cabecera, rutas, buscador y bienvenida
+│   │   ├── i18n.js               Español / English: traduce datos e interfaz al vuelo
 │   │   └── icons.js              Iconos Lucide en línea (ISC)
 │   ├── data/
 │   │   ├── tracks.js             Registro de normas
 │   │   └── iso27001/             content · bloque2 a bloque5 · albatrel · norma
+│   ├── i18n/                     Diccionarios español → inglés (en-*.js)
 │   ├── vendor/three/             Three.js r169 y complementos (MIT)
 │   └── img/                      Ilustraciones opcionales
 │
