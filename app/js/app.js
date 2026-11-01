@@ -83,6 +83,39 @@
   }
   function paintThemeBtn() { const b = $('#theme-btn'); if (b) { b.textContent = ''; b.append(icon(isDark() ? 'sun' : 'moon')); b.setAttribute('aria-label', isDark() ? 'Tema claro' : 'Tema oscuro'); } }
 
+  /* ── Pie de página: marca, mapa del sitio, ecosistema y autor ── */
+  function renderFooter() {
+    const f = $('#ftr'); if (!f) return; f.textContent = '';
+    const ext = (href, cls, ...kids) => h('a' + cls, {href, target: '_blank', rel: 'noopener noreferrer'}, ...kids);
+    const REPO = 'https://github.com/heindall92/atlas-grc';
+    const cols = [
+      ['Aprender', [['#/', 'Hoy'], ['#/ruta', 'Ruta'], ['#/norma', 'Mapa de la norma'], ['#/examen', 'Simulacro'], ['#/repaso', 'Repaso']]],
+      ['Albatrel', [['#/caso', 'El caso'], ['#/ciudad', 'La ciudad'], ['#/caso', 'Sus 15 documentos'], ['#/glosario', 'Glosario']]],
+      ['Ecosistema', [['https://heindall92.github.io/rosetta_multinorma/', 'Rosetta'], ['https://heindall92.github.io/argos-grc/', 'ARGOS'], ['https://heindall92.github.io/grc_ens_compliance_studio/app/dist/ens-compliance-studio.html', 'ENS Compliance Studio'], ['https://heindall92.github.io/kairos/', 'KAIROS'], ['#/acerca', 'Ver las 9 herramientas']]]
+    ];
+    const link = ([href, t]) => href.startsWith('#') ? h('a.ft-a', {href}, t) : ext(href, '.ft-a', t, icon('arrow-up-right'));
+    const social = [['linkedin', 'LinkedIn', 'https://www.linkedin.com/in/yoandyrd92/'], ['github', 'GitHub', 'https://github.com/heindall92'], ['globe', 'Portafolio', 'https://yoandyramirez.com'], ['hackthebox', 'HackTheBox', 'https://profile.hackthebox.com/profile/019c5812-b4ca-7315-b12f-14db6d2b42fa']];
+    f.append(h('div.ft-card',
+      h('div.ft-top',
+        h('div.ft-brand',
+          h('a.ft-logo', {href: '#/', 'aria-label': 'Atlas GRC, inicio'}, h('span.mark', icon('atlas')), h('b', 'Atlas GRC')),
+          h('p.ft-tag', 'Aprende la ISO/IEC 27001 desde cero. Busca siempre el norte.'),
+          h('b.ft-cta-h', 'Hecho en abierto para aprender GRC en español'),
+          h('div.ft-cta',
+            ext(REPO, '.ft-btn.primary', Views.brand('github'), 'Código en GitHub'),
+            ext(REPO + '/issues/new', '.ft-btn', icon('lightbulb'), 'Proponer una mejora'))),
+        h('nav.ft-cols', {'aria-label': 'Mapa del sitio'}, cols.map(([t, ls]) => h('div.ft-col', h('h3', t), h('ul', ls.map(l => h('li', link(l)))))))),
+      h('div.ft-social', social.map(([k, l, href]) => ext(href, '.ft-soc', Views.brand(k), h('span.sr', l)))),
+      h('div.ft-bottom',
+        h('span', '© 2026 Yoandy Ramírez Delgado · Atlas GRC ' + Views.VERSION),
+        h('span.ft-legal', h('a', {href: '#/acerca'}, 'Acerca de'), h('i', '•'), ext(REPO, '', 'Código'), h('i', '•'), h('span', {title: 'El progreso se guarda solo en tu navegador'}, 'Sin cuentas ni seguimiento')))));
+    // Aparece con un fundido suave al llegar a él
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { f.classList.add('in'); io.disconnect(); } }, {threshold: .15});
+      io.observe(f);
+    } else f.classList.add('in');
+  }
+
   /* ── Cabecera, pestañas y dock ── */
   function renderHeader() {
     const t = App.trackInfo();
@@ -301,7 +334,7 @@
   setInterval(() => { if (active && !document.hidden) Store.addMinutes(1); active = false; }, 60000);
 
   /* ── Inicio ── */
-  applyTheme(); applyTrack(); renderHeader();
+  applyTheme(); applyTrack(); renderHeader(); renderFooter();
   addEventListener('hashchange', () => transition(route));
   addEventListener('resize', () => markTabs(true));
   addEventListener('scroll', () => $('#hdr').classList.toggle('scrolled', scrollY > 4), {passive: true});

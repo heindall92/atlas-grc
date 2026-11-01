@@ -460,7 +460,7 @@
   };
   function brand(k) {
     const s = h('span.brand-ic', {'aria-hidden': 'true'});
-    if (k === 'linkedin') s.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16"><rect x="1" y="1" width="22" height="22" rx="4" fill="currentColor"/><text x="12" y="17.2" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="13" fill="#fff">in</text></svg>';
+    if (k === 'linkedin') s.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16"><rect x="1" y="1" width="22" height="22" rx="4" fill="currentColor"/><text x="12" y="17.2" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="13" style="fill:var(--li-in,#fff)">in</text></svg>';
     else if (BRAND[k]) s.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="' + BRAND[k] + '"/></svg>';
     else return icon(k);
     return s;
@@ -626,5 +626,5 @@
 
   function notFound() { return h('div.view', h('h1', 'No encuentro esa página'), h('a.btn.primary.press', {href: '#/'}, 'Volver a Hoy')); }
 
-  window.Views = {aboutView, today, path, unit, block, onboarding, norma, review, flashcards, glossary, caso, examCover, library, progress, tracks, settings, notFound, unitState, allUnits, nextStep};
+  window.Views = {aboutView, brand, VERSION, today, path, unit, block, onboarding, norma, review, flashcards, glossary, caso, examCover, library, progress, tracks, settings, notFound, unitState, allUnits, nextStep};
 })();
