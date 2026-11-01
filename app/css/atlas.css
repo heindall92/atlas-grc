@@ -1217,10 +1217,17 @@ main{padding-bottom:56px}
 :root[data-skin="verde"]:not([data-theme="dark"]) .ft-soc{color:var(--fi);border-color:rgba(15,42,27,.16);background:#fff}
 :root[data-skin="verde"]:not([data-theme="dark"]) .ft-bottom{border-top-color:rgba(15,42,27,.1)}
 :root[data-skin="verde"]:not([data-theme="dark"]) .ft-legal a:hover{color:var(--track)}
-@media (prefers-color-scheme:dark){:root[data-skin="verde"]:not([data-theme="light"]) .ft-card{--fi:#effaf3;--fm:color-mix(in oklab,var(--track) 30%,#cfe3d7);--li-in:var(--ft-base);
-  background:radial-gradient(70% 90% at 85% 0%,color-mix(in oklab,var(--track) 42%,transparent),transparent 65%),radial-gradient(60% 70% at 0% 100%,color-mix(in oklab,var(--track-2) 14%,transparent),transparent 70%),linear-gradient(160deg,var(--ft-base),var(--ft-deep) 70%);border-color:rgba(255,255,255,.08)}
+@media (prefers-color-scheme:dark){:root[data-skin="verde"]:not([data-theme="light"]) .ft-card{--fi:#e9f5ee;--fm:#93ad9f;--li-in:#111a15;
+  background:radial-gradient(70% 90% at 85% 0%,color-mix(in oklab,var(--track) 16%,transparent),transparent 65%),radial-gradient(60% 70% at 0% 100%,color-mix(in oklab,var(--track-2) 8%,transparent),transparent 70%),linear-gradient(160deg,#13201a,#0d1612 70%);
+  border-color:color-mix(in oklab,var(--track) 16%,transparent);box-shadow:0 30px 60px -36px rgba(0,0,0,.8)}
   :root[data-skin="verde"]:not([data-theme="light"]) .ft-card::after{opacity:.35}
   :root[data-skin="verde"]:not([data-theme="light"]) .ft-logo,:root[data-skin="verde"]:not([data-theme="light"]) .ft-cta-h{color:#fff}
   :root[data-skin="verde"]:not([data-theme="light"]) .ft-btn:not(.primary){background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);color:var(--fi)}
   :root[data-skin="verde"]:not([data-theme="light"]) .ft-soc{color:var(--fi);border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.04)}
   :root[data-skin="verde"]:not([data-theme="light"]) .ft-bottom{border-top-color:rgba(255,255,255,.1)}}
+
+/* Verde en modo oscuro: superficie verde muy oscura y brillo discreto (sin neón) */
+:root[data-skin="verde"][data-theme="dark"] .ft-card{--fi:#e9f5ee;--fm:#93ad9f;--li-in:#111a15;
+  background:radial-gradient(70% 90% at 85% 0%,color-mix(in oklab,var(--track) 16%,transparent),transparent 65%),radial-gradient(60% 70% at 0% 100%,color-mix(in oklab,var(--track-2) 8%,transparent),transparent 70%),linear-gradient(160deg,#13201a,#0d1612 70%);
+  border-color:color-mix(in oklab,var(--track) 16%,transparent);box-shadow:0 30px 60px -36px rgba(0,0,0,.8)}
+:root[data-skin="verde"][data-theme="dark"] .ft-card::after{opacity:.2}
