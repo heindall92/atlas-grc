@@ -979,7 +979,11 @@ a.tag:hover{filter:brightness(.97)}
 .city-legend .cl small{display:block;color:var(--ink-3);font-size:13.5px;line-height:1.4;margin-top:8px}
 .cl-h{display:flex;align-items:center;gap:8px;font-weight:600}
 .cl-h b{margin-left:auto;font-size:20px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
-.cl-i{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--track-soft);color:var(--track)}
+/* .mini span pone display:block: aquí hace falta más especificidad para centrar el icono */
+.mini .cl-i{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:9px;background:var(--track-soft);color:var(--track)}
+.mini .cl-i .ico{font-size:16px}
+.mini .cl-h span:not(.cl-i){font-size:14px;color:var(--ink-2)}
+.mini .cl-h b{margin:0 0 0 auto;font:700 20px/1 var(--display)}
 .prog-row{display:flex;align-items:center;gap:12px}
 /* Miniatura en Hoy y en el caso */
 .city-mini{position:relative;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);align-items:center;gap:8px;border-radius:24px;overflow:hidden;text-decoration:none;color:inherit;border:1px solid var(--line-2);
