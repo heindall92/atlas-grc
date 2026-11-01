@@ -3,7 +3,7 @@
 Uso:   python tools/extraer.py            ->  sources/md/<nombre>.md
 Necesita:  pip install "markitdown[all]"
 
-- Solo LEE la carpeta ..\\GRC-Master Evolve. No modifica nada allí.
+- Solo LEE la carpeta indicada en el fichero local .material (fuera de Git). No modifica nada allí.
 - Los PDF se convierten página a página (con un encabezado «## Página N») para poder
   citar «Doc, pág. N» en la app. Los DOCX y XLSX se convierten con MarkItDown tal cual.
 - Si un fichero ya está convertido y no ha cambiado, se salta.
@@ -15,7 +15,7 @@ import sys
 from markitdown import MarkItDown
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC = os.path.realpath(os.path.join(HERE, '..', 'GRC-Master Evolve'))
+SRC = os.path.realpath(open(os.path.join(HERE, '.material'), encoding='utf-8').read().strip())
 OUT = os.path.join(HERE, 'sources', 'md')
 SKIP = ('SCAN-ISO-42001',)          # ISO 42001: fuera del alcance
 EXTS = ('.pdf', '.docx', '.xlsx', '.html')

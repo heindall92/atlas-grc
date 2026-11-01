@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Atlas GRC - servidor local.
 
-Sirve la carpeta app/ y, bajo /material/, los PDF de la carpeta del curso
-(..\\GRC-Master Evolve), solo lectura y solo PDF. Nada sale de este ordenador.
+Sirve la carpeta app/ y, si existe el fichero local .material (fuera de Git) con la ruta
+a una carpeta de documentos propia, la sirve bajo /material/ en solo lectura.
+Nada sale de este ordenador.
 
 Uso:  python serve.py [puerto] [--no-browser]     (por defecto http://127.0.0.1:8643)
 """
@@ -11,7 +12,10 @@ from functools import partial
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, 'app')
-MATERIAL = os.path.realpath(os.path.join(HERE, '..', 'GRC-Master Evolve'))
+# Carpeta de documentos personal: su ruta va en .material (no se sube al repo)
+_cfg = os.path.join(HERE, '.material')
+MATERIAL = (os.path.realpath(open(_cfg, encoding='utf-8').read().strip()) if os.path.isfile(_cfg)
+            else os.path.join(HERE, '__sin_material__'))
 ROUTES = {'/material/': (MATERIAL, ('.pdf', '.docx', '.xlsx', '.html'))}
 ARGS = [a for a in sys.argv[1:] if not a.startswith('--')]
 PORT = int(ARGS[0]) if ARGS else 8643

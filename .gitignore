@@ -14,3 +14,5 @@ Thumbs.db
 .DS_Store
 # - herramienta que contiene textos del examen de práctica del curso
 tools/examen_ezequiel.py
+# Ruta local a la carpeta de documentos que sirve serve.py
+.material
