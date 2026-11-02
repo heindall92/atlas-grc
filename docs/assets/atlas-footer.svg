@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="170" viewBox="0 0 1280 170" role="img" aria-labelledby="t">
+  <title id="t">Atlas GRC · aprende GRC desde cero</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2b2466"/><stop offset=".5" stop-color="#4b3fb8"/><stop offset="1" stop-color="#7a3fb8"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7d7aff"/><stop offset="1" stop-color="#bf5af2"/></linearGradient>
+    <clipPath id="frame"><rect width="1280" height="170"/></clipPath>
+  </defs>
+  <style>
+    .ico { fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .t { font: 600 17px 'Segoe UI Variable Text','SF Pro Text',-apple-system,'Segoe UI',system-ui,sans-serif; fill: rgba(255,255,255,.9); }
+    .s { font: 700 11px ui-monospace,'SF Mono','Cascadia Code',Consolas,monospace; letter-spacing: 3px; fill: #cfcaff; }
+    .w1 { animation: drift 20s linear infinite; }
+    .w2 { animation: drift 28s linear infinite reverse; }
+    .w3 { animation: drift 36s linear infinite; }
+    @keyframes drift { to { transform: translateX(-640px) } }
+    .needle { transform-box: fill-box; transform-origin: center; animation: seek 6s cubic-bezier(.23,1,.32,1) infinite; }
+    @keyframes seek { 0% { transform: rotate(-70deg) } 10% { transform: rotate(28deg) } 17% { transform: rotate(-14deg) } 23% { transform: rotate(7deg) } 28% { transform: rotate(-3deg) } 33%, 100% { transform: rotate(0) } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important } }
+  </style>
+  <g clip-path="url(#frame)">
+    <path class="w3" fill="url(#bg)" opacity=".35" d="M0 46 Q 80 28 160 46 T 320 46 T 480 46 T 640 46 T 800 46 T 960 46 T 1120 46 T 1280 46 T 1440 46 T 1600 46 T 1760 46 T 1920 46 T 2080 46 T 2240 46 T 2400 46 T 2560 46 V170 H0Z"/>
+    <path class="w2" fill="url(#bg)" opacity=".6" d="M-640 64 Q -560 50 -480 64 T -320 64 T -160 64 T 0 64 T 160 64 T 320 64 T 480 64 T 640 64 T 800 64 T 960 64 T 1120 64 T 1280 64 T 1440 64 T 1600 64 T 1760 64 T 1920 64 V170 H-640Z"/>
+    <path class="w1" fill="url(#bg)" d="M0 82 Q 80 66 160 82 T 320 82 T 480 82 T 640 82 T 800 82 T 960 82 T 1120 82 T 1280 82 T 1440 82 T 1600 82 T 1760 82 T 1920 82 T 2080 82 T 2240 82 T 2400 82 T 2560 82 V170 H0Z"/>
+    <g transform="translate(560 104)">
+      <rect width="40" height="40" rx="12" fill="url(#mark)"/>
+      <g transform="translate(6 6) scale(1.17)" class="ico"><circle cx="12" cy="12" r="10"/><path class="needle" d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/></g>
+      <text x="54" y="18" class="t">Atlas GRC</text>
+      <text x="54" y="35" class="s">BUSCA SIEMPRE EL NORTE</text>
+    </g>
+  </g>
+</svg>

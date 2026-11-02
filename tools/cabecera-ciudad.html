@@ -1,0 +1,28 @@
+<!doctype html>
+<!-- Atlas GRC · fotograma de la ciudad para la cabecera del README.
+     Se copia a app/ y se abre con ?p=0..1 (posición en el bucle). Lo usa tools/cabecera.py. -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<script type="importmap">{"imports":{"three":"./vendor/three/three.module.min.js"}}</script>
+<style>html,body{margin:0;background:transparent;overflow:hidden}#h{width:100vw;height:100vh}</style>
+</head>
+<body>
+<div id="h"></div>
+<script>window.UI = {}; window.App = {}; window.Store = {};</script>
+<script src="js/city.js"></script>
+<script type="module">
+import {mount} from './js/city3d.js';
+const q = new URLSearchParams(location.search), p = +q.get('p') || 0;
+// Una ciudad de muestra a medio construir: bloques 0 a 6 en obra, 7 a 10 aún en solar
+const pct = [1, 1, .67, .67, 1, .43, .5];
+const blocks = City.B.map((b, k) => {
+  const soon = k > 6, v = soon ? 0 : pct[k];
+  return {b, k, soon, pct: v, m: {id: 'm' + k}, floors: v > 0 ? Math.max(1, Math.round(v * b.max)) : 0};
+});
+const st = {blocks, cols: ['#ff6b6b', '#0a84ff', '#ff9f0a', '#30b0c7', '#34c759', '#64d2ff', '#bf5af2', '#5e5ce6', '#ff9f0a', '#30d158', '#ffcc00'],
+  beacon: true, passed: true, fresh: null, trees: 42, TREES: City.TREES, lamps: 15, LAMPS: City.LAMPS, wall: 72, WALL: City.WALL};
+mount(document.getElementById('h'), st, {night: q.get('n') !== '0', still: true, loop: {p}, az: Math.PI / 4 + .38 * Math.sin(2 * Math.PI * p), zoom: +(q.get('z') || .78), pol: .96});
+</script>
+</body>
+</html>
