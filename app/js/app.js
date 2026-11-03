@@ -108,7 +108,7 @@
     const ext = (href, cls, ...kids) => h('a' + cls, {href, target: '_blank', rel: 'noopener noreferrer'}, ...kids);
     const REPO = 'https://github.com/heindall92/atlas-grc';
     const cols = [
-      ['Aprender', [['#/', 'Hoy'], ['#/ruta', 'Ruta'], ['#/norma', 'Mapa de la norma'], ['#/examen', 'Simulacro'], ['#/repaso', 'Repaso']]],
+      ['Aprender', [['#/', 'Hoy'], ['#/ruta', 'Ruta'], ['#/norma', 'Mapa de la norma'], ['#/examen', 'Simulacro'], ['#/auditoria', 'Simulador de auditoría'], ['#/repaso', 'Repaso']]],
       ['Albatrel', [['#/caso', 'El caso'], ['#/ciudad', 'La ciudad'], ['#/caso', 'Sus 15 documentos'], ['#/glosario', 'Glosario']]],
       ['Ecosistema', [['https://heindall92.github.io/rosetta_multinorma/', 'Rosetta'], ['https://heindall92.github.io/argos-grc/', 'ARGOS'], ['https://heindall92.github.io/grc_ens_compliance_studio/app/dist/ens-compliance-studio.html', 'ENS Compliance Studio'], ['https://heindall92.github.io/kairos/', 'KAIROS', 1], ['#/acerca', 'Ver las 9 herramientas', 1]]]
     ];

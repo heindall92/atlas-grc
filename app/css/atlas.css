@@ -70,7 +70,7 @@ kbd{font:600 11px var(--mono);padding:2px 6px;border-radius:6px;background:var(-
 
 /* Pulsación: responde en el pointer-down con 0,97 */
 .press{transition:transform .16s var(--ease-out),background-color .2s var(--ease-out),border-color .2s var(--ease-out),color .2s var(--ease-out),box-shadow .2s var(--ease-out),opacity .2s var(--ease-out)}
-.press:active:not(:disabled){transform:scale(.97);transition-duration:.08s}
+.press:active:not(:disabled){transform:scale(.96);transition-duration:.08s}
 
 /* ═══ Cabecera ═══ */
 .hdr{position:sticky;top:0;z-index:30;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;height:68px;padding:0 max(20px,env(safe-area-inset-right)) 0 max(20px,env(safe-area-inset-left));
@@ -1495,4 +1495,71 @@ a.au-case:hover{border-color:var(--track);transform:translateY(-1px)}
   .au-mini dd{margin-bottom:8px}
   .au-a{margin-left:4px}
   .au-letter{padding:18px}
+}
+
+/* ── Simulador · pulido (make-interfaces-feel-better, impeccable, transitions.dev) ── */
+.au h2,.au h3,.au-test-h b,.au-find-h b{text-wrap:balance}
+.au-p,.au-letter p,.au-a,.au-k p,.au-find p{text-wrap:pretty}
+/* Radios concéntricos: exterior = interior + relleno */
+.au-ev{border-radius:24px;padding:16px}
+.au-ev .au-tbl{border-radius:8px}
+.au-test{border-radius:24px;padding:16px}
+.au-test .au-ta{border-radius:8px}
+.au-person{border-radius:24px;padding:16px}
+.au-q button{border-radius:8px}
+/* Transiciones solo en las propiedades que cambian */
+.au-chk{transition:background-color .15s ease-out,border-color .15s ease-out}
+.au-q button{transition:background-color .15s ease-out}
+.au-req-i{transition:border-color .15s ease-out,transform .16s var(--ease-out)}
+.au-case{transition:transform .2s var(--ease-out),border-color .2s ease-out}
+/* Formulario del hallazgo */
+.au-sub{margin:6px 0 0;color:var(--ink-3);font-size:14px}
+.au-form{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;padding-top:4px;overflow-x:hidden}
+.au-field{min-width:0}
+.au-field{padding:10px 0}
+.au-field .au-lbl{margin:0 0 4px;font-size:13.5px;color:var(--ink)}
+.au-help{display:block;color:var(--ink-3);font-size:13px;margin:-2px 0 8px}
+.au-field .au-lbl+.au-sel,.au-field .au-lbl+.au-ta,.au-field .au-lbl+.au-seg,.au-field .au-lbl+.au-list{margin-top:6px}
+.au-seg{display:flex;width:100%;border-radius:16px}
+.au-seg button{border-radius:12px}
+.au-seg button{flex:1;min-width:0;padding:6px 8px;height:auto;min-height:34px;white-space:normal;line-height:1.2}
+.au-ferr,.panel-b .au-ferr{margin:0;color:#c4122f;font-size:13.5px;line-height:1.4;max-height:0;opacity:0;overflow:hidden;transition:max-height .28s ease-out,opacity .28s ease-out,margin .28s ease-out}
+.au-field.is-error .au-ferr,.panel-b .au-field.is-error .au-ferr{max-height:60px;opacity:1;margin-top:8px}
+.au-field.is-error .au-sel,.au-field.is-error .au-ta,.au-field.is-error .au-chk{border-color:#e0313f}
+.au-field.is-error>:is(.au-sel,.au-ta,.au-list,.au-seg){animation:shake .28s linear}
+:root[data-theme="dark"] .au-ferr,:root[data-theme="dark"] .panel-b .au-ferr{color:#ff6b75}
+/* Lista para entregar */
+.au-ready{padding:18px 20px;border-radius:20px;background:var(--surface);border:1px solid var(--line-2);box-shadow:var(--shadow-sm);margin-bottom:14px}
+.au-ready-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.au-ready-h>b{font-size:16px}
+.au-ready-n{color:var(--ink-3);font-size:14px;font-variant-numeric:tabular-nums}
+.au-ready-n b{color:var(--ink);font-size:18px}
+.au-ready-bar{display:block;height:6px;border-radius:99px;background:var(--fill-2);margin:12px 0 14px;overflow:hidden}
+.au-ready-bar em{display:block;height:100%;background:var(--track);border-radius:inherit;transform-origin:left;transition:transform .5s var(--ease-out)}
+.au-ready-l{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.au-ready-l li{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:10px;align-items:center;font-size:14.5px;color:var(--ink-2)}
+.au-ready-l li.ok{color:var(--ink-3)}
+.au-ready-l li.ok>span:nth-child(2){text-decoration:line-through;text-decoration-color:var(--ink-4)}
+.au-tick{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);color:var(--bg)}
+.au-ready-l li.ok .au-tick{background:var(--ok-fill,#34c759);border-color:transparent}
+.au-tick .ico{font-size:13px;stroke-width:3}
+.au-ready-l .link{font-size:13.5px;font-weight:600;white-space:nowrap}
+.btn.primary:disabled{opacity:1;background:var(--fill-2);color:var(--ink-3)}
+/* Resultado: un único momento animado (cifras y barras), con transform y opacidad */
+.au-bar em{width:100%;transform-origin:left;transform:scaleX(var(--v,0))}
+.au-score.is-in .au-bar em{animation:au-grow .7s var(--ease-out) both;animation-delay:calc(.25s + var(--k,0) * .08s)}
+.au-big b{display:inline-flex}
+.au-dig{display:inline-block}
+.au-score.is-in .au-dig{animation:au-digit .5s var(--ease-out) both;animation-delay:calc(var(--k,0) * .06s)}
+@keyframes au-grow{from{transform:scaleX(0)}}
+@keyframes au-digit{from{opacity:0;transform:translateY(12px);filter:blur(4px)}}
+/* Zonas táctiles de 44 px en pantallas táctiles */
+@media (pointer:coarse){
+  .au-steps a{height:44px}
+  .au-states .pill{height:40px}
+  .au-mark select{height:40px}
+}
+@media (prefers-reduced-motion:reduce){
+  .au-score.is-in .au-bar em,.au-score.is-in .au-dig,.au-field.is-error>*{animation:none!important}
+  .au-ferr,.au-ready-bar em{transition:none}
 }

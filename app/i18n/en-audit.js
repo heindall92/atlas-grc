@@ -96,6 +96,23 @@ I18N.add({
   'La auditoría se basa en una muestra y en evidencias aportadas por el auditado; las bajas no incluidas en la muestra no se han revisado.': 'The audit is based on a sample and on evidence provided by the auditee; departures not included in the sample have not been reviewed.',
   'Generado con Atlas GRC · Simulador de auditoría': 'Generated with Atlas GRC · Audit simulator',
 
+  /* Formulario y entrega (v2) */
+  'Criterio + condición observada + evidencia.': 'Criterion + observed condition + evidence.',
+  'Arregla este caso concreto.': 'Fixes this specific case.', 'Evita que vuelva a pasar.': 'Prevents it from happening again.',
+  'El requisito que no se cumple o que queda afectado.': 'The requirement that is not met or is affected.', 'Hechos, sin opiniones.': 'Facts, no opinions.',
+  'Guardar hallazgo': 'Save finding', 'Hallazgo registrado': 'Finding recorded', 'Hallazgo actualizado': 'Finding updated',
+  'Elige a qué baja o proceso afecta.': 'Choose which departure or process it affects.',
+  'Elige el criterio: sin criterio no hay hallazgo.': 'Choose the criterion: no criterion, no finding.',
+  'Marca al menos una evidencia que lo demuestre.': 'Tick at least one piece of evidence that proves it.',
+  'Primero pide evidencias en el paso 4.': 'First request evidence in step 4.',
+  'Describe qué viste, cuándo y en qué evidencia (al menos una frase).': 'Describe what you saw, when and in which evidence (at least one sentence).',
+  'Indica qué se hace ya con este caso.': "Say what's done now about this case.",
+  'Indica qué cambia para que no se repita.': 'Say what changes so it does not happen again.',
+  'Objetivo de la auditoría': 'Audit objective', 'Alcance: al menos un sistema': 'Scope: at least one system', 'Al menos un criterio': 'At least one criterion',
+  'Muestra de 5 bajas o más': 'Sample of 5 or more departures', 'Resultado de al menos una prueba': 'Result of at least one test', 'Conclusión del informe': 'Report conclusion',
+  'Todo listo para entregar': 'Everything ready to submit',
+  'Completa lo que falta; cada enlace te lleva al paso correspondiente.': 'Complete what is missing; each link takes you to the right step.',
+
   /* ── Caso 01 ── */
   'Bajas de personal: ¿se retiraron todos los accesos?': 'Staff departures: was all access removed?',
   'Auditoría interna del proceso de bajas de Albatrel: muestreo, evidencias, entrevistas, hallazgos e informe.': "Internal audit of Albatrel's leavers process: sampling, evidence, interviews, findings and report.",

@@ -141,17 +141,19 @@
       .map(([n, v, m]) => [n, Math.round(Math.min(v, m)), m]);
     return {total: parts.reduce((a, p) => a + p[1], 0), parts, fb, matched, date: new Date().toISOString().slice(0, 10)};
   }
-  function missing(C, st) {
-    const m = [];
-    if (!st.plan.obj) m.push('Elige el objetivo de la auditoría');
-    if (!st.plan.sys.length) m.push('Define el alcance (sistemas)');
-    if (!st.plan.crit.length) m.push('Elige al menos un criterio');
-    if (st.sample.length < C.sampleMin) m.push('Selecciona la muestra');
-    if ((st.why || '').trim().length < 10) m.push('Justifica la muestra');
-    if (!C.tests.some(t => (st.tests[t.id] || {}).s && st.tests[t.id].s !== 'pend')) m.push('Registra el resultado de las pruebas');
-    if (!st.concl) m.push('Elige la conclusión del informe');
-    return m;
+  /* Requisitos para entregar: cada uno sabe si está hecho y en qué paso se completa */
+  function readiness(C, st) {
+    return [
+      ['Objetivo de la auditoría', !!st.plan.obj, 'plan'],
+      ['Alcance: al menos un sistema', st.plan.sys.length > 0, 'plan'],
+      ['Al menos un criterio', st.plan.crit.length > 0, 'plan'],
+      ['Muestra de ' + C.sampleMin + ' bajas o más', st.sample.length >= C.sampleMin, 'muestra'],
+      ['Justificación de la muestra', (st.why || '').trim().length >= 10, 'muestra'],
+      ['Resultado de al menos una prueba', C.tests.some(t => (st.tests[t.id] || {}).s && st.tests[t.id].s !== 'pend'), 'pruebas'],
+      ['Conclusión del informe', !!st.concl, 'informe']
+    ];
   }
+  const missing = (C, st) => readiness(C, st).filter(r => !r[1]).map(r => r[0]);
 
   /* ═════════ Informe en Markdown ═════════ */
   function report(C, st) {
@@ -202,7 +204,6 @@
         h('div.au-case-st', h('span.tag' + (st && st.result ? '.ok' : st ? '.track' : ''), state), st && st.result ? h('b', st.result.total + '/100') : null, icon('chevron-right')));
     };
     return h('div.view.au',
-      h('div.eyebrow.track', h('span.dot'), 'Anexo · Laboratorio práctico'),
       h('h1', 'Simulador de auditoría'),
       h('p.lede', 'Aprende a trabajar como auditor interno y analista GRC: recibes un encargo, planificas, eliges una muestra, pides evidencias, entrevistas a las personas, ejecutas pruebas, redactas hallazgos y presentas un informe. Con Albatrel como cliente.'),
       warn(),
@@ -304,7 +305,7 @@
       const got = C.evidence.filter(e => st.req.includes(e.id)), left = C.evidence.filter(e => !st.req.includes(e.id));
       body.append(
         h('p.au-p', 'Pide al auditado lo que necesites. Cada petición le cuesta tiempo: pide solo lo que sirve para el objetivo.'),
-        left.length ? sec('Solicitar', h('div.au-req', left.map(e => h('button.au-req-i', {type: 'button', disabled: locked, onclick: () => set(s => { s.req.push(e.id); })},
+        left.length ? sec('Solicitar', h('div.au-req', left.map(e => h('button.au-req-i.press', {type: 'button', disabled: locked, onclick: () => set(s => { s.req.push(e.id); })},
           icon('send'), h('div', h('b', e.t), h('small', e.from, ' · ', e.type)))))) : null,
         sec('Sala de evidencias', got.length ? h('div.au-evs', got.map(e => evCard(C, e, st, set, locked))) : h('p.au-empty', 'Aún no has pedido ninguna evidencia.')),
         hints(C, 'evidence'));
@@ -329,7 +330,7 @@
         return h('div.au-test',
           h('div.au-test-h', h('span.tag.track', t.id), h('b', t.t)),
           h('dl.au-mini', h('dt', 'Criterio'), h('dd', (P.criteria.find(c => c.id === t.crit) || {}).t || ''), h('dt', 'Evidencia esperada'), h('dd', t.ev), h('dt', 'Procedimiento'), h('dd', t.how)),
-          h('div.au-states', {role: 'radiogroup', 'aria-label': t.id}, C.testStates.map(([v, l]) => h('button.pill', {type: 'button', role: 'radio', 'aria-checked': String(r.s === v), 'aria-pressed': String(r.s === v), disabled: locked,
+          h('div.au-states', {role: 'radiogroup', 'aria-label': t.id}, C.testStates.map(([v, l]) => h('button.pill.press', {type: 'button', role: 'radio', 'aria-checked': String(r.s === v), 'aria-pressed': String(r.s === v), disabled: locked,
             onclick: () => set(s => { s.tests[t.id] = Object.assign(s.tests[t.id] || {note: ''}, {s: v}); })}, l))),
           area(r.note, (v) => set(s => { s.tests[t.id] = Object.assign(s.tests[t.id] || {s: 'pend'}, {note: v}); }, false), {rows: 2, ph: 'Nota: qué has visto y en qué evidencia', ...dis}));
       })),
@@ -339,13 +340,12 @@
       h('p.au-p', 'Un hallazgo = criterio + condición observada + evidencia. Si algo no se puede demostrar, no es un hallazgo: es evidencia insuficiente.'),
       st.finds.length ? h('div.au-finds', st.finds.map((f, i) => h('div.au-find',
         h('div.au-find-h', h('span.tag' + (f.type === 'nc' ? '.warn' : f.type === 'obs' ? '.track' : ''), (TYPES.find(x => x[0] === f.type) || [0, ''])[1]), h('b', 'H-' + String(i + 1).padStart(2, '0')), h('span', subjName(C, f.subj)),
-          locked ? null : h('span.au-act', h('button.btn.sm.ghost', {type: 'button', onclick: () => findForm(C, st, set, i)}, icon('notebook-pen'), 'Editar'), h('button.btn.sm.ghost', {type: 'button', 'aria-label': 'Eliminar hallazgo', onclick: () => set(s => { s.finds.splice(i, 1); })}, icon('trash-2')))),
+          locked ? null : h('span.au-act', h('button.btn.sm.ghost.press', {type: 'button', onclick: () => findForm(C, st, set, i)}, icon('notebook-pen'), 'Editar'), h('button.btn.sm.ghost', {type: 'button', 'aria-label': 'Eliminar hallazgo', onclick: () => set(s => { s.finds.splice(i, 1); })}, icon('trash-2')))),
         h('p', f.cond), h('small', (P.criteria.find(c => c.id === f.crit) || {}).t || '', ' · ', f.ev.join(', '))))) : h('p.au-empty', 'Aún no has registrado hallazgos.'),
-      locked ? null : h('button.btn.primary', {type: 'button', onclick: () => findForm(C, st, set, -1)}, icon('flag'), 'Registrar un hallazgo'),
+      locked ? null : h('button.btn.primary.press', {type: 'button', onclick: () => findForm(C, st, set, -1)}, icon('flag'), 'Registrar un hallazgo'),
       hints(C, 'findings'));
 
     if (step === 'informe') {
-      const miss = missing(C, st);
       body.append(
         sec('Resumen ejecutivo', h('p.au-p', 'Lo que leerá la Gerencia en un minuto: qué se auditó, qué se encontró y qué significa.'),
           area(st.summary, (v) => set(s => { s.summary = v; }, false), {rows: 5, ph: 'Resumen ejecutivo', ...dis})),
@@ -353,12 +353,21 @@
         sec('Exportar', h('div.au-btns',
           h('button.btn', {type: 'button', onclick: () => dl('informe-auditoria-' + C.id + '.md', report(C, st), 'text/markdown')}, icon('file-down'), 'Informe (Markdown)'),
           h('button.btn', {type: 'button', onclick: () => dl('expediente-' + C.id + '.json', JSON.stringify({simulacion: true, aviso: tr(WARN), caso: C.id, version: C.v, estado: st}, null, 2), 'application/json')}, icon('download'), 'Expediente (JSON)'))),
-        locked ? null : sec('Entregar',
-          miss.length ? h('div.callout.exam', icon('triangle-alert'), h('div', h('b', 'Antes de entregar'), h('ul', miss.map(m => h('li', m))))) : h('p.au-p', 'Al entregar verás tu puntuación por competencias y la solución del caso.'),
-          h('button.btn.primary.lg', {type: 'button', disabled: !!miss.length, onclick: () => {
-            const r = grade(C, st); st.result = r; st.attempts = (st.attempts || []).concat({date: r.date, total: r.total}); save();
-            location.hash = '#/auditoria/' + id + '/resultado';
-          }}, icon('send'), 'Entregar y evaluar')),
+        locked ? null : sec('Entregar', (() => {
+          const rd = readiness(C, st), done = rd.filter(r => r[1]).length, ready = done === rd.length;
+          return [
+            h('div.au-ready',
+              h('div.au-ready-h', h('b', ready ? 'Todo listo para entregar' : 'Antes de entregar'), h('span.au-ready-n', h('b', String(done)), ' / ', String(rd.length))),
+              h('i.au-ready-bar', h('em', {style: {transform: 'scaleX(' + (done / rd.length) + ')'}})),
+              h('ul.au-ready-l', rd.map(([t, ok, step]) => h('li' + (ok ? '.ok' : ''),
+                h('span.au-tick', ok ? icon('check') : null), h('span', t),
+                !ok && step !== 'informe' ? h('a.link', {href: '#/auditoria/' + id + '/' + step}, STEPS.find(x => x[0] === step)[1], ' →') : null)))),
+            h('p.au-p', ready ? 'Al entregar verás tu puntuación por competencias y la solución del caso.' : 'Completa lo que falta; cada enlace te lleva al paso correspondiente.'),
+            h('button.btn.primary.lg.press', {type: 'button', disabled: !ready, onclick: () => {
+              const r = grade(C, st); st.result = r; st.attempts = (st.attempts || []).concat({date: r.date, total: r.total}); save();
+              location.hash = '#/auditoria/' + id + '/resultado';
+            }}, icon('send'), 'Entregar y evaluar')];
+        })()),
         hints(C, 'report'));
     }
 
@@ -372,7 +381,7 @@
       next ? h('a.btn.dark', {href: '#/auditoria/' + id + '/' + next[0]}, next[1], icon('arrow-right')) : null) : null;
 
     return h('div.view.au',
-      h('a.au-back', {href: '#/auditoria'}, icon('chevron-left'), 'Simulador de auditoría'),
+      h('a.au-back.press', {href: '#/auditoria'}, icon('chevron-left'), 'Simulador de auditoría'),
       h('div.eyebrow.track', h('span.dot'), 'Caso ', C.n, ' · ', C.kind),
       h('h1.au-h1', C.t),
       warn(), nav,
@@ -396,39 +405,59 @@
     const f = i >= 0 ? JSON.parse(JSON.stringify(st.finds[i])) : {type: 'nc', subj: '', crit: '', ev: [], cond: '', corr: '', ca: ''};
     const subjects = [...C.population.filter(b => st.sample.includes(b.id)).map(b => [b.id, b.id + ' · ' + b.role]), ...C.subjects];
     panel(close => {
-      const err = h('p.au-err', {role: 'alert'});
+      /* Cada campo lleva su propio mensaje de error, que dice qué falla y cómo arreglarlo */
+      const fields = {};
+      const field = (key, label, ctl, help) => {
+        const msg = h('p.au-ferr', {id: 'fe-' + key, role: 'alert'});
+        const wrap = h('div.au-field', h('label.au-lbl', label), help ? h('small.au-help', help) : null, ctl, msg);
+        fields[key] = {wrap, msg, ctl}; return wrap;
+      };
+      const clear = (key) => { const x = fields[key]; if (x) { x.wrap.classList.remove('is-error'); x.msg.textContent = ''; } };
       const ncBox = h('div');
       const drawNc = () => { ncBox.textContent = ''; if (f.type === 'nc') ncBox.append(
-        h('label.au-lbl', 'Corrección (arreglar este caso)'), area(f.corr, v => { f.corr = v; }, {rows: 2, ph: 'Qué se hace ya con lo detectado'}),
-        h('label.au-lbl', 'Acción correctiva (evitar que se repita)'), area(f.ca, v => { f.ca = v; }, {rows: 2, ph: 'Qué cambia para atacar la causa'})); };
+        field('corr', 'Corrección', area(f.corr, v => { f.corr = v; }, {rows: 2, ph: 'Qué se hace ya con lo detectado'}), 'Arregla este caso concreto.'),
+        field('ca', 'Acción correctiva', area(f.ca, v => { f.ca = v; }, {rows: 2, ph: 'Qué cambia para atacar la causa'}), 'Evita que vuelva a pasar.')); };
       drawNc();
-      const types = h('div.seg', {role: 'group', 'aria-label': 'Tipo'}, TYPES.map(([v, l]) => h('button', {type: 'button', 'aria-pressed': String(f.type === v), onclick: (e) => {
+      const types = h('div.seg.au-seg', {role: 'group', 'aria-label': 'Tipo'}, TYPES.map(([v, l]) => h('button', {type: 'button', 'aria-pressed': String(f.type === v), onclick: (e) => {
         f.type = v; types.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b === e.currentTarget))); drawNc(); }}, l)));
       const sel = (opts, val, on, ph) => h('select.au-sel', {'aria-label': ph, onchange: (e) => on(e.target.value)}, h('option', {value: ''}, ph), opts.map(([v, l]) => h('option', {value: v, selected: val === v}, l)));
       const evs = C.evidence.filter(e => st.req.includes(e.id));
+      const save = () => {
+        Object.keys(fields).forEach(clear);
+        const errs = [];
+        if (!f.subj) errs.push(['subj', 'Elige a qué baja o proceso afecta.']);
+        if (!f.crit) errs.push(['crit', 'Elige el criterio: sin criterio no hay hallazgo.']);
+        if (!f.ev.length) errs.push(['ev', evs.length ? 'Marca al menos una evidencia que lo demuestre.' : 'Primero pide evidencias en el paso 4.']);
+        if (f.cond.trim().length < 20) errs.push(['cond', 'Describe qué viste, cuándo y en qué evidencia (al menos una frase).']);
+        if (f.type === 'nc' && (f.corr || '').trim().length < 10) errs.push(['corr', 'Indica qué se hace ya con este caso.']);
+        if (f.type === 'nc' && (f.ca || '').trim().length < 10) errs.push(['ca', 'Indica qué cambia para que no se repita.']);
+        if (errs.length) {
+          errs.forEach(([k, m]) => { const x = fields[k]; if (!x) return; x.msg.textContent = tr(m); x.wrap.classList.remove('is-error'); void x.wrap.offsetWidth; x.wrap.classList.add('is-error'); });
+          const first = fields[errs[0][0]].wrap; first.scrollIntoView({block: 'center', behavior: UI.RM() ? 'auto' : 'smooth'});
+          const ctl = first.querySelector('select,textarea,input'); ctl && ctl.focus({preventScroll: true});
+          return;
+        }
+        set(s => { if (i >= 0) s.finds[i] = f; else s.finds.push(f); }); close(); toast(tr(i >= 0 ? 'Hallazgo actualizado' : 'Hallazgo registrado'));
+      };
       return [
-        h('h2', i >= 0 ? 'Editar hallazgo' : 'Nuevo hallazgo'),
-        h('label.au-lbl', 'Tipo'), types,
-        h('label.au-lbl', 'Afecta a'), sel(subjects, f.subj, v => { f.subj = v; }, 'Elige una baja de tu muestra o un proceso'),
-        h('label.au-lbl', 'Criterio incumplido o afectado'), sel(C.plan.criteria.map(c => [c.id, c.t]), f.crit, v => { f.crit = v; }, 'Elige el criterio'),
-        h('label.au-lbl', 'Evidencias que lo demuestran'),
-        evs.length ? h('div.au-list.tight', evs.map(e => check(e.id + ' · ' + e.t, f.ev.includes(e.id), () => toggle(f.ev, e.id)))) : h('p.au-empty', 'Primero pide evidencias en la sala de evidencias.'),
-        h('label.au-lbl', 'Condición observada (hechos, sin opiniones)'), area(f.cond, v => { f.cond = v; }, {rows: 3, ph: 'Qué has visto, cuándo y en qué evidencia'}),
-        ncBox, err,
-        h('div.au-btns', h('button.btn', {type: 'button', onclick: close}, 'Cancelar'),
-          h('button.btn.primary', {type: 'button', onclick: () => {
-            const m = !f.subj ? 'Indica a qué afecta el hallazgo.' : !f.crit ? 'Un hallazgo necesita un criterio.' : !f.ev.length ? 'Un hallazgo necesita al menos una evidencia.' : f.cond.trim().length < 20 ? 'Describe la condición observada con más detalle.' : '';
-            if (m) { err.textContent = tr(m); return; }
-            set(s => { if (i >= 0) s.finds[i] = f; else s.finds.push(f); }); close();
-          }}, icon('check'), 'Guardar'))];
+        h('div.panel-h', h('div', h('h2', i >= 0 ? 'Editar hallazgo' : 'Nuevo hallazgo'), h('p.au-sub', 'Criterio + condición observada + evidencia.')),
+          h('button.ib.press', {type: 'button', 'aria-label': 'Cerrar', onclick: close}, icon('x'))),
+        h('div.panel-b.au-form',
+          field('type', 'Tipo', types),
+          field('subj', 'Afecta a', sel(subjects, f.subj, v => { f.subj = v; clear('subj'); }, 'Elige una baja de tu muestra o un proceso')),
+          field('crit', 'Criterio', sel(C.plan.criteria.map(c => [c.id, c.t]), f.crit, v => { f.crit = v; clear('crit'); }, 'Elige el criterio'), 'El requisito que no se cumple o que queda afectado.'),
+          field('ev', 'Evidencias que lo demuestran', evs.length ? h('div.au-list', evs.map(e => check(h('span.au-b', h('b', e.id), ' ', e.t), f.ev.includes(e.id), () => { toggle(f.ev, e.id); clear('ev'); }))) : h('p.au-empty', 'Primero pide evidencias en la sala de evidencias.')),
+          field('cond', 'Condición observada', area(f.cond, v => { f.cond = v; if (v.trim().length >= 20) clear('cond'); }, {rows: 3, ph: 'Qué has visto, cuándo y en qué evidencia'}), 'Hechos, sin opiniones.'),
+          ncBox),
+        h('div.panel-f', h('button.btn.press', {type: 'button', onclick: close}, 'Cancelar'), h('button.btn.primary.press', {type: 'button', onclick: save}, icon('check'), 'Guardar hallazgo'))];
     });
   }
 
   function resultView(C, st, id) {
     const r = st.result;
     return h('div.au-res',
-      h('div.au-score', h('div.au-big', h('b', String(r.total)), h('span', '/100')),
-        h('div.au-bars', r.parts.map(([n, v, m]) => h('div.au-bar', h('span', n), h('i', h('em', {style: {width: (100 * v / m) + '%'}})), h('b', v + '/' + m))))),
+      h('div.au-score.is-in', h('div.au-big', h('b', String(r.total).split('').map((d, k) => h('span.au-dig', {style: {'--k': k}}, d))), h('span', '/100')),
+        h('div.au-bars', r.parts.map(([n, v, m], k) => h('div.au-bar', {style: {'--k': k}}, h('span', n), h('i', h('em', {style: {'--v': v / m}})), h('b', v + '/' + m))))),
       sec('Lo que has hecho bien y lo que falta', h('ul.au-fb', r.fb.map(([k, t, sub]) => h('li.' + k, icon(k === 'ok' ? 'circle-check' : k === 'bad' ? 'circle-x' : 'info'), h('span', h('b', t), sub ? h('span', sub) : null))))),
       sec('Solución del caso', h('p.au-p', 'Estos son los hallazgos que se podían demostrar con las evidencias.'),
         h('div.au-key', C.key.map(k => {
