@@ -516,7 +516,7 @@
     const scaler = h('div.ap-scaler', win, cursor);
     const stage = h('div.au-pr-stage', {'aria-hidden': 'true'}, scaler);
     const card = h('a.au-promo.press', {href: '#/auditoria' + (started ? '/c01' + (done ? '/resultado' : '') : '')},
-      done ? null : h('span.au-new', icon('zap'), 'Nuevo'),
+      h('span.au-new', icon('zap'), 'Nuevo'),
       h('div.au-pr-copy',
         h('div.au-pr-k', icon('scan-search'), 'Simulador de auditoría'),
         h('h3', 'Audita Albatrel como lo haría un profesional'),
