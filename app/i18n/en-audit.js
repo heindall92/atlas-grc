@@ -113,6 +113,11 @@ I18N.add({
   'Todo listo para entregar': 'Everything ready to submit',
   'Completa lo que falta; cada enlace te lleva al paso correspondiente.': 'Complete what is missing; each link takes you to the right step.',
 
+  /* Tarjeta de novedad en Hoy */
+  'Nuevo': 'New', 'Audita Albatrel como lo haría un profesional': 'Audit Albatrel the way a professional would',
+  'Pide evidencias, entrevista al equipo, encuentra las no conformidades y entrega tu informe. Con la solución al final.': 'Request evidence, interview the team, find the nonconformities and hand in your report. With the solution at the end.',
+  'Tu mejor nota:': 'Your best score:', 'Repasar': 'Review', 'Continuar el caso 01': 'Continue case 01', 'Empezar el caso 01': 'Start case 01', 'Deshabilitada': 'Disabled',
+
   /* ── Caso 01 ── */
   'Bajas de personal: ¿se retiraron todos los accesos?': 'Staff departures: was all access removed?',
   'Auditoría interna del proceso de bajas de Albatrel: muestreo, evidencias, entrevistas, hallazgos e informe.': "Internal audit of Albatrel's leavers process: sampling, evidence, interviews, findings and report.",

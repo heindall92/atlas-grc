@@ -81,6 +81,7 @@
           h('div.mini', h('span', 'XP total'), h('b', Store.s.xp)),
           h('div.mini', h('span', 'Unidades'), h('b', doneUnits + '/' + units.length)))), 1)),
       h('div.sec', qr),
+      window.Audit ? h('div.sec', Audit.promo()) : null,
       h('div.sec', h('div.sec-h', h('h2', 'Tu ciudad'), h('a', {href: '#/ciudad'}, 'Verla entera')), City.mini()),
       h('div.sec', h('div.sec-h', h('h2', 'Tus bloques'), h('a', {href: '#/ruta'}, 'Ver la ruta')), carousel()));
   }

@@ -47,11 +47,11 @@
     if (S.mode !== 'learn' || !C.hints || !C.hints[k]) return null;
     const list = C.hints[k]; let n = 0;
     const box = h('div.au-hints');
-    const btn = h('button.btn.sm.ghost', {type: 'button', onclick: () => {
+    const btn = h('button.btn.sm.ghost.press', {type: 'button', onclick: () => {
       if (n < list.length) box.append(h('div.callout.plain', icon('lightbulb'), h('div', h('b', 'Pista'), h('span', list[n++]))));
       if (n >= list.length) btn.remove();
     }}, icon('lightbulb'), 'Ver una pista');
-    return h('div', btn, box);
+    return h('div.au-hint-wrap', btn, box);
   }
   const sec = (title, ...kids) => h('section.au-sec', h('h2', title), ...kids);
 
@@ -475,10 +475,59 @@
         h('button.btn', {type: 'button', onclick: () => dl('informe-auditoria-' + C.id + '.md', report(C, st), 'text/markdown')}, icon('file-down'), 'Descargar mi informe')));
   }
 
+  /* ═════════ Tarjeta de novedad en «Hoy» ═════════
+     Una miniatura del simulador cuenta qué pasa dentro (reglas de stageshow):
+     extracto del Directorio Activo → se revisa B-01 → B-02 sale tarde → aparece la no conformidad.
+     El fotograma fijo es el resultado; con «reducir movimiento» solo se ve ese. */
+  function promo() {
+    const C = AUD().cases.c01; if (!C) return null;
+    const st = S.cases.c01, done = st && st.result, started = !!st;
+    const best = done ? Math.max(...(st.attempts || []).map(a => a.total), st.result.total) : 0;
+    const row = (b, out, off, cls) => h('div.au-pr-row' + (cls || ''), h('b', b), h('span', out), h('span.au-pr-off', off));
+    const filler = (w1, w2) => h('div.au-pr-row.fill', h('i', {style: {width: w1 + 'px'}}), h('i', {style: {width: w2 + 'px'}}), h('i', {style: {width: w2 + 'px'}}));
+    const win = h('div.au-pr-win',
+      h('div.au-pr-bar', h('span'), h('span'), h('span'), h('em', 'EV-04', h('span.au-pr-long', ' · ', 'Directorio Activo'))),
+      h('div.au-pr-head', h('span', 'Baja'), h('span', 'Salida'), h('span', 'Deshabilitada')),
+      row('B-01', '16/01', '16/01', '.r1'), row('B-02', '13/02', '20/02', '.r2'),
+      filler(30, 38), filler(30, 32), filler(30, 40), filler(30, 34));
+    const chip = h('div.au-pr-chip', icon('flag'), h('span', h('b', 'No conformidad'), h('small', 'NOR-01 §2')));
+    const stage = h('div.au-pr-stage', {'aria-hidden': 'true'}, h('div.au-pr-frame', win, chip));
+    const card = h('a.au-promo.press', {href: '#/auditoria' + (started ? '/c01' + (done ? '/resultado' : '') : '')},
+      done ? null : h('span.au-new', 'Nuevo'),
+      h('div.au-pr-copy',
+        h('div.au-pr-k', icon('scan-search'), 'Simulador de auditoría'),
+        h('h3', 'Audita Albatrel como lo haría un profesional'),
+        h('p', 'Pide evidencias, entrevista al equipo, encuentra las no conformidades y entrega tu informe. Con la solución al final.'),
+        h('span.au-pr-cta', done ? ['Tu mejor nota: ', h('b', best + '/100'), ' · Repasar'] : started ? 'Continuar el caso 01' : 'Empezar el caso 01', icon('arrow-right'))),
+      stage);
+    /* Guion: 0 reposo · 1 revisa B-01 · 2 B-02 tarde · 3 hallazgo (y se mantiene) */
+    const beats = [[0, 0], [1, 1100], [2, 2500], [3, 3700], [0, 10200]];
+    const LOOP = 11400;
+    const set = (b) => { stage.dataset.beat = b; };
+    if (UI.RM()) { set(3); return card; }
+    set(3); // fotograma fijo hasta que la tarjeta se ve
+    let timers = [], running = false;
+    const stop = () => { timers.forEach(clearTimeout); timers = []; running = false; };
+    const play = () => {
+      if (running || !card.isConnected) return; running = true; set(0);
+      const once = () => {
+        if (!card.isConnected) return stop();
+        beats.forEach(([b, t]) => timers.push(setTimeout(() => set(b), t)));
+        timers.push(setTimeout(once, LOOP));
+      };
+      once();
+    };
+    const io = new IntersectionObserver((es) => { es.forEach(e => { if (e.isIntersecting && !document.hidden) play(); else { stop(); set(3); } }); }, {threshold: .45});
+    setTimeout(() => card.isConnected && io.observe(card), 0);
+    App.onLeave(() => { stop(); io.disconnect(); });
+    return card;
+  }
+
   function refresh() { if (location.hash.startsWith('#/auditoria')) window.dispatchEvent(new HashChangeEvent('hashchange')); }
 
   window.Audit = {
     view(id, step) { return id ? caseView(id, step) : center(); },
+    promo,
     state: () => S, grade, expected, report
   };
 })();
