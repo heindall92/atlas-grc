@@ -34,7 +34,8 @@ Empezar en GRC leyendo directamente una norma suele acabar igual: memorizar clá
 - **mapa de la norma** con las cláusulas por el ciclo PDCA y los **93 controles** del Anexo A explicados en lenguaje sencillo;
 - **caso Albatrel**: una empresa inventada con su SGSI completo en **15 documentos propios**, que se leen, se descargan y se **construyen paso a paso**;
 - **simulacro** con el formato del examen ISO/IEC 27001 Foundation de CertiProf (40 preguntas, 60 minutos) y un banco de **280 preguntas propias**;
-- **repaso espaciado** del glosario y de los errores, para que lo aprendido se quede.
+- **repaso espaciado** del glosario y de los errores, para que lo aprendido se quede;
+- **simulador de auditoría** (anexo): un encargo de auditoría interna sobre Albatrel con evidencias, entrevistas, pruebas, hallazgos, informe y evaluación por competencias.
 
 Funciona en el navegador, sin servidor, sin cuentas y sin conexión. Tu progreso no sale de tu equipo. Toda la plataforma está en **español e inglés**: el selector ES/EN está junto al botón de tema.
 
@@ -112,6 +113,7 @@ Funciona en el navegador, sin servidor, sin cuentas y sin conexión. Tu progreso
 - [Capturas](#-capturas)
 - [El caso Albatrel](#-el-caso-albatrel)
 - [La ciudad de Albatrel](#-la-ciudad-de-albatrel)
+- [Simulador de auditoría](#-simulador-de-auditoría)
 - [Arranque rápido](#-arranque-rápido)
 - [Arquitectura](#-arquitectura)
 - [Contenido y derechos de autor](#-contenido-y-derechos-de-autor)
@@ -191,6 +193,7 @@ mindmap
 | <img src="docs/assets/icons/shield-check.svg" width="18"/> | **Mapa de la norma** | Cláusulas 4 a 10 ordenadas por el ciclo PDCA y los 93 controles con buscador, filtros por tema, los 11 nuevos de 2022 y la opción de marcarlos como entendidos. |
 | <img src="docs/assets/icons/briefcase.svg" width="18"/> | **Caso Albatrel** | La empresa, su pirámide documental y sus 15 documentos para leer, descargar en Markdown o construir paso a paso. |
 | <img src="docs/assets/icons/building-2.svg" width="18"/> | **Ciudad de Albatrel** | Maqueta 3D de la empresa que crece con tu progreso: gírala, acércate y toca un edificio para ver la obra de su bloque. |
+| <img src="docs/assets/icons/scan-search.svg" width="18"/> | **Simulador de auditoría** | Anexo práctico: encargo, plan, muestra, sala de evidencias, entrevistas, pruebas, hallazgos e informe exportable, con la solución al entregar. |
 | <img src="docs/assets/icons/file-check.svg" width="18"/> | **Simulacro** | 10, 20 o 40 preguntas con temporizador, marcadores, entrega manteniendo pulsado y revisión completa. |
 | <img src="docs/assets/icons/sparkles.svg" width="18"/> | **Repaso y glosario** | 64 términos con tarjetas que se giran y la sesión de «Mis errores». |
 | <img src="docs/assets/icons/user-round.svg" width="18"/> | **Acerca de** | Autor, enlace al código fuente, aviso de independencia y las demás herramientas GRC del ecosistema (también en Ajustes). |
@@ -285,6 +288,41 @@ Si el navegador no tiene WebGL, se muestra el plano isométrico en SVG.
 
 La cabecera de este README es la misma maqueta grabada en bucle con `tools/cabecera.py`: GitHub no ejecuta 3D en un README, pero sí muestra imágenes animadas (WebP).
 
+## <img src="docs/assets/icons/scan-search.svg" width="20" height="20" valign="middle"/> Simulador de auditoría
+
+Un anexo para aprender a **trabajar** como auditor interno y analista GRC, no a memorizar. Se abre desde **Más → Simulador de auditoría** (`#/auditoria`).
+
+<p align="center">
+  <img src="docs/img/readme/auditoria-light.png" alt="Centro de misiones del simulador de auditoría" width="880"/>
+</p>
+
+**Caso 01 · Bajas de personal: ¿se retiraron todos los accesos?** La Responsable de Seguridad de Albatrel te encarga comprobar si la acción del riesgo R-09 funciona de verdad. El caso se apoya en la NOR-01 real del caso Albatrel («los accesos se retiran el mismo día de la salida»).
+
+| Paso | Qué haces |
+|---|---|
+| 1. Encargo | Lees la carta: objetivo, periodo, trabajo de campo y destinatario del informe. |
+| 2. Plan | Eliges objetivo, alcance (sistemas), criterios y técnicas. |
+| 3. Muestra | Eliges al menos 5 de las 8 bajas del semestre y lo justificas. |
+| 4. Evidencias | Pides documentos y extractos (dos no sirven para nada) y los valoras. |
+| 5. Entrevistas | Preguntas a RR. HH., al Responsable del Sistema, al de producto y a la de Seguridad. |
+| 6. Pruebas | Registras el resultado de 8 pruebas: conforme, no conforme, evidencia insuficiente o no aplica. |
+| 7. Hallazgos | Cada hallazgo exige criterio, evidencias y condición observada; las no conformidades, corrección y acción correctiva. |
+| 8. Informe | Resumen ejecutivo y conclusión; se exporta en Markdown (con marca «simulación educativa») o JSON. |
+
+Al entregar se puntúa por competencias (planificación 15, selección de pruebas 20, análisis de evidencia 25, calidad de hallazgos 25, informe y seguimiento 15) y se muestra la **solución**: 5 hallazgos demostrables y 2 trampas que parecen no conformidades pero no lo son (una demora con excepción aprobada y un buzón compartido autorizado). Los falsos positivos restan.
+
+<p align="center">
+  <img src="docs/img/readme/auditoria-evidencias-light.png" alt="Sala de evidencias del caso 01" width="880"/>
+</p>
+
+- **Modo Aprendiz** (con pistas) y **modo Auditor** (sin pistas).
+- Itinerario de 12 semanas que enlaza con los bloques de Atlas.
+- Progreso aparte, en este navegador; se puede exportar, importar, reiniciar un caso o borrarlo todo.
+- En español e inglés.
+- **Todo es ficticio**: personas, cuentas, tickets y extractos se han inventado para el caso. La puntuación no es una certificación ni acredita experiencia real.
+
+**Añadir un caso.** Cada caso es un fichero de datos en `app/data/auditoria/` con el encargo, el plan, la población, las evidencias, las entrevistas, las pruebas, la solución (`key` y `traps`) y las pistas; el motor y las pantallas están en `app/js/audit.js`. La solución viaja con la app (no hay servidor): solo se oculta en la interfaz hasta entregar.
+
 ## <img src="docs/assets/icons/rocket.svg" width="20" height="20" valign="middle"/> Arranque rápido
 
 **En el navegador:** abre [heindall92.github.io/atlas-grc](https://heindall92.github.io/atlas-grc/).
@@ -338,6 +376,8 @@ flowchart LR
 - [x] Bienvenida con plan personal, cuatro colores, modo demostración
 - [x] Ciudad de Albatrel: el progreso convertido en una maqueta 3D que crece
 - [x] Español e inglés en toda la plataforma
+- [x] Simulador de auditoría: caso 01 (bajas de personal)
+- [ ] Simulador: casos 02 a 05 (copias, cuentas privilegiadas, proveedores, incidentes) y seguimiento de acciones
 - [ ] Bloques 7 a 9: controles del Anexo A en profundidad
 - [ ] Bloque 10: auditoría de certificación
 - [ ] Ilustraciones por bloque
@@ -370,10 +410,12 @@ atlas-grc/
 │   │   ├── city3d.js             Maqueta 3D (Three.js): edificios por piezas, día y noche, coches
 │   │   ├── app.js                Cabecera, rutas, buscador y bienvenida
 │   │   ├── i18n.js               Español / English: traduce datos e interfaz al vuelo
+│   │   ├── audit.js              Simulador de auditoría: pantallas, estado y evaluación
 │   │   └── icons.js              Iconos Lucide en línea (ISC)
 │   ├── data/
 │   │   ├── tracks.js             Registro de normas
-│   │   └── iso27001/             content · bloque2 a bloque5 · albatrel · norma
+│   │   ├── iso27001/             content · bloque2 a bloque6 · albatrel · norma
+│   │   └── auditoria/            Casos del simulador de auditoría (caso01.js)
 │   ├── i18n/                     Diccionarios español → inglés (en-*.js)
 │   ├── vendor/three/             Three.js r169 y complementos (MIT)
 │   └── img/                      Ilustraciones opcionales

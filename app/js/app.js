@@ -3,7 +3,7 @@
   const {h, icon, toast, menu, pill, ticker, transition} = UI;
   const $ = (s) => document.querySelector(s);
   const TABS = [['#/', 'house', 'Hoy'], ['#/ruta', 'map', 'Ruta'], ['#/norma', 'layers', 'Norma'], ['#/repaso', 'refresh-cw', 'Repaso'], ['#/examen', 'graduation-cap', 'Examen']];
-  const MORE = [['#/glosario', 'book-a', 'Glosario', 'Los términos clave'], ['#/caso', 'briefcase', 'Caso Albatrel', 'Tu empresa de prácticas'], ['#/ciudad', 'building-2', 'Ciudad de Albatrel', 'La ciudad que levantas estudiando'], ['#/biblioteca', 'library', 'Biblioteca', 'Enlaces oficiales y gratuitos'], ['#/progreso', 'chart-column', 'Progreso', 'Racha, constancia e insignias'], ['#/normas', 'compass', 'Normas', 'ISO 27001, ENS y más'], ['#/acerca', 'info', 'Acerca de', 'Autor, código y herramientas GRC']];
+  const MORE = [['#/glosario', 'book-a', 'Glosario', 'Los términos clave'], ['#/caso', 'briefcase', 'Caso Albatrel', 'Tu empresa de prácticas'], ['#/ciudad', 'building-2', 'Ciudad de Albatrel', 'La ciudad que levantas estudiando'], ['#/auditoria', 'scan-search', 'Simulador de auditoría', 'Practica una auditoría interna con Albatrel'], ['#/biblioteca', 'library', 'Biblioteca', 'Enlaces oficiales y gratuitos'], ['#/progreso', 'chart-column', 'Progreso', 'Racha, constancia e insignias'], ['#/normas', 'compass', 'Normas', 'ISO 27001, ENS y más'], ['#/acerca', 'info', 'Acerca de', 'Autor, código y herramientas GRC']];
   let leaveFns = [];
 
   const App = {
@@ -212,12 +212,13 @@
       case 'progreso': el = Views.progress(); break;
       case 'normas': el = Views.tracks(); break;
       case 'acerca': el = Views.aboutView(); break;
+      case 'auditoria': el = Audit.view(parts[1], parts[2]); break;
       case 'mas': el = moreView(); break;
       default: el = Views.notFound();
     }
     show(el);
     markTabs(false);
-    const title = {'': 'Hoy', ruta: 'Ruta', u: 'Unidad', norma: 'Mapa de la norma', repaso: 'Repaso', glosario: 'Glosario', caso: 'Caso Albatrel', examen: 'Simulacro', biblioteca: 'Biblioteca', progreso: 'Progreso', normas: 'Normas', mas: 'Más'}[r];
+    const title = {'': 'Hoy', ruta: 'Ruta', u: 'Unidad', norma: 'Mapa de la norma', repaso: 'Repaso', glosario: 'Glosario', caso: 'Caso Albatrel', examen: 'Simulacro', auditoria: 'Simulador de auditoría', biblioteca: 'Biblioteca', progreso: 'Progreso', normas: 'Normas', mas: 'Más'}[r];
     document.title = (title ? title + ' · ' : '') + 'Atlas GRC';
   }
   function moreView() {

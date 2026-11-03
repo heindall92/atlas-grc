@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="css/atlas.css">
 <script src="js/i18n.js"></script>
 <script>/* En inglés se cargan los diccionarios (solo entonces) */
-if (I18N.lang === 'en') ['ui', 'extra', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10', 'c11', 'c12', 'c13'].forEach(f => document.write('<script src="i18n/en-' + f + '.js" onerror="void 0"><\/script>'));</script>
+if (I18N.lang === 'en') ['ui', 'extra', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10', 'c11', 'c12', 'c13', 'audit'].forEach(f => document.write('<script src="i18n/en-' + f + '.js" onerror="void 0"><\/script>'));</script>
 </head>
 <body>
 <a class="skip" href="#main">Saltar al contenido</a>
@@ -45,6 +45,7 @@ if (I18N.lang === 'en') ['ui', 'extra', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7'
 <script src="data/private/pack.js" onerror="void 0"></script>
 <script src="data/private/examen-ezequiel.js" onerror="void 0"></script>
 <script src="data/iso27001/norma.js"></script>
+<script src="data/auditoria/caso01.js"></script>
 <script>I18N.apply();</script>
 <script src="js/store.js"></script>
 <script src="js/motion.js"></script>
@@ -52,6 +53,7 @@ if (I18N.lang === 'en') ['ui', 'extra', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7'
 <script src="js/player.js"></script>
 <script src="js/views.js"></script>
 <script src="js/docs.js"></script>
+<script src="js/audit.js"></script>
   <script src="js/city.js"></script>
 <script src="js/app.js"></script>
 <script>I18N.observe();</script>
