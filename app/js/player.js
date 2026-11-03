@@ -100,8 +100,9 @@
     scrollTo(0, 0);
 
     function leave() {
-      if (!finished && i > 0 && !confirm('¿Salir? Perderás el progreso de esta sesión.')) return;
-      cleanup(); location.hash = cfg.backHref || '#/';
+      const go = () => { cleanup(); location.hash = cfg.backHref || '#/'; };
+      if (finished || i === 0) return go();
+      UI.ask({title: '¿Salir de la sesión?', text: 'Perderás el progreso de esta sesión.', ok: 'Salir', danger: true}).then(ok => { if (ok) go(); });
     }
     function cleanup() {
       clearInterval(timerId); sheet && sheet.close(); sheet = null;
@@ -255,7 +256,7 @@
     const submit = holdButton('Mantén para entregar', 1200, () => finish(), 'dark');
     const bar = h('div.bar', h('i'));
     const view = h('div.player',
-      h('div.p-top', h('button.ib.press', {type: 'button', 'aria-label': 'Salir', onclick: () => { if (confirm('¿Abandonar el simulacro?')) { cleanup(); location.hash = '#/examen'; } }}, icon('x')), bar, h('span.chip', icon('timer'), clock)),
+      h('div.p-top', h('button.ib.press', {type: 'button', 'aria-label': 'Salir', onclick: () => UI.ask({title: '¿Abandonar el simulacro?', text: 'Se perderán las respuestas de este intento.', ok: 'Abandonar', danger: true}).then(ok => { if (ok) { cleanup(); location.hash = '#/examen'; } })}, icon('x')), bar, h('span.chip', icon('timer'), clock)),
       h('div.p-title', cfg.title), qnav, stage,
       h('div.p-foot', h('div.p-foot-in', h('div', {style: {display: 'flex', gap: '8px'}}, prev, flagB), h('div', {style: {display: 'flex', gap: '8px'}}, submit, nextB))));
     main.textContent = ''; main.append(view); scrollTo(0, 0);

@@ -273,5 +273,19 @@
     } catch (e) { /* sin audio */ }
   }
 
-  window.UI = {h, icon, rich, toast, drawer, panel, menu, pill, ticker, holdButton, rings, confetti, xpFloat, transition, beep, RM};
+  /* Confirmación propia (en lugar de confirm(), que algunos navegadores integrados bloquean
+     devolviendo «no» sin mostrar nada). Devuelve una promesa con true o false. */
+  function ask({title, text, ok = 'Aceptar', cancel = 'Cancelar', danger = false}) {
+    return new Promise(resolve => {
+      let done = false; const fin = (v) => { if (!done) { done = true; resolve(v); } };
+      const p = panel(close => [
+        h('div.panel-h', h('div', h('h2', title), text ? h('p.ask-t', text) : null)),
+        h('div.panel-f', h('button.btn.press', {type: 'button', onclick: () => { fin(false); close(); }}, cancel),
+          h('button.btn.press' + (danger ? '.danger' : '.primary'), {type: 'button', onclick: () => { fin(true); close(); }}, ok))]);
+      p.el.classList.add('ask-wrap');
+      const mo = new MutationObserver(() => { if (!p.el.isConnected) { mo.disconnect(); fin(false); } });
+      mo.observe(document.body, {childList: true});
+    });
+  }
+  window.UI = {h, icon, rich, toast, drawer, panel, menu, pill, ticker, holdButton, rings, confetti, xpFloat, transition, beep, RM, ask};
 })();

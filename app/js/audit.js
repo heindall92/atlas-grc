@@ -215,7 +215,7 @@
         h('div.au-roles', ROLES.map(([t, d]) => h('div', h('b', t), h('p', d))))),
       h('div.au-foot', h('button.btn.sm', {type: 'button', onclick: exportAll}, icon('download'), 'Exportar mi progreso (JSON)'),
         h('label.btn.sm', icon('upload'), 'Importar', h('input', {type: 'file', accept: 'application/json', hidden: true, onchange: (e) => importAll(e.target.files[0])})),
-        h('button.btn.sm.ghost', {type: 'button', onclick: () => { if (confirm(tr('¿Borrar todo el progreso del simulador?'))) { S = blank(); save(); refresh(); } }}, icon('trash-2'), 'Borrar todo')));
+        h('button.btn.sm.ghost', {type: 'button', onclick: () => UI.ask({title: tr('¿Borrar todo el progreso del simulador?'), text: tr('Se borrarán tus intentos, notas y hallazgos de los cinco casos. El resto de Atlas no cambia.'), ok: tr('Borrar todo'), cancel: tr('Cancelar'), danger: true}).then(ok => { if (!ok) return; S = blank(); save(); toast(tr('Progreso del simulador borrado')); refresh(); })}, icon('trash-2'), 'Borrar todo')));
   }
   const ROAD = [
     ['1–2', 'Fundamentos', 'Qué es un SGSI, las cláusulas 4 a 10 y qué hace un auditor interno.', '#/ruta', 'Bloques 0 y 1'],

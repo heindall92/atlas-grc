@@ -10,6 +10,9 @@ I18N.add({
   'Has incluido criterios que no tienen relación con el encargo.': 'You included criteria unrelated to the assignment.',
   'Estas son todas las bajas del periodo (la población).': 'These are all the departures in the period (the population).',
   'Intermedio': 'Intermediate', 'Avanzado': 'Advanced',
+  'Se borrarán tus intentos, notas y hallazgos de los cinco casos. El resto de Atlas no cambia.': 'Your attempts, scores and findings for all five cases will be deleted. The rest of Atlas stays the same.',
+  'Progreso del simulador borrado': 'Simulator progress deleted', '¿Salir de la sesión?': 'Leave the session?', 'Perderás el progreso de esta sesión.': "You'll lose this session's progress.",
+  'Salir': 'Leave', '¿Abandonar el simulacro?': 'Abandon the mock exam?', 'Se perderán las respuestas de este intento.': "This attempt's answers will be lost.", 'Abandonar': 'Abandon', 'Aceptar': 'OK',
   'Enero': 'January', 'Febrero': 'February', 'Marzo': 'March', 'Abril': 'April', 'Mayo': 'May', 'Junio': 'June',
   'Gerencia, 08/01/2026': 'Management, 08/01/2026', 'RSIS, 08/01/2026': 'SYS, 08/01/2026', 'RSIS, 2024': 'SYS, 2024', 'Seguimiento': 'Follow-up',
 

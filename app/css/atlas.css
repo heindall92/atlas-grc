@@ -1709,3 +1709,11 @@ a.au-case:hover{border-color:var(--track);transform:translateY(-1px)}
 .au-hints{align-self:stretch}
 .au-hints .callout{margin:0}
 .au-hints:empty{display:none}
+
+/* Confirmación propia (UI.ask): un panel compacto, no a toda altura */
+.ask-wrap .panel{top:auto;height:auto;max-height:none}
+.ask-wrap .panel-h{padding-bottom:18px}
+.ask-t{margin:8px 0 0;color:var(--ink-2);font-size:15px;line-height:1.5;text-wrap:pretty}
+.ask-wrap .panel-f{justify-content:flex-end}
+.btn.danger{background:#ff3b30;color:#fff}
+@media (hover:hover){.btn.danger:hover{background:#e0342a}}
