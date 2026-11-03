@@ -298,6 +298,18 @@ Un anexo para aprender a **trabajar** como auditor interno y analista GRC, no a 
 
 **Caso 01 · Bajas de personal: ¿se retiraron todos los accesos?** La Responsable de Seguridad de Albatrel te encarga comprobar si la acción del riesgo R-09 funciona de verdad. El caso se apoya en la NOR-01 real del caso Albatrel («los accesos se retiran el mismo día de la salida»).
 
+Hay cinco casos, todos sobre la Albatrel del laboratorio y sus propios documentos:
+
+| Caso | Nivel | Qué se audita | Criterios |
+|---|---|---|---|
+| 01 · Bajas de personal | Inicial | Si los accesos se retiran el día de la salida en todos los sistemas | NOR-01 §2, §4 y §5 · 5.18, 6.5, 8.2 |
+| 02 · Copias de seguridad | Inicial | La regla 3-2-1, las pruebas mensuales de restauración y el indicador que llega al Comité | NOR-02 · 8.13 · cláusula 9.1 |
+| 03 · Cuentas privilegiadas y MFA | Intermedio | Cuentas compartidas, MFA, privilegios aprobados y revisión mensual del uso | NOR-01 §1, §3 y §4 · 8.2, 8.5 |
+| 04 · Proveedores con acceso a datos | Intermedio | Registro de proveedores, contratos de encargado, cláusulas de seguridad y revisiones | 5.19, 5.20, 5.22 · RGPD art. 28 · PTR-01 |
+| 05 · Respuesta a incidentes | Avanzado | Clasificación, notificación a la AEPD en 72 horas, evidencias y lecciones aprendidas | PRO-01 · 5.28 · RGPD art. 33 |
+
+Cada caso tiene sus hallazgos demostrables y sus trampas: cosas que parecen incumplimientos pero no lo son (una excepción aprobada, una cuenta de servicio sin MFA con medidas que lo compensan, un proveedor que no toca datos, una brecha no notificada por una decisión justificada).
+
 | Paso | Qué haces |
 |---|---|
 | 1. Encargo | Lees la carta: objetivo, periodo, trabajo de campo y destinatario del informe. |
@@ -376,8 +388,8 @@ flowchart LR
 - [x] Bienvenida con plan personal, cuatro colores, modo demostración
 - [x] Ciudad de Albatrel: el progreso convertido en una maqueta 3D que crece
 - [x] Español e inglés en toda la plataforma
-- [x] Simulador de auditoría: caso 01 (bajas de personal)
-- [ ] Simulador: casos 02 a 05 (copias, cuentas privilegiadas, proveedores, incidentes) y seguimiento de acciones
+- [x] Simulador de auditoría: casos 01 a 05 (bajas, copias, cuentas privilegiadas, proveedores e incidentes)
+- [ ] Simulador: seguimiento de acciones correctivas y jornada de analista GRC
 - [ ] Bloques 7 a 9: controles del Anexo A en profundidad
 - [ ] Bloque 10: auditoría de certificación
 - [ ] Ilustraciones por bloque
@@ -415,7 +427,7 @@ atlas-grc/
 │   ├── data/
 │   │   ├── tracks.js             Registro de normas
 │   │   ├── iso27001/             content · bloque2 a bloque6 · albatrel · norma
-│   │   └── auditoria/            Casos del simulador de auditoría (caso01.js)
+│   │   └── auditoria/            Casos del simulador de auditoría (caso01.js a caso05.js)
 │   ├── i18n/                     Diccionarios español → inglés (en-*.js)
 │   ├── vendor/three/             Three.js r169 y complementos (MIT)
 │   └── img/                      Ilustraciones opcionales

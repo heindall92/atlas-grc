@@ -71,27 +71,29 @@
     else bad('El objetivo de una auditoría interna es comprobar el cumplimiento contra criterios, no revisar la técnica ni evaluar a personas.');
     const fit = (opts, chosen, flag) => opts.filter(o => (chosen.includes(o.id)) === !!o[flag]).length / opts.length;
     const sysFit = fit(P.systems, st.plan.sys, 'in'); plan += 5 * sysFit;
-    if (!st.plan.sys.includes('app')) bad('El alcance no incluye la consola de soporte de clínicas, donde también hay cuentas de personas.');
-    else if (sysFit === 1) good('El alcance incluye todos los sistemas con cuentas de usuario, también los que no gestiona TI.');
+    const K = C.checks || {};
+    const sysMiss = (K.sys || []).filter(x => !st.plan.sys.includes(x.id));
+    sysMiss.forEach(x => bad(x.bad));
+    if (!sysMiss.length && sysFit === 1 && K.sysGood) good(K.sysGood);
     const critFit = fit(P.criteria, st.plan.crit, 'rel'); plan += 3 * critFit;
-    if (P.criteria.some(c => !c.rel && st.plan.crit.includes(c.id))) bad('Has incluido criterios que no tienen relación con las bajas.');
+    if (P.criteria.some(c => !c.rel && st.plan.crit.includes(c.id))) bad('Has incluido criterios que no tienen relación con el encargo.');
     plan += 2 * fit(P.techniques, st.plan.tech, 'rel');
     if (st.plan.tech.includes('pen')) bad('Una auditoría interna de este proceso no necesita pruebas de intrusión: se pide evidencia, no se ataca.');
     /* Selección de pruebas · 20 */
     let sel = 0;
     const smp = st.sample, pop = C.population;
     if (smp.length >= C.sampleMin) sel += 4; else bad('La muestra es demasiado pequeña para esta población.');
-    const priv = pop.filter(b => b.priv).map(b => b.id);
-    if (priv.some(b => smp.includes(b))) { sel += 4; good('La muestra incluye la baja de un administrador, la de mayor riesgo.'); }
-    else bad('La muestra no incluye la baja del administrador de sistemas, la de mayor riesgo.');
+    /* Los elementos de mayor riesgo (cada caso dice cuáles) deben estar en la muestra */
+    const must = K.mustSample || {ids: pop.filter(b => b.priv).map(b => b.id), good: '', bad: ''};
+    if (must.ids.some(b => smp.includes(b))) { sel += 4; if (must.good) good(must.good); }
+    else if (must.bad) bad(must.bad);
     const qs = new Set(pop.filter(b => smp.includes(b.id)).map(b => b.q));
     if (qs.size > 1) sel += 2; else bad('La muestra no cubre todo el periodo auditado.');
     const relEv = C.evidence.filter(e => e.rel).map(e => e.id), irr = C.evidence.filter(e => !e.rel).map(e => e.id);
     const gotRel = relEv.filter(e => st.req.includes(e)).length, gotIrr = irr.filter(e => st.req.includes(e)).length;
     sel += Math.max(0, 6 * gotRel / relEv.length - 1.5 * gotIrr);
     if (gotIrr) bad('Has pedido evidencias que no sirven para el objetivo.');
-    if (!st.req.includes('EV-06')) bad('No pediste el extracto de la consola de clínicas.');
-    if (!st.req.includes('EV-07')) bad('No pediste el registro de excepciones: sin él no se puede saber si una demora estaba autorizada.');
+    (K.ev || []).forEach(x => { if (!st.req.includes(x.id)) bad(x.bad); });
     const keyQs = C.people.flatMap(p => p.qs).filter(q => q.key).map(q => q.id), offQs = C.people.flatMap(p => p.qs).filter(q => q.off).map(q => q.id);
     sel += Math.max(0, 4 * keyQs.filter(q => st.asked.includes(q)).length / keyQs.length - offQs.filter(q => st.asked.includes(q)).length);
     if (offQs.some(q => st.asked.includes(q))) bad('Hiciste preguntas fuera del alcance de la auditoría.');
@@ -106,17 +108,13 @@
     else info('Algunas pruebas no tienen el resultado que muestran las evidencias de tu muestra. Revisa la solución.');
     /* Calidad de hallazgos · 25 */
     const reach = C.key.filter(k => k.subj === 'rev' || k.subj === 'proc' || smp.includes(k.subj));
-    let pts = 0; const matched = {};
-    reach.forEach(k => {
-      let best = 0;
-      st.finds.filter(f => f.subj === k.subj).forEach(f => {
-        let p = f.type === k.type ? 1 : (k.alt || []).includes(f.type) ? .6 : .3;
-        if (!k.crit.includes(f.crit)) p *= .8;
-        if (!f.ev.some(e => k.ev.includes(e))) p *= .8;
-        best = Math.max(best, p);
-      });
-      matched[k.id] = best; pts += best;
-    });
+    /* Cada hallazgo del alumno cuenta una sola vez: se asigna a la clave de la solución que mejor encaja */
+    let pts = 0; const matched = {}, used = new Set();
+    const score = (f, k) => { let p = f.type === k.type ? 1 : (k.alt || []).includes(f.type) ? .6 : .3; if (!k.crit.includes(f.crit)) p *= .8; if (!f.ev.some(e => k.ev.includes(e))) p *= .8; return p; };
+    const pairs = [];
+    reach.forEach(k => st.finds.forEach((f, i) => { if (f.subj === k.subj) pairs.push([score(f, k) + (k.crit[0] === f.crit ? .01 : 0), k, i]); }));
+    pairs.sort((x, y) => y[0] - x[0]).forEach(([p, k, i]) => { if (matched[k.id] != null || used.has(i)) return; matched[k.id] = Math.min(1, p); used.add(i); pts += Math.min(1, p); });
+    reach.forEach(k => { if (matched[k.id] == null) matched[k.id] = 0; });
     let fp = 0;
     st.finds.forEach(f => {
       const tp = C.traps.find(x => x.subj === f.subj);
@@ -147,7 +145,7 @@
       ['Objetivo de la auditoría', !!st.plan.obj, 'plan'],
       ['Alcance: al menos un sistema', st.plan.sys.length > 0, 'plan'],
       ['Al menos un criterio', st.plan.crit.length > 0, 'plan'],
-      ['Muestra de ' + C.sampleMin + ' bajas o más', st.sample.length >= C.sampleMin, 'muestra'],
+      ['Muestra del tamaño mínimo', st.sample.length >= C.sampleMin, 'muestra'],
       ['Justificación de la muestra', (st.why || '').trim().length >= 10, 'muestra'],
       ['Resultado de al menos una prueba', C.tests.some(t => (st.tests[t.id] || {}).s && st.tests[t.id].s !== 'pend'), 'pruebas'],
       ['Conclusión del informe', !!st.concl, 'informe']
@@ -181,7 +179,7 @@
       L.push('');
     });
     L.push('## 9. ' + T('Conclusión'), '', name(C.conclusions, st.concl) || '—', '');
-    L.push('## 10. ' + T('Limitaciones'), '', T('La auditoría se basa en una muestra y en evidencias aportadas por el auditado; las bajas no incluidas en la muestra no se han revisado.'), '');
+    L.push('## 10. ' + T('Limitaciones'), '', T('La auditoría se basa en una muestra y en evidencias aportadas por el auditado; lo que no entró en la muestra no se ha revisado.'), '');
     L.push('---', '', '_' + T('Generado con Atlas GRC · Simulador de auditoría') + ' · ' + new Date().toISOString().slice(0, 10) + '_', '');
     return L.join('\n');
   }
@@ -209,7 +207,7 @@
       warn(),
       h('div.au-mode', h('span', 'Modo'), modeSeg, h('small', S.mode === 'learn' ? 'Aprendiz: cada paso tiene pistas.' : 'Auditor: sin pistas, como en un encargo real.')),
       sec('Casos', h('div.au-cases', A.order.map(id => card(A.cases[id])),
-        (A.soon || []).map(([n, t, s]) => h('div.au-case.soon', {'aria-disabled': 'true'}, h('div.au-case-n', n), h('div', h('h3', t), h('p', s)), h('div.au-case-st', h('span.tag', 'Próximamente')))))),
+        (A.soon || []).filter(([n]) => !A.order.some(id => A.cases[id].n === n)).map(([n, t, s]) => h('div.au-case.soon', {'aria-disabled': 'true'}, h('div.au-case-n', n), h('div', h('h3', t), h('p', s)), h('div.au-case-st', h('span.tag', 'Próximamente')))))),
       sec('Itinerario de 12 semanas',
         h('p.au-p', 'Un recorrido para pasar de cero a defender un caso de auditoría en una entrevista. Cada fase se apoya en lo que ya tienes en Atlas.'),
         h('ol.au-road', ROAD.map(([w, t, d, href, cta]) => h('li', h('span.au-w', w), h('div', h('b', t), h('p', d), href ? h('a.link', {href}, cta, ' →') : h('small', cta)))))),
@@ -295,10 +293,10 @@
       hints(C, 'plan'));
 
     if (step === 'muestra') body.append(
-      h('p.au-p', 'Estas son todas las bajas del periodo (la población). Elige al menos ', String(C.sampleMin), ' y explica por qué.'),
+      h('p.au-p', C.popIntro || 'Esta es la población: todo lo que podrías revisar.', ' ', 'Elige al menos', ' ', String(C.sampleMin), ' ', 'y explica por qué.'),
       h('div.au-list', C.population.map(b => check(h('span.au-b', h('b', b.id), ' ', b.role, h('small', b.out)), st.sample.includes(b.id), () => set(s => toggle(s.sample, b.id)), dis))),
       h('div.au-count', h('b', String(st.sample.length)), ' / ', String(C.population.length), h('span', ' en la muestra')),
-      sec('Justificación de la muestra', area(st.why, (v) => set(s => { s.why = v; }, false), {ph: '¿Por qué estas bajas? Piensa en riesgo y en el periodo.', ...dis})),
+      sec('Justificación de la muestra', area(st.why, (v) => set(s => { s.why = v; }, false), {ph: C.sampleWhyPh || 'Piensa en el riesgo y en el periodo.', ...dis})),
       hints(C, 'sample'));
 
     if (step === 'evidencias') {
@@ -324,7 +322,7 @@
       hints(C, 'people'));
 
     if (step === 'pruebas') body.append(
-      h('p.au-p', 'Para cada prueba, mira las evidencias de las bajas de tu muestra y registra el resultado. Tu muestra: ', h('b', st.sample.join(', ') || '—')),
+      h('p.au-p', 'Para cada prueba, mira las evidencias de los elementos de tu muestra y registra el resultado. Tu muestra:', ' ', h('b', st.sample.join(', ') || '—')),
       h('div.au-tests', C.tests.map(t => {
         const r = st.tests[t.id] || {s: 'pend', note: ''};
         return h('div.au-test',
@@ -425,7 +423,7 @@
       const save = () => {
         Object.keys(fields).forEach(clear);
         const errs = [];
-        if (!f.subj) errs.push(['subj', 'Elige a qué baja o proceso afecta.']);
+        if (!f.subj) errs.push(['subj', 'Elige a qué elemento o proceso afecta.']);
         if (!f.crit) errs.push(['crit', 'Elige el criterio: sin criterio no hay hallazgo.']);
         if (!f.ev.length) errs.push(['ev', evs.length ? 'Marca al menos una evidencia que lo demuestre.' : 'Primero pide evidencias en el paso 4.']);
         if (f.cond.trim().length < 20) errs.push(['cond', 'Describe qué viste, cuándo y en qué evidencia (al menos una frase).']);
@@ -444,7 +442,7 @@
           h('button.ib.press', {type: 'button', 'aria-label': 'Cerrar', onclick: close}, icon('x'))),
         h('div.panel-b.au-form',
           field('type', 'Tipo', types),
-          field('subj', 'Afecta a', sel(subjects, f.subj, v => { f.subj = v; clear('subj'); }, 'Elige una baja de tu muestra o un proceso')),
+          field('subj', 'Afecta a', sel(subjects, f.subj, v => { f.subj = v; clear('subj'); }, 'Elige un elemento de tu muestra o un proceso')),
           field('crit', 'Criterio', sel(C.plan.criteria.map(c => [c.id, c.t]), f.crit, v => { f.crit = v; clear('crit'); }, 'Elige el criterio'), 'El requisito que no se cumple o que queda afectado.'),
           field('ev', 'Evidencias que lo demuestran', evs.length ? h('div.au-list', evs.map(e => check(h('span.au-b', h('b', e.id), ' ', e.t), f.ev.includes(e.id), () => { toggle(f.ev, e.id); clear('ev'); }))) : h('p.au-empty', 'Primero pide evidencias en la sala de evidencias.')),
           field('cond', 'Condición observada', area(f.cond, v => { f.cond = v; if (v.trim().length >= 20) clear('cond'); }, {rows: 3, ph: 'Qué has visto, cuándo y en qué evidencia'}), 'Hechos, sin opiniones.'),

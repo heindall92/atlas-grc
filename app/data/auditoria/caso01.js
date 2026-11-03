@@ -88,6 +88,15 @@ const C = {
     {id: 'B-08', role: 'Técnica de soporte a clínicas', out: '26/06/2026', q: 2}
   ],
   sampleMin: 5,
+  popIntro: 'Estas son todas las bajas del periodo (la población).',
+  sampleWhyPh: '¿Por qué estas bajas? Piensa en riesgo y en el periodo.',
+  /* Comprobaciones propias del caso para la evaluación */
+  checks: {
+    sys: [{id: 'app', bad: 'El alcance no incluye la consola de soporte de clínicas, donde también hay cuentas de personas.'}],
+    sysGood: 'El alcance incluye todos los sistemas con cuentas de usuario, también los que no gestiona TI.',
+    mustSample: {ids: ['B-07'], good: 'La muestra incluye la baja de un administrador, la de mayor riesgo.', bad: 'La muestra no incluye la baja del administrador de sistemas, la de mayor riesgo.'},
+    ev: [{id: 'EV-06', bad: 'No pediste el extracto de la consola de clínicas.'}, {id: 'EV-07', bad: 'No pediste el registro de excepciones: sin él no se puede saber si una demora estaba autorizada.'}]
+  },
 
   /* ── 4. Evidencias que se pueden pedir (dos no sirven para este encargo) ── */
   evidence: [
