@@ -96,7 +96,7 @@ Funciona en el navegador, sin servidor, sin cuentas y sin conexión. Tu progreso
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="2"><code>version: 0.6 beta&nbsp;&nbsp;·&nbsp;&nbsp;ISO/IEC 27001:2022&nbsp;&nbsp;·&nbsp;&nbsp;bloques: 0–6 de 10&nbsp;&nbsp;·&nbsp;&nbsp;caso: Albatrel (ficticio)&nbsp;&nbsp;·&nbsp;&nbsp;licencia: GPLv2 + CC BY-SA 4.0</code></td>
+      <td colspan="2"><code>version: 0.7 beta&nbsp;&nbsp;·&nbsp;&nbsp;ISO/IEC 27001:2022&nbsp;&nbsp;·&nbsp;&nbsp;bloques: 0–6 de 10&nbsp;&nbsp;·&nbsp;&nbsp;caso: Albatrel (ficticio)&nbsp;&nbsp;·&nbsp;&nbsp;licencia: GPLv2 + CC BY-SA 4.0</code></td>
     </tr>
   </tfoot>
 </table>
@@ -105,8 +105,31 @@ Funciona en el navegador, sin servidor, sin cuentas y sin conexión. Tu progreso
 
 ---
 
+## <img src="docs/assets/icons/sparkles.svg" width="20" height="20" valign="middle"/> Novedades
+
+### 0.7 beta · noviembre de 2026
+
+- **Nuevo: [simulador de auditoría](#-simulador-de-auditoría).** Cinco casos de auditoría interna sobre Albatrel (bajas de personal, copias de seguridad, cuentas privilegiadas y MFA, proveedores con acceso a datos y respuesta a incidentes). Planificas, eliges la muestra, pides evidencias, entrevistas al equipo, ejecutas pruebas, redactas hallazgos y entregas un informe en Markdown. Al final ves tu nota por competencias y la solución, con hallazgos demostrables y trampas que no lo son.
+- **Tarjeta animada en «Hoy»** que presenta el simulador: una demo a color en la que se audita, las bajas se resuelven una a una y el anillo cuenta el cumplimiento. Lleva el distintivo «Nuevo».
+- **Español e inglés** en toda la plataforma, interfaz y contenido. El selector ES/EN está junto al botón de tema.
+- **Modo claro por defecto**, con tarjetas, líneas y bordes más marcados. El oscuro sigue a un clic.
+- **Contenido propio al cien por cien:** los ejemplos usan el caso ficticio Albatrel y cada ejercicio trae su explicación desplegable. No se enlaza ni reproduce material de cursos ni el texto de la norma.
+- **Licencia:** GPLv2 para el código y CC BY-SA 4.0 para el contenido educativo.
+- **Pulido de diseño:** formularios con el error en el campo que lo causa, separación uniforme entre bloques, respuesta al pulsar, zonas táctiles de 44 px en el móvil y respeto a «reducir movimiento».
+- **Móvil:** los marcadores de actividad van junto a los anillos y el selector de idioma cabe en la cabecera.
+
+### 0.6 beta
+
+- Bloque 6 (cláusula 10: mejora continua y acciones correctivas).
+- Ciudad de Albatrel en 3D, que crece con tu progreso.
+- «Acerca de» con el autor, el código fuente y el ecosistema GRC.
+- Cuatro colores (malva, coral, azul eléctrico y verde) y pie de página.
+
+---
+
 ## Índice
 
+- [Novedades](#-novedades)
 - [Cómo se usa](#-cómo-se-usa)
 - [Mapa mental](#-mapa-mental)
 - [Vistas](#-vistas)

@@ -452,7 +452,7 @@
 
   /* ═════ Ajustes y ayuda ═════ */
   /* ═════ Acerca de: autor, código fuente y el ecosistema GRC (como en Rosetta) ═════ */
-  const VERSION = '0.6 beta';
+  const VERSION = '0.7 beta';
   const AUTOR = {nombre: 'Yoandy Ramírez Delgado', email: 'yoandyramirezdelgado@gmail.com', repo: 'https://github.com/heindall92/atlas-grc',
     links: [['linkedin', 'LinkedIn', 'https://www.linkedin.com/in/yoandyrd92/'], ['github', 'GitHub', 'https://github.com/heindall92'],
       ['globe', 'Portafolio', 'https://yoandyramirez.com'], ['hackthebox', 'HackTheBox', 'https://profile.hackthebox.com/profile/019c5812-b4ca-7315-b12f-14db6d2b42fa']]};
