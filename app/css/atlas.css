@@ -1697,3 +1697,15 @@ a.au-case:hover{border-color:var(--track);transform:translateY(-1px)}
   .ap-st>span,.ap-row,.ap-ring .fg,.ap-risk,.ap-cnt,.ap-fix,.ap-cursor,.ap-main,.ap-win{transition:none!important}
   .au-new::after{animation:none}
 }
+
+/* ── Simulador · ritmo vertical: cada bloque de un paso separado del siguiente (nada pegado) ── */
+.au-body,.au-res{display:flex;flex-direction:column;gap:20px}
+.au-body>*,.au-res>*{margin-top:0!important;margin-bottom:0!important}
+.au-body>.au-sec,.au-res>.au-sec{padding-top:12px}
+.au-sec{display:flex;flex-direction:column;gap:14px}
+.au-sec>*{margin-top:0!important;margin-bottom:0!important}
+.au-sec>.au-h3{padding-top:10px}
+.au-hint-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.au-hints{align-self:stretch}
+.au-hints .callout{margin:0}
+.au-hints:empty{display:none}
