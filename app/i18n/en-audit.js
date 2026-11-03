@@ -116,7 +116,7 @@ I18N.add({
   /* Tarjeta de novedad en Hoy */
   'Nuevo': 'New', 'Audita Albatrel como lo haría un profesional': 'Audit Albatrel the way a professional would',
   'Pide evidencias, entrevista al equipo, encuentra las no conformidades y entrega tu informe. Con la solución al final.': 'Request evidence, interview the team, find the nonconformities and hand in your report. With the solution at the end.',
-  'Tu mejor nota:': 'Your best score:', 'Repasar': 'Review', 'Continuar el caso 01': 'Continue case 01', 'Empezar el caso 01': 'Start case 01', 'Deshabilitada': 'Disabled',
+  'Tu mejor nota:': 'Your best score:', 'Repasar': 'Review', 'Continuar el caso 01': 'Continue case 01', 'Empezar el caso 01': 'Start case 01', 'Ver los 5 casos': 'See the 5 cases', 'Deshabilitada': 'Disabled',
 
   /* Demo de la tarjeta */
   'Soporte a ayuntamientos': 'Council support', 'Soporte a clínicas': 'Clinic support', 'Correcto': 'Correct', '7 días tarde': '7 days late',

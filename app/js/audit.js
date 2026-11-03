@@ -480,8 +480,6 @@
      El fotograma fijo es el resultado: es lo que se ve con «reducir movimiento». */
   function promo() {
     const C = AUD().cases.c01; if (!C) return null;
-    const st = S.cases.c01, done = st && st.result, started = !!st;
-    const best = done ? Math.max(...(st.attempts || []).map(a => a.total), st.result.total) : 0;
     const ROWS = [
       ['B-01', 'Soporte a ayuntamientos', 'ok', 'check', 'Correcto'],
       ['B-02', 'Desarrollador', 'nc', 'circle-x', '7 días tarde'],
@@ -513,13 +511,13 @@
     const cursor = h('span.ap-cursor', {html: '<svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.6L10 19z"/></svg>'});
     const scaler = h('div.ap-scaler', win, cursor);
     const stage = h('div.au-pr-stage', {'aria-hidden': 'true'}, scaler);
-    const card = h('a.au-promo.press', {href: '#/auditoria' + (started ? '/c01' + (done ? '/resultado' : '') : '')},
+    const card = h('a.au-promo.press', {href: '#/auditoria'},   // siempre al panel principal del simulador
       h('span.au-new', icon('zap'), 'Nuevo'),
       h('div.au-pr-copy',
         h('div.au-pr-k', icon('scan-search'), 'Simulador de auditoría'),
         h('h3', 'Audita Albatrel como lo haría un profesional'),
         h('p', 'Pide evidencias, entrevista al equipo, encuentra las no conformidades y entrega tu informe. Con la solución al final.'),
-        h('span.au-pr-cta', done ? ['Tu mejor nota: ', h('b', best + '/100'), ' · Repasar'] : started ? 'Continuar el caso 01' : 'Empezar el caso 01', icon('arrow-right'))),
+        h('span.au-pr-cta', 'Ver los 5 casos', icon('arrow-right'))),
       stage);
 
     /* Escala: diseño a tamaño fijo, encajado en el hueco */
