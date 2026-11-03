@@ -476,50 +476,103 @@
   }
 
   /* ═════════ Tarjeta de novedad en «Hoy» ═════════
-     Una miniatura del simulador cuenta qué pasa dentro (reglas de stageshow):
-     extracto del Directorio Activo → se revisa B-01 → B-02 sale tarde → aparece la no conformidad.
-     El fotograma fijo es el resultado; con «reducir movimiento» solo se ve ese. */
+     Una demo en miniatura del simulador (reglas de stageshow): se pulsa «Auditar», las bajas pasan de
+     «Pendiente» a su resultado una a una, el anillo cuenta el cumplimiento y aparece la acción correctiva.
+     Diseñada a tamaño fijo y escalada al hueco; en el móvil tiene su propia versión compacta.
+     El fotograma fijo es el resultado: es lo que se ve con «reducir movimiento». */
   function promo() {
     const C = AUD().cases.c01; if (!C) return null;
     const st = S.cases.c01, done = st && st.result, started = !!st;
     const best = done ? Math.max(...(st.attempts || []).map(a => a.total), st.result.total) : 0;
-    const row = (b, out, off, cls) => h('div.au-pr-row' + (cls || ''), h('b', b), h('span', out), h('span.au-pr-off', off));
-    const filler = (w1, w2) => h('div.au-pr-row.fill', h('i', {style: {width: w1 + 'px'}}), h('i', {style: {width: w2 + 'px'}}), h('i', {style: {width: w2 + 'px'}}));
-    const win = h('div.au-pr-win',
-      h('div.au-pr-bar', h('span'), h('span'), h('span'), h('em', 'EV-04', h('span.au-pr-long', ' · ', 'Directorio Activo'))),
-      h('div.au-pr-head', h('span', 'Baja'), h('span', 'Salida'), h('span', 'Deshabilitada')),
-      row('B-01', '16/01', '16/01', '.r1'), row('B-02', '13/02', '20/02', '.r2'),
-      filler(30, 38), filler(30, 32), filler(30, 40), filler(30, 34));
-    const chip = h('div.au-pr-chip', icon('flag'), h('span', h('b', 'No conformidad'), h('small', 'NOR-01 §2')));
-    const stage = h('div.au-pr-stage', {'aria-hidden': 'true'}, h('div.au-pr-frame', win, chip));
+    const ROWS = [
+      ['B-01', 'Soporte a ayuntamientos', 'ok', 'check', 'Correcto'],
+      ['B-02', 'Desarrollador', 'nc', 'circle-x', '7 días tarde'],
+      ['B-03', 'Analista de datos', 'ex', 'info', 'Excepción EX-03'],
+      ['B-04', 'Soporte a clínicas', 'nc', 'circle-x', 'Cuenta activa'],
+      ['B-07', 'Administrador', 'nc', 'circle-x', 'adm- 3 días tarde']];
+    const rows = ROWS.map(([id, role, k, ic, label]) => h('div.ap-row', {'data-k': k},
+      h('span.ap-av', icon('user-round')), h('span.ap-who', h('b', id), h('small', role)),
+      h('span.ap-st', h('span.ap-st-p', 'Pendiente'), h('span.ap-st-r', icon(ic), label))));
+    const R = 30, CIRC = 2 * Math.PI * R;
+    const num = h('b.ap-num', '—');
+    const ring = h('div.ap-ring', {html: '<svg viewBox="0 0 76 76"><circle class="bg" cx="38" cy="38" r="' + R + '"/><circle class="fg" cx="38" cy="38" r="' + R + '" stroke-dasharray="' + CIRC + '" stroke-dashoffset="' + CIRC + '"/></svg>'});
+    ring.append(h('span.ap-ring-c', num, h('small', 'de 100')));
+    const cnt = (k, n, l) => h('span.ap-cnt.' + k, h('b', String(n)), h('small', l));
+    const nav = (ic, t, on) => h('span.ap-nav' + (on ? '.on' : ''), icon(ic), t);
+    const btn = h('span.ap-btn', icon('scan-search'), h('span', 'Auditar'));
+    const win = h('div.ap-win',
+      h('div.ap-chrome', h('i.r'), h('i.y'), h('i.g'), h('span.ap-url', icon('lock'), 'atlas-grc · auditoría')),
+      h('div.ap-body',
+        h('div.ap-side', h('span.ap-brand', icon('atlas'), 'Atlas GRC'), nav('mail-open', 'Encargo'), nav('folder-open', 'Evidencias'), nav('clipboard-check', 'Pruebas', true), nav('flag', 'Hallazgos'), nav('file-text', 'Informe'), h('i.ap-bar', {style: {width: '62px'}}), h('i.ap-bar', {style: {width: '48px'}})),
+        h('div.ap-main',
+          h('div.ap-head', h('span.ap-doc', icon('file-text')), h('div', h('b', 'Caso 01 · Bajas de personal'), h('small', 'Albatrel · primer semestre de 2026')), btn),
+          h('div.ap-grid',
+            h('div.ap-card.ap-list', h('div.ap-card-h', h('b', 'Muestra'), h('small', '5 bajas')), rows),
+            h('div.ap-col',
+              h('div.ap-card.ap-score', h('div.ap-card-h', h('b', 'Cumplimiento')), ring, h('span.ap-risk', 'Riesgo alto'),
+                h('div.ap-cnts', cnt('nc', 3, 'NC'), cnt('ex', 1, 'Exc.'), cnt('ok', 1, 'OK'))),
+              h('div.ap-card.ap-fix', h('div.ap-card-h', icon('notebook-pen'), h('b', 'Acción correctiva')), h('p', 'Añadir la consola de clínicas y las cuentas adm- al ticket de baja.')))))));
+    const cursor = h('span.ap-cursor', {html: '<svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.6L10 19z"/></svg>'});
+    const scaler = h('div.ap-scaler', win, cursor);
+    const stage = h('div.au-pr-stage', {'aria-hidden': 'true'}, scaler);
     const card = h('a.au-promo.press', {href: '#/auditoria' + (started ? '/c01' + (done ? '/resultado' : '') : '')},
-      done ? null : h('span.au-new', 'Nuevo'),
+      done ? null : h('span.au-new', icon('zap'), 'Nuevo'),
       h('div.au-pr-copy',
         h('div.au-pr-k', icon('scan-search'), 'Simulador de auditoría'),
         h('h3', 'Audita Albatrel como lo haría un profesional'),
         h('p', 'Pide evidencias, entrevista al equipo, encuentra las no conformidades y entrega tu informe. Con la solución al final.'),
         h('span.au-pr-cta', done ? ['Tu mejor nota: ', h('b', best + '/100'), ' · Repasar'] : started ? 'Continuar el caso 01' : 'Empezar el caso 01', icon('arrow-right'))),
       stage);
-    /* Guion: 0 reposo · 1 revisa B-01 · 2 B-02 tarde · 3 hallazgo (y se mantiene) */
-    const beats = [[0, 0], [1, 1100], [2, 2500], [3, 3700], [0, 10200]];
-    const LOOP = 11400;
-    const set = (b) => { stage.dataset.beat = b; };
-    if (UI.RM()) { set(3); return card; }
-    set(3); // fotograma fijo hasta que la tarjeta se ve
+
+    /* Escala: diseño a tamaño fijo, encajado en el hueco */
+    let scale = 1;
+    const fit = () => {
+      const w = stage.clientWidth; if (!w) return;
+      const compact = w < 540; scaler.dataset.compact = compact ? '1' : '';
+      const dw = compact ? 400 : 640, left = compact ? 18 : 36;
+      scale = Math.min(1, (w - left * 2) / dw);   // márgenes iguales a los lados; solo se corta por abajo
+      scaler.style.setProperty('--s', scale); scaler.style.setProperty('--l', left + 'px');
+    };
+    const ro = new ResizeObserver(fit); setTimeout(() => { if (card.isConnected) { ro.observe(stage); fit(); } }, 0);
+
+    /* Estados */
+    const fill = (pct, ms) => {
+      const fg = ring.querySelector('.fg'); fg.style.strokeDashoffset = CIRC * (1 - pct / 100);
+      if (!ms) { num.textContent = pct ? String(pct) : '—'; return; }
+      const t0 = performance.now();
+      const step = (t) => { const k = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - k, 3); num.textContent = String(Math.round(pct * e)); if (k < 1 && card.isConnected) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    };
+    const cursorTo = (el, dx = 0, dy = 0) => {
+      const sr = scaler.getBoundingClientRect(), r = el.getBoundingClientRect();
+      cursor.style.setProperty('--x', ((r.left - sr.left + r.width * .6) / scale + dx) + 'px');
+      cursor.style.setProperty('--y', ((r.top - sr.top + r.height * .55) / scale + dy) + 'px');
+    };
+    const away = () => { cursor.style.setProperty('--x', '106%'); cursor.style.setProperty('--y', '88%'); };
+    const reset = () => { stage.dataset.beat = '0'; rows.forEach(r => r.classList.remove('on')); fill(0, 0); stage.classList.remove('busy'); away(); };
+    const poster = () => { stage.dataset.beat = '9'; rows.forEach(r => r.classList.add('on')); fill(58, 0); stage.classList.remove('busy'); away(); };
+    poster();
+    if (UI.RM()) return card;
+
     let timers = [], running = false;
     const stop = () => { timers.forEach(clearTimeout); timers = []; running = false; };
-    const play = () => {
-      if (running || !card.isConnected) return; running = true; set(0);
-      const once = () => {
-        if (!card.isConnected) return stop();
-        beats.forEach(([b, t]) => timers.push(setTimeout(() => set(b), t)));
-        timers.push(setTimeout(once, LOOP));
-      };
-      once();
+    const at = (t, f) => timers.push(setTimeout(() => card.isConnected ? f() : stop(), t));
+    const run = () => {
+      reset();
+      at(500, () => cursorTo(btn));
+      at(1500, () => stage.classList.add('press'));
+      at(1700, () => { stage.classList.remove('press'); stage.classList.add('busy'); stage.dataset.beat = '1'; });
+      rows.forEach((r, i) => at(2100 + i * 520, () => r.classList.add('on')));
+      at(3140, () => cursorTo(rows[2], 40, 30));
+      at(4800, () => { stage.classList.remove('busy'); stage.dataset.beat = '2'; fill(58, 1100); });
+      at(6000, () => { stage.dataset.beat = '9'; away(); });
+      at(11800, () => { stage.dataset.beat = 'out'; });
+      at(12400, run);
     };
-    const io = new IntersectionObserver((es) => { es.forEach(e => { if (e.isIntersecting && !document.hidden) play(); else { stop(); set(3); } }); }, {threshold: .45});
+    const play = () => { if (running) return; running = true; run(); };
+    const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting && !document.hidden) play(); else { stop(); poster(); } }), {threshold: .4});
     setTimeout(() => card.isConnected && io.observe(card), 0);
-    App.onLeave(() => { stop(); io.disconnect(); });
+    App.onLeave(() => { stop(); io.disconnect(); ro.disconnect(); });
     return card;
   }
 

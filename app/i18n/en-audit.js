@@ -118,6 +118,13 @@ I18N.add({
   'Pide evidencias, entrevista al equipo, encuentra las no conformidades y entrega tu informe. Con la solución al final.': 'Request evidence, interview the team, find the nonconformities and hand in your report. With the solution at the end.',
   'Tu mejor nota:': 'Your best score:', 'Repasar': 'Review', 'Continuar el caso 01': 'Continue case 01', 'Empezar el caso 01': 'Start case 01', 'Deshabilitada': 'Disabled',
 
+  /* Demo de la tarjeta */
+  'Soporte a ayuntamientos': 'Council support', 'Soporte a clínicas': 'Clinic support', 'Correcto': 'Correct', '7 días tarde': '7 days late',
+  'Excepción EX-03': 'Exception EX-03', 'Cuenta activa': 'Account active', 'adm- 3 días tarde': 'adm- 3 days late', 'de 100': 'of 100',
+  'auditoría': 'audit', 'Bajas de personal': 'Staff departures', 'primer semestre de 2026': 'first half of 2026', '5 bajas': '5 leavers',
+  'Cumplimiento': 'Compliance', 'Riesgo alto': 'High risk', 'NC': 'NC', 'Exc.': 'Exc.', 'Auditar': 'Audit',
+  'Añadir la consola de clínicas y las cuentas adm- al ticket de baja.': 'Add the clinic console and adm- accounts to the leaver ticket.',
+
   /* ── Caso 01 ── */
   'Bajas de personal: ¿se retiraron todos los accesos?': 'Staff departures: was all access removed?',
   'Auditoría interna del proceso de bajas de Albatrel: muestreo, evidencias, entrevistas, hallazgos e informe.': "Internal audit of Albatrel's leavers process: sampling, evidence, interviews, findings and report.",
